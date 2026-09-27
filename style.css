@@ -40,7 +40,7 @@ html, body{
 
 body{
   margin:0;
-  font-family:'Instrument Serif', Georgia, serif;
+  font-family:'Instrument Serif', serif;
   color:var(--ink);
   background-color:var(--paper);
   background-image:url("./assets/embossed-background.png");
@@ -61,7 +61,7 @@ button{
 }
 
 .eyebrow-label{ 
-  font-family:Georgia,serif; 
+  font-family: 'Instrument Serif',serif; 
   font-size:.68rem; 
   letter-spacing:.14em; 
   color:var(--wine); 
@@ -160,7 +160,7 @@ button{
   color:var(--wine); 
   opacity:.6; 
   text-transform:uppercase; 
-  font-family:Georgia,serif;
+  font-family:'Instrument Serif',serif;
 }
 
 .envelope-wrap{
@@ -227,7 +227,7 @@ button{
 }
 
 .subtitle{
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.62rem; 
   letter-spacing:.2em;
   text-transform:uppercase; 
@@ -263,7 +263,7 @@ button{
 }
 
 .stamps-heading p{ 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.85rem; 
   color:var(--ink); 
   opacity:.65; 
@@ -355,7 +355,7 @@ button{
 }
 
 .stamp-desc{ 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:clamp(.72rem, .65rem + .3vw, .9rem); 
   color:var(--ink); 
   opacity:.65; 
@@ -405,7 +405,7 @@ button{
   color:#eef2df; 
   font-size:.85rem; 
   opacity:.8; 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   letter-spacing:.05em; 
 }
 
@@ -547,7 +547,7 @@ button{
 }
 
 .venue-addr{ 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.85rem; 
   opacity:.75; 
   margin:0 0 14px; 
@@ -559,7 +559,7 @@ button{
   gap:8px;
   color:var(--olive); 
   text-decoration:none; 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.85rem; 
   border-bottom:1px solid var(--olive);
 }
@@ -578,7 +578,7 @@ button{
 }
 
 .tl-time{ 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.78rem; 
   color:var(--olive); 
   min-width:64px; 
@@ -609,7 +609,7 @@ button{
   margin-bottom:6px;
 }
 .modal-img-caption{
-  font-family:Georgia,serif;
+  font-family:'Instrument Serif',serif;
   font-size:.75rem;
   color:var(--ink);
   opacity:.6;
@@ -633,7 +633,7 @@ button{
 }
 .entourage-group h4:not(:first-child){ margin-top:14px; }
 .entourage-sub{
-  font-family:Georgia,serif;
+  font-family:'Instrument Serif',serif;
   font-size:.68rem;
   letter-spacing:.14em;
   text-transform:uppercase;
@@ -693,7 +693,7 @@ button{
 }
 .info-highlight-item h4 i{ font-size:.95rem; color:var(--olive); }
 .info-highlight-item p{
-  font-family:Georgia,serif;
+  font-family:'Instrument Serif',serif;
   font-size:.82rem;
   line-height:1.5;
   color:var(--ink);
@@ -710,7 +710,7 @@ form.rsvp-form{
 .rsvp-form label{ 
   font-size:.85rem; 
   color:var(--wine); 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   margin-bottom:4px; 
   display:block; 
   resize: none;
@@ -832,14 +832,14 @@ form.rsvp-form{
 }
 
 .rsvp-note{ 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.72rem; 
   opacity:.55; 
   margin-top:2px; 
 }
 
 .rsvp-status{ 
-  font-family:Georgia,serif; 
+  font-family:'Instrument Serif',serif; 
   font-size:.85rem; 
   margin-top:10px; 
   display:none; 
