@@ -79,12 +79,22 @@ body{
   font-family:'Instrument Serif', serif;
   color:var(--ink);
   background-color:var(--paper);
-  background-image:url("./assets/embossed-background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment:fixed;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  position:relative; /* establishes containing context, not strictly required with body::before fixed */
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background-image:url("./assets/embossed-background.png");
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+  opacity:0.5; /* <- adjust this number (0 to 1) to control how visible the texture is */
+  pointer-events:none;
 }
 
 img{
