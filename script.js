@@ -343,7 +343,7 @@ rsvpForm?.addEventListener('submit', async (e) => {
     fullName: form.fullName.value,
     attending: form.attending.value, // RadioNodeList.value returns the checked radio's value
     songSuggest: form.songSuggest ? form.songSuggest.value : '',
-    notes: form.notes.value,
+    notes: form.dietaryRestriction.value,
     submittedAt: new Date().toISOString()
   };
 
