@@ -9,21 +9,11 @@
 
         ♡ embedded google maps for church & reception.
 
+        ♡ background music player.
+
         ♡ curated color palette and dress code guide.
 
         ♡ event timeline and schedule.
 
         ♡ live rsvp form integrated directly with google sheets.
-
-
-
-      to-do list:
-
-        ♡ asset and custom icons.
-
-        ♡ background music player.
-
-        ♡ sticky, responsive navigation bar.
-
-        ♡ mobile and tablet layout fixes.
 
