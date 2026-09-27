@@ -151,12 +151,16 @@ document.querySelectorAll('.attend-option').forEach(option => {
   const cards = Array.from(track.querySelectorAll('.stamp-card'));
   if (!cards.length) return;
 
-  let activeIndex = Math.min(1, cards.length - 1); // start near the front, not required to be 0
+  // Default to the Entourage card being active/centered on every fresh load.
+  const entourageIndex = cards.findIndex(c => c.dataset.open === 'entourage');
+  let activeIndex = entourageIndex !== -1 ? entourageIndex : Math.min(1, cards.length - 1);
   let currentTranslate = 0;
-  let dragging = false;
+  let dragging = false;      // true only once real movement has been detected
+  let pointerActive = false; // true from pointerdown until pointerup/cancel
   let startX = 0;
   let startTranslate = 0;
   let pointerId = null;
+  const DRAG_THRESHOLD = 6; // px of movement before we treat this as a drag, not a click
 
   // ---- build dot indicators ----
   dotsWrap.innerHTML = '';
@@ -240,25 +244,45 @@ document.querySelectorAll('.attend-option').forEach(option => {
   }
 
   // ---- pointer-based drag (works for mouse, touch, and pen alike) ----
+  // Drag mode only engages once movement exceeds DRAG_THRESHOLD. A plain
+  // click (press + release with little/no movement) is left completely
+  // alone here, so it bubbles normally and the card's own click handler
+  // opens its modal — this is what was silently broken on desktop before,
+  // where pointer capture was being grabbed on every mousedown and could
+  // retarget the resulting click event away from the card.
   function onPointerDown(e) {
-    dragging = true;
+    pointerActive = true;
+    dragging = false;
     pointerId = e.pointerId;
     startX = e.clientX;
     startTranslate = currentTranslate;
-    viewport.classList.add('dragging');
-    viewport.setPointerCapture && viewport.setPointerCapture(pointerId);
   }
 
   function onPointerMove(e) {
-    if (!dragging) return;
+    if (!pointerActive) return;
     const deltaX = e.clientX - startX;
+
+    if (!dragging) {
+      if (Math.abs(deltaX) < DRAG_THRESHOLD) return; // still just a click/tap so far
+      dragging = true;
+      viewport.classList.add('dragging');
+      viewport.setPointerCapture && viewport.setPointerCapture(pointerId);
+    }
+
     render(startTranslate + deltaX);
   }
 
   function endDrag(e) {
-    if (!dragging) return;
+    if (!pointerActive) return;
+    pointerActive = false;
+
+    if (!dragging) return; // it was a plain click/tap — let the click event do its thing
+
     dragging = false;
     viewport.classList.remove('dragging');
+    if (viewport.releasePointerCapture && pointerId != null) {
+      try { viewport.releasePointerCapture(pointerId); } catch (err) { /* already released */ }
+    }
     const deltaX = (e.clientX != null ? e.clientX : startX) - startX;
     const threshold = 40;
     if (deltaX > threshold && activeIndex > 0) {
