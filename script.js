@@ -343,7 +343,10 @@ rsvpForm?.addEventListener('submit', async (e) => {
     fullName: form.fullName.value,
     attending: form.attending.value, // RadioNodeList.value returns the checked radio's value
     songSuggest: form.songSuggest ? form.songSuggest.value : '',
-    notes: form.dietaryRestriction.value,
+    // Reads whichever field actually exists in the HTML (dietaryRestriction preferred,
+    // falls back to the old "notes" name) and sends it under the key Code.gs expects.
+    dietaryRestriction: form.dietaryRestriction ? form.dietaryRestriction.value
+                        : (form.notes ? form.notes.value : ''),
     submittedAt: new Date().toISOString()
   };
 
