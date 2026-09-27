@@ -194,26 +194,26 @@ button{
   background:
     radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.05), transparent 60%),
     var(--wine);
-  padding:clamp(56px,10vw,96px) 20px;
+  padding:clamp(66px,5vw,86px) 5px;
   display:flex; align-items:center; justify-content:center;
 }
 
 .lace-frame{
   position:relative;
-  width:min(92vw, 560px);
-  aspect-ratio:900/680;
+  width:min(122vw, 760px);
+  aspect-ratio:1000/880;
   display:flex; align-items:center; justify-content:center;
   padding:clamp(20px,5vw,40px);
   filter:drop-shadow(0 18px 40px rgba(0,0,0,.35));
 }
 @media (min-width:640px){
-  .lace-frame{ width:min(78vw, 760px); }
+  .lace-frame{ width:min(98vw, 860px); } /*width:min(78vw, 760px);*/
 }
 @media (min-width:1024px){
-  .lace-frame{ width:min(56vw, 980px); }
+  .lace-frame{ width:min(76vw, 1080px); } /*width:min(56vw, 980px);*/
 }
 @media (min-width:1440px){
-  .lace-frame{ width:min(46vw, 1120px); }
+  .lace-frame{ width:min(66vw, 1320px); } /*width:min(46vw, 1120px);*/
 }
 
 .lace-frame-img{
