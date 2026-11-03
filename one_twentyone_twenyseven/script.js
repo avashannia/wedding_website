@@ -6,6 +6,7 @@ const CFG = {
   cer: "5:30 PM",
   rec: "7:00 PM", // PLACEHOLDER
   rsvpBy: "[RSVP-by date]", // PLACEHOLDER
+  rsvpUrl: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL", // PLACEHOLDER
   guest: Q.get("to") || "Tita Baby",
   seats: Math.max(1, parseInt(Q.get("seats")) || 2),
   video: { src: "", poster: "" }, // put the prenup video path here, e.g. 'prenup.mp4'
@@ -113,7 +114,7 @@ const DARK = [0, 1, 3, 6];
 function go(i) {
   cur = Math.max(0, Math.min(pages.length - 1, i));
   pages.forEach((p, j) => p.classList.toggle("on", j === cur));
-  if (!manual) document.body.classList.toggle("dark", DARK.includes(cur));
+  if (!manual) document.body.classList.add("dark");
   $("#modal").classList.add("hid");
   $("#pv").style.visibility = cur ? "visible" : "hidden";
   $("#nx").style.display = cur ? "" : "none";
@@ -147,12 +148,6 @@ document.addEventListener("click", (e) => {
     go(+g.dataset.go);
   }
 });
-$("#replay2").onclick = () => {
-  $("#ps").classList.remove("f");
-  $("#boarding").classList.remove("hid");
-  $("#invite").classList.add("hid");
-  go(0);
-};
 
 /* ================= Info modal ================= */
 $("#eWhen").innerHTML =
@@ -191,24 +186,24 @@ $("#modal").onclick = (e) => {
 };
 $("#justD").onclick = () => $("#modal").classList.remove("hid");
 const TH = [
-  ["linen", "#F4EFE6"],
-  ["sage", "#9caf88"],
-  ["rose", "#e6bfb6"],
-  ["navy", "#1d3466"],
+  ["dark", "#1E293B"],
+  ["light", "#F9F6F0"],
 ];
 $("#sw").innerHTML = $("#sw2").innerHTML = TH.map(
   (t) =>
-    `<button data-th="${t[0]}" style="background:${t[1]}" aria-label="${t[0]} theme"></button>`,
+    `<button data-th="${t[0]}" style="background:${t[1]}" aria-label="${t[0]} mode"></button>`,
 ).join("");
 document.addEventListener("click", (e) => {
   const t = e.target.dataset && e.target.dataset.th;
-  if (t) document.documentElement.dataset.t = t;
+  if (!t) return;
+  manual = true;
+  document.body.classList.toggle("dark", t === "dark");
 });
 
 /* ================= Ambient layers: fog, glows, outlined clouds, slow plane, particles ================= */
 {
   const cloud = (i, l) =>
-    `<svg class="cld" viewBox="0 0 160 80" style="top:${6 + i * 13}%;width:${(l ? 200 : 130) + i * 30}px;animation-duration:${(l ? 70 : 110) + i * 14}s;animation-delay:-${i * 19}s;opacity:${l ? 0.95 : 0.6}"><path d="M24 64a20 20 0 0 1 2-40 30 30 0 0 1 56-8 26 26 0 0 1 46 10 22 22 0 0 1 2 38z"/><path class="in" d="M44 52h70"/></svg>`;
+    `<svg class="cld" viewBox="0 0 160 80" style="top:${4 + i * 24}%;width:${(l ? 200 : 130) + i * 30}px;animation-duration:${(l ? 70 : 110) + i * 14}s;animation-delay:-${i * 19}s;opacity:${l ? 0.95 : 0.6}"><path d="M24 64a20 20 0 0 1 2-40 30 30 0 0 1 56-8 26 26 0 0 1 46 10 22 22 0 0 1 2 38z"/><path class="in" d="M44 52h70"/></svg>`;
   $("#bgL").innerHTML =
     [0, 1, 2]
       .map(
@@ -677,7 +672,7 @@ function fwLoop(t) {
       set();
       if (level >= 1 && !fired) {
         fired = true;
-        confetti();
+        fxConfetti();
         sec3.classList.add("ringing");
         setTimeout(() => sec3.classList.remove("ringing"), 2000);
       }
@@ -731,7 +726,7 @@ function fwLoop(t) {
   $("#gcal").href =
     "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Abe+%26+Collyn+Wedding&dates=20270121T093000Z/20270121T150000Z&location=Antipolo+City";
 }
-function confetti() {
+function fxConfetti() {
   for (let i = 0; i < 44; i++) {
     const s = document.createElement("span");
     s.className = "cf";
@@ -828,99 +823,51 @@ $("#fbl").innerHTML = [...Array(120)]
       `<circle cx="${20 + ((i * 47) % 290)}" cy="${30 + ((i * 83) % 170)}" r="${i % 4 ? 0.9 : 1.5}" style="animation-delay:-${i % 6}s"/>`,
   )
   .join("");
-{
-  const J = {
-    "By car": [
-      "car",
-      "Set Waze or Google Maps to the Parish on Hinulugang Taktak Rd., Brgy. Dela Paz, then to the reception at 267 San Jose Ext. St. Allow extra time for Antipolo traffic. Parking: to be confirmed.",
-    ],
-    "By bus": [
-      "bus",
-      "Take a bus or UV Express toward Antipolo, then a tricycle or jeep to Brgy. Dela Paz. Routes and fares: to be confirmed.",
-    ],
-    "By Grab": [
-      "car",
-      "Set your drop-off to the Parish and ask your driver to wait for the reception transfer. Travel time: to be confirmed.",
-    ],
-  };
-  $("#tabs").innerHTML = Object.keys(J)
-    .map(
-      (k) =>
-        `<button class="b o" data-k="${k}"><i data-i="${J[k][0]}"></i>${k}</button>`,
-    )
-    .join("");
-  const show = (k) => {
-    $("#tp").textContent = J[k][1];
-    $$("#tabs .b").forEach((b) => b.classList.toggle("o", b.dataset.k !== k));
-  };
-  $("#tabs").onclick = (e) => {
-    const b = e.target.closest("button");
-    if (b) show(b.dataset.k);
-  };
-  show("By car");
-  $("#lks").innerHTML =
-    `<div><b>Ceremony</b>${mapL(CFG.venues.c).replace('class="mini"', 'class="mini" style="margin:0"')}</div><div><b>Reception</b>${mapL(CFG.venues.r)}</div>`;
-}
-
 /* ================= Ch5 what to wear ================= */
 {
   const SET = {
     g: [
-      ["Deep navy", "#14264f"],
-      ["Navy", "#2a4478"],
-      ["Blue", "#5c78b0"],
-      ["Powder", "#a9bbdf"],
-      ["Pale blue", "#dbe4f4"],
-      ["Gold", "#c9a24b"],
-      ["Cream", "#efe3c8"],
-      ["Light green", "#bcd6b0"],
+      ["Navy 1", "#2D456E"],
+      ["Navy 2", "#3C5B91"],
+      ["Blue 1", "#7590BF"],
+      ["Blue 2", "#ADC6ED"],
+      ["Pale 1", "#D3DFF5"],
+      ["Pale 2", "#EBF1FA"],
     ],
     e: [
-      ["Mother · Ninang", "#b99a6b"],
-      ["Father · Ninong", "#2b2b2b"],
-      ["Bridesmaids", "#d9c3a0"],
-      ["Groomsmen", "#4a4a4a"],
-      ["Gold", "#c9a24b"],
-      ["Cream", "#efe3c8"],
+      ["Ninang", "#D2B89A", "f"],
+      ["Ninong", "#1C1C1C", "m"],
+      ["Bridesmaid", "#E0C8AC", "f"],
+      ["Groomsmen", "#F2E8D5", "m"],
     ],
   };
-  let tab = "g";
-  const pal = SET.g.map((s) => s[1]);
-  const paint = (c) => {
+  let tab = "e";
+  const view = (g) => {
+    $("#suitG").style.opacity = !g || g === "m" ? 1 : 0.15;
+    $("#gownG").style.opacity = !g || g === "f" ? 1 : 0.15;
+  };
+  const paint = (c, g) => {
     $("#jk").style.fill = c;
     $("#dr").style.fill = c;
     $("#pt").style.fill = c;
-    $("#own").value = c;
-    const rgb = c.match(/\w\w/g).map((x) => parseInt(x, 16)),
-      dist = Math.min(
-        ...pal.map((p) => {
-          const q = p.match(/\w\w/g).map((x) => parseInt(x, 16));
-          return Math.hypot(...rgb.map((v, i) => v - q[i]));
-        }),
-      );
-    $("#cnote").textContent =
-      dist > 140
-        ? "That shade is outside our palette. Navy, gold, cream or light green blend best."
-        : "";
+    view(g);
+    $("#cnote").textContent = "";
   };
   const draw = () => {
-    $("#chips").innerHTML =
-      SET[tab]
-        .map(
-          (s) =>
-            `<button class="chip" data-c="${s[1]}"><i style="background:${s[1]}"></i>${s[0]}</button>`,
-        )
-        .join("") +
-      (tab === "e"
-        ? '<p class="sm">Entourage colours are approximate. Confirm against the palette sheet.</p>'
-        : "");
+    $("#chips").innerHTML = SET[tab]
+      .map(
+        (s) =>
+          `<button class="chip" data-c="${s[1]}" data-g="${s[2] || ""}"><i style="background:${s[1]}"></i>${s[0]}</button>`,
+      )
+      .join("");
+    $("#chips .chip").click();
   };
   $("#chips").onclick = (e) => {
     const c = e.target.closest(".chip");
     if (!c) return;
     $$(".chip").forEach((x) => x.classList.remove("on"));
     c.classList.add("on");
-    paint(c.dataset.c);
+    paint(c.dataset.c, c.dataset.g);
   };
   $("#wt").onclick = (e) => {
     const w = e.target.dataset.w;
@@ -929,9 +876,8 @@ $("#fbl").innerHTML = [...Array(120)]
     $$("#wt .b").forEach((b) => b.classList.toggle("o", b.dataset.w !== w));
     draw();
   };
-  $("#own").oninput = (e) => paint(e.target.value);
+  $$("#wt .b").forEach((b) => b.classList.toggle("o", b.dataset.w !== tab));
   draw();
-  paint("#2a4478");
 }
 
 /* ================= Ch6 cast (centered credits) ================= */
@@ -960,12 +906,7 @@ function petals() {
     .join("");
 }
 {
-  let n = Math.min(2, CFG.seats);
-  $("#gc").textContent = n;
   const fs = $("#fs");
-  $("#mn").onclick = () => ($("#gc").textContent = n = Math.max(1, n - 1));
-  $("#pl").onclick = () =>
-    ($("#gc").textContent = n = Math.min(CFG.seats, n + 1));
   $$("#rv [data-a]").forEach(
     (b) =>
       (b.onclick = () => {
@@ -981,11 +922,32 @@ function petals() {
           : "Yay! Save some energy for the dance floor.";
       }),
   );
-  $("#snd").onclick = () => {
-    /* BACKEND: POST the form values here (fetch to your form service) */ $(
-      "#snd",
-    ).classList.add("hid");
-    $("#ok").classList.remove("hid");
+  let att = "y";
+  $$("#rv [data-a]").forEach((b) =>
+    b.addEventListener("click", () => (att = b.dataset.a)),
+  );
+  $("#snd").onclick = async () => {
+    const btn = $("#snd");
+    btn.disabled = true;
+    $("#rerr").classList.add("hid");
+    const body = new URLSearchParams({
+      guest: CFG.guest,
+      attending: att === "y" ? "Yes" : "No",
+      seats: att === "y" ? 1 : 0,
+      diet: $("#diet").value,
+      song: $("#song").value,
+      advice: $("#adv").value,
+    });
+    try {
+      await fetch(CFG.rsvpUrl, { method: "POST", mode: "no-cors", body });
+      btn.classList.add("hid");
+      $("#ok").classList.remove("hid");
+      if (window.confetti)
+        window.confetti({ particleCount: 220, spread: 90, origin: { y: 0.6 } });
+    } catch (err) {
+      btn.disabled = false;
+      $("#rerr").classList.remove("hid");
+    }
   };
 }
 
@@ -1010,7 +972,7 @@ function enterGift() {
 $("#gbox").onclick = () => {
   const g = $("#gbox");
   g.classList.add("re");
-  confetti();
+  fxConfetti();
   setTimeout(() => g.classList.remove("re"), 3200);
 };
 
@@ -1061,28 +1023,6 @@ $("#gbox").onclick = () => {
   };
 }
 
-/* ================= Epilogue lanterns ================= */
-{
-  const sk = $("#sky2");
-  const lan = (x, txt) => {
-    const e = document.createElement("div");
-    e.className = "lan";
-    e.style.cssText = `left:${x}px;animation-duration:${14 + Math.random() * 8}s`;
-    e.innerHTML = `<svg viewBox="0 0 40 56"><path d="M8 10h24l4 36H4zM14 10q6-8 12 0M10 46h20"/></svg>${txt || ""}`;
-    sk.append(e);
-    setTimeout(() => e.remove(), 24000);
-  };
-  setInterval(() => {
-    if (cur === 10) lan(Math.random() * innerWidth);
-  }, 2200);
-  for (let i = 0; i < 4; i++)
-    setTimeout(() => lan(Math.random() * innerWidth), i * 400);
-  sk.onclick = (e) => lan(e.clientX - 22);
-  $("#rel").onclick = () => {
-    lan(innerWidth / 2 - 22, $("#wish").value);
-    $("#wish").value = "";
-  };
-}
 
 icons();
 go(0);
