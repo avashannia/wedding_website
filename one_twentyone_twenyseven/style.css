@@ -1,14 +1,14 @@
 /* ===== Tokens: every theme defines text, muted, surface, border, accents, buttons ===== */
 :root {
-  --bg: #f4efe6;
-  --tx: #1a3322;
-  --mut: #4d5f52;
-  --card: #fbf7ee;
-  --bd: #b8924a;
-  --gd: #b8924a;
-  --gt: #7a5a1c;
-  --ac: #1a3322;
-  --ab: #f4efe6;
+  --bg: #F9F6F0;
+  --tx: #2B3A2E;
+  --mut: #4a5a4c;
+  --card: #fffdf8;
+  --bd: #8A9A86;
+  --gd: #8A9A86;
+  --gt: #5F7461;
+  --ac: #5F7461;
+  --ab: #F9F6F0;
   --cf: #ffffffcc;
   --cs: #8a9a8a;
   --orb: #f0c870;
@@ -62,23 +62,23 @@ html[data-t="navy"] {
   --mapf: hue-rotate(180deg) saturate(0.7) brightness(0.97);
 }
 body.dark {
-  --bg: #0b1b12;
+  --bg: #0F172A;
   --tx: #f8f5ee;
-  --mut: #c9c4b6;
-  --card: #13281c;
-  --bd: #e5c583;
-  --gd: #e5c583;
-  --gt: #e5c583;
-  --ac: #e5c583;
-  --ab: #0b1b12;
-  --cf: #1d3a2acc;
+  --mut: #cfcab9;
+  --card: #1E293B;
+  --bd: #D4AF37;
+  --gd: #E2B857;
+  --gt: #E2B857;
+  --ac: #D4AF37;
+  --ab: #0F172A;
+  --cf: #1E293Bcc;
   --cs: #e5c58399;
   --orb: #ffc94d;
-  --fog: #2a5a3f66;
-  --bdb: #050d08;
-  --bdt: #13281c;
+  --fog: #33466e66;
+  --bdb: #070c18;
+  --bdt: #1E293B;
   --bdc: #e5c583;
-  --mbg: #10261a;
+  --mbg: #12203a;
 }
 html[data-t="navy"] body.dark {
   --bg: #0b1325;
@@ -2250,4 +2250,13 @@ body.dark .mapf iframe {
     animation-duration: 14s !important;
     transition-duration: 0.2s !important;
   }
+}
+
+textarea,
+.form textarea,
+.form input {
+  resize: none;
+}
+.form textarea {
+  height: 84px;
 }
