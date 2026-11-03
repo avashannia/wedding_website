@@ -454,11 +454,6 @@
               </button>
             </div>
           </div>
-          <div class="trav">
-            <div class="row" id="tabs"></div>
-            <p class="tp" id="tp"></p>
-            <div class="lks" id="lks"></div>
-          </div>
         </div>
       </section>
 
@@ -490,14 +485,6 @@
               </div>
             </div>
             <div class="chips" id="chips"></div>
-            <label class="own"
-              >Try your own colour
-              <input
-                type="color"
-                id="own"
-                value="#1d3466"
-                aria-label="Pick a colour"
-            /></label>
             <p class="sm" id="cnote"></p>
           </div>
           <div class="vz">
@@ -512,7 +499,7 @@
                 stroke-width="3"
                 fill="none"
               />
-              <g class="sway">
+              <g class="sway" id="suitG">
                 <path
                   d="M105 22q0-14 10-14"
                   fill="none"
@@ -537,7 +524,7 @@
                 </g>
                 <path d="M105 124v30" stroke="#fff6" />
               </g>
-              <g class="sway s2">
+              <g class="sway s2" id="gownG">
                 <path
                   d="M232 22q0-14 10-14"
                   fill="none"
@@ -601,8 +588,7 @@
               <span>Will you be there, <span data-g>Tita Baby</span>?</span>
             </div>
             <p class="sm c">
-              Kindly reply by <b id="rsvpBy"></b>. We've reserved
-              <b data-s>2</b> seats for you.
+              Kindly reply by <b id="rsvpBy"></b>. One seat is reserved for you.
             </p>
             <div id="rv" class="form">
               <p class="k">Attendance</p>
@@ -619,30 +605,14 @@
                 <path d="M100 1l4 4-4 4-4-4z" />
               </svg>
               <div id="fs">
-                <p class="k">Seats</p>
-                <div class="row">
-                  <button class="rb" id="mn" aria-label="Fewer">
-                    <i data-i="minus"></i></button
-                  ><b id="gc">2</b
-                  ><button class="rb" id="pl" aria-label="More">
-                    <i data-i="plus"></i>
-                  </button>
-                </div>
-                <svg class="dv" viewBox="0 0 200 10">
-                  <path d="M0 5H80M120 5H200" />
-                  <path d="M100 1l4 4-4 4-4-4z" />
-                </svg>
                 <p class="k">Your details</p>
-                <input
-                  placeholder="Allergies or dietary needs"
+                <input id="diet" type="text" placeholder="Allergies or dietary needs"
                   aria-label="Dietary"
-                /><input
-                  placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
+                /><input id="song" type="text" placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
                   aria-label="Song"
                 />
                 <p class="k">Your message</p>
-                <textarea
-                  rows="2"
+                <textarea id="adv" rows="2"
                   placeholder="Advice for the couple (optional)"
                   aria-label="Advice"
                 ></textarea>
@@ -656,7 +626,7 @@
                   <path d="M14 26l8 8 15-17" /></svg
                 ><span>Thank you. Your RSVP is sealed and sent.</span>
               </div>
-              <p class="k c">Demo only · connect a form backend in script.js</p>
+              <p class="sm c hid" id="rerr">Could not send. Please check your connection and try again.</p>
             </div>
             <div id="petals"></div>
           </div>
@@ -746,29 +716,6 @@
           </div>
         </div>
       </section>
-
-      <!-- EPILOGUE -->
-      <section class="pg" data-n="Forever day" data-l="Epilogue" id="epi">
-        <div class="sky2" id="sky2"></div>
-        <div class="epc">
-          <p class="k">Epilogue</p>
-          <h2>See you on forever day</h2>
-          <p>Abe &amp; Collyn · 21.01.2027 · Antipolo</p>
-          <p class="sm">Tap the sky to light a lantern, or send a wish up.</p>
-          <div class="row">
-            <input
-              id="wish"
-              placeholder="Your wish"
-              maxlength="40"
-              style="max-width: 220px"
-              aria-label="Your wish"
-            /><button class="b" id="rel">Release</button>
-          </div>
-          <button class="b o" id="replay2">
-            <i data-i="redo"></i>Replay our story
-          </button>
-        </div>
-      </section>
     </main>
     <footer id="bot">
       <button class="t" id="pv" aria-label="Previous">
@@ -776,6 +723,7 @@
       ><small class="hint">Use <kbd>←</kbd> <kbd>→</kbd> to turn the page</small
       ><button class="b" id="nx">Next stop<i data-i="ar"></i></button>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
