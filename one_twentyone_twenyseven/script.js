@@ -334,18 +334,18 @@ const mk = (s) => () => {
 };
 /* Story stops (percent of map). Order = page order. */
 const TAGS = [
-  ["Invitation ticket", 10, 18],
-  ["Proposal", 33, 16],
-  ["Prenup shot", 50, 24],
-  ["Wedding day", 72, 12],
-  ["Timeline and map", 60, 38],
-  ["Dress code", 85, 52],
-  ["Entourage", 92, 74],
-  ["Gift", 11, 54],
-  ["Question", 19, 76],
-  ["RSVP", 25, 36],
+  ["Invitation ticket", 10, 25],
+  ["Proposal", 30, 20],
+  ["Prenup shot", 50, 25],
+  ["Wedding day", 70, 20],
+  ["Timeline and map", 85, 36],
+  ["Dress code", 88, 55],
+  ["Entourage", 74, 71],
+  ["Gift", 54, 77],
+  ["Question", 34, 72],
+  ["RSVP", 14, 62],
 ];
-const BENDS = { 6: -230, 7: 0.1, 4: -0.2 };
+const BENDS = {};
 function lineD(ang, off, ext = 1400) {
   const dx = Math.cos(ang),
     dy = Math.sin(ang),
@@ -394,10 +394,10 @@ function buildBg() {
 function gen() {
   lights = [];
   const R = mk((Math.random() * 1e6) | 0),
-    cap = innerWidth < 760 ? 1200 : 2500,
+    cap = innerWidth < 760 ? 800 : 1500,
     lamps = [],
     wins = [],
-    riv = (x, y) => x > 600 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 90;
+    riv = () => false;
   SEGS.forEach((s) => {
     const L = Math.hypot(s[2] - s[0], s[3] - s[1]),
       n = Math.max(1, Math.round(L / [13, 19, 30][s[4]])),
@@ -423,8 +423,10 @@ function gen() {
     for (let k = 0; k < 3; k++)
       if (R() < 0.75) wins.push({ x: b[0] + (R() - 0.5) * 30, y: b[1] + (R() - 0.5) * 26, r: R() * 0.7 + 0.6, p: R() * 6 });
   });
-  const kl = Math.min(1, (cap * 0.72) / lamps.length),
-    kw = Math.min(1, (cap * 0.28) / Math.max(1, wins.length));
+  const kl = Math.min(1, (cap * 0.5) / lamps.length),
+    kw = Math.min(1, (cap * 0.1) / Math.max(1, wins.length));
+  for (let k = 0; k < cap * 0.4; k++)
+    lights.push({ x: R() * 1000, y: R() * 560, r: R() * 0.8 + 0.5, p: R() * 6 });
   lamps.forEach((l) => R() < kl && l.x > -5 && l.x < 1005 && l.y > -5 && l.y < 565 && lights.push(l));
   wins.forEach((l) => R() < kw && l.x > 0 && l.x < 1000 && l.y > 0 && l.y < 560 && lights.push(l));
 }
@@ -432,11 +434,12 @@ function paintLights(t) {
   const el = (t - lt0) / 1000;
   cc.clearRect(0, 0, 2000, 1120);
   const dk = document.body.classList.contains("dark");
+  cl.style.opacity = dk ? 1 : 0;
   cc.globalCompositeOperation = dk ? "lighter" : "source-over";
   for (const l of lights) {
     const w = introMode ? Math.max(0, Math.min(1, (el * 230 - l.x) / 220)) : 1;
     if (!w) continue;
-    cc.globalAlpha = w * (dk ? 0.3 : 0.55) * (1 + (dk ? 2.3 : 0.8) * Math.sin(t / 500 + l.p) ** 2);
+    cc.globalAlpha = w * (dk ? 0.22 : 0.55) * (1 + (dk ? 2.3 : 0.8) * Math.sin(t / 500 + l.p) ** 2);
     cc.fillStyle = dk ? (l.r > 1.4 ? "#fff3c4" : "#E5C583") : l.r > 1.4 ? "#d98a12" : l.p > 3 ? "#2f5a3a" : "#e0a030";
     cc.beginPath();
     cc.arc(l.x * 2, l.y * 2, l.r * 2.1, 0, 7);
@@ -463,7 +466,7 @@ buildBg = function () {
       { o: [560, 20], a: -0.1, s: [90, 70], i: [-7, 7], j: [-3, 5] },
     ],
     rvD = "M690 -20Q810 70 1040 120L1040 280Q840 220 600 60Z",
-    riv = (x, y) => x > 590 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 98,
+    riv = () => false,
     Wd = [11, 7, 4],
     cls = (n) => (n % 6 === 0 ? 0 : n % 3 === 0 ? 1 : 2),
     rd = ["", "", ""],
@@ -546,7 +549,7 @@ buildBg = function () {
   bg.insertAdjacentHTML(
     "beforeend",
     `<g id="top">${hw("hw1", H1)}${hw("hw2", H2)}<g clip-path="url(#rvclip)"><path class="brg" d="${H1}"/><path class="brr" d="${H1}"/></g>${tf}
-    <g class="cmp" transform="translate(500 522)"><circle r="21"/><path d="M0-17L5 0H-5zM0 17L5 0H-5z" class="cmn"/><text y="-26" text-anchor="middle">N</text></g></g>`,
+    <g class="cmp" transform="translate(945 52)"><circle r="21"/><path d="M0-17L5 0H-5zM0 17L5 0H-5z" class="cmn"/><text y="-26" text-anchor="middle">N</text></g></g>`,
   );
 };
 function buildTags(intro) {
