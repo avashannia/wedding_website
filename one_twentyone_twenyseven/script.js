@@ -408,7 +408,11 @@ function buildBg() {
     "M-60 330Q300 210 540 300T1060 420",
   ];
   ROADS = [];
-  (mains.join("") + side).replace(/M(-?\d+) (-?\d+)L(-?\d+) (-?\d+)/g, (m, a, b, c2, d) => ROADS.push([+a, +b, +c2, +d, mains.join("").includes(m) ? 1 : 0]));
+  (mains.join("") + side).replace(
+    /M(-?\d+) (-?\d+)L(-?\d+) (-?\d+)/g,
+    (m, a, b, c2, d) =>
+      ROADS.push([+a, +b, +c2, +d, mains.join("").includes(m) ? 1 : 0]),
+  );
   const iso = (x, y, w, h) =>
     `<g class="bd2"><polygon points="${x},${y} ${x + w},${y - w / 2} ${x + 2 * w},${y} ${x + w},${y + w / 2}"/><polygon points="${x},${y} ${x + w},${y + w / 2} ${x + w},${y + w / 2 + h} ${x},${y + h}"/><polygon points="${x + 2 * w},${y} ${x + w},${y + w / 2} ${x + w},${y + w / 2 + h} ${x + 2 * w},${y + h}"/></g>`;
   const comets = mains
@@ -441,7 +445,12 @@ function gen() {
     for (let k = 0; k < n; k++) {
       const t = (k + 0.5) / n,
         o = (k % 2 ? 1 : -1) * [4.5, 3.5, 2.5][s[4]];
-      lamps.push({ x: s[0] + (s[2] - s[0]) * t + nx * o, y: s[1] + (s[3] - s[1]) * t + ny * o, r: s[4] ? 0.9 : 1.2, p: R() * 6 });
+      lamps.push({
+        x: s[0] + (s[2] - s[0]) * t + nx * o,
+        y: s[1] + (s[3] - s[1]) * t + ny * o,
+        r: s[4] ? 0.9 : 1.2,
+        p: R() * 6,
+      });
     }
     if (R() < 0.5) lamps.push({ x: s[0], y: s[1], r: 1.7, p: R() * 6 });
   });
@@ -451,19 +460,47 @@ function gen() {
     const L = p.getTotalLength();
     for (let d = 0, k = 0; d < L; d += 11, k++) {
       const q = p.getPointAtLength(d);
-      if (!riv(q.x, q.y)) lamps.push({ x: q.x + (k % 2 ? 9 : -9), y: q.y, r: 1.5, p: R() * 6 });
+      if (!riv(q.x, q.y))
+        lamps.push({ x: q.x + (k % 2 ? 9 : -9), y: q.y, r: 1.5, p: R() * 6 });
     }
   });
   BLKS.forEach((b) => {
     for (let k = 0; k < 3; k++)
-      if (R() < 0.75) wins.push({ x: b[0] + (R() - 0.5) * 30, y: b[1] + (R() - 0.5) * 26, r: R() * 0.7 + 0.6, p: R() * 6 });
+      if (R() < 0.75)
+        wins.push({
+          x: b[0] + (R() - 0.5) * 30,
+          y: b[1] + (R() - 0.5) * 26,
+          r: R() * 0.7 + 0.6,
+          p: R() * 6,
+        });
   });
   const kl = Math.min(1, (cap * 0.5) / lamps.length),
     kw = Math.min(1, (cap * 0.1) / Math.max(1, wins.length));
   for (let k = 0; k < cap * 0.4; k++)
-    lights.push({ x: R() * 1000, y: R() * 560, r: R() * 0.8 + 0.5, p: R() * 6 });
-  lamps.forEach((l) => R() < kl && l.x > -5 && l.x < 1005 && l.y > -5 && l.y < 565 && lights.push(l));
-  wins.forEach((l) => R() < kw && l.x > 0 && l.x < 1000 && l.y > 0 && l.y < 560 && lights.push(l));
+    lights.push({
+      x: R() * 1000,
+      y: R() * 560,
+      r: R() * 0.8 + 0.5,
+      p: R() * 6,
+    });
+  lamps.forEach(
+    (l) =>
+      R() < kl &&
+      l.x > -5 &&
+      l.x < 1005 &&
+      l.y > -5 &&
+      l.y < 565 &&
+      lights.push(l),
+  );
+  wins.forEach(
+    (l) =>
+      R() < kw &&
+      l.x > 0 &&
+      l.x < 1000 &&
+      l.y > 0 &&
+      l.y < 560 &&
+      lights.push(l),
+  );
 }
 function paintLights(t) {
   const el = (t - lt0) / 1000;
@@ -474,8 +511,19 @@ function paintLights(t) {
   for (const l of lights) {
     const w = introMode ? Math.max(0, Math.min(1, (el * 230 - l.x) / 220)) : 1;
     if (!w) continue;
-    cc.globalAlpha = w * (dk ? 0.22 : 0.55) * (1 + (dk ? 2.3 : 0.8) * Math.sin(t / 500 + l.p) ** 2);
-    cc.fillStyle = dk ? (l.r > 1.4 ? "#fff3c4" : "#E5C583") : l.r > 1.4 ? "#d98a12" : l.p > 3 ? "#2f5a3a" : "#e0a030";
+    cc.globalAlpha =
+      w *
+      (dk ? 0.22 : 0.55) *
+      (1 + (dk ? 2.3 : 0.8) * Math.sin(t / 500 + l.p) ** 2);
+    cc.fillStyle = dk
+      ? l.r > 1.4
+        ? "#fff3c4"
+        : "#E5C583"
+      : l.r > 1.4
+        ? "#d98a12"
+        : l.p > 3
+          ? "#2f5a3a"
+          : "#e0a030";
     cc.beginPath();
     cc.arc(l.x * 2, l.y * 2, l.r * 2.1, 0, 7);
     cc.fill();
@@ -511,10 +559,16 @@ buildBg = function () {
   SEGS = [];
   BLKS = [];
   const seg = (p, q, k) => {
-    const key = [p.map((v) => v.toFixed(1)).join(), q.map((v) => v.toFixed(1)).join()].sort().join("|");
+    const key = [
+      p.map((v) => v.toFixed(1)).join(),
+      q.map((v) => v.toFixed(1)).join(),
+    ]
+      .sort()
+      .join("|");
     if (seen.has(key)) return;
     seen.add(key);
-    rd[k] += `M${p[0].toFixed(1)} ${p[1].toFixed(1)}L${q[0].toFixed(1)} ${q[1].toFixed(1)}`;
+    rd[k] +=
+      `M${p[0].toFixed(1)} ${p[1].toFixed(1)}L${q[0].toFixed(1)} ${q[1].toFixed(1)}`;
     SEGS.push([p[0], p[1], q[0], q[1], k]);
   };
   D.forEach((d, di) => {
@@ -532,7 +586,12 @@ buildBg = function () {
           if (q < bv) ((bv = q), (best = k));
         });
         if (best !== di) continue;
-        if (riv(c[0], c[1]) || Math.hypot(c[0] - 640, c[1] - 310) < 48 || Math.hypot(c[0] - 500, c[1] - 388) < 44) continue;
+        if (
+          riv(c[0], c[1]) ||
+          Math.hypot(c[0] - 640, c[1] - 310) < 48 ||
+          Math.hypot(c[0] - 500, c[1] - 388) < 44
+        )
+          continue;
         const s0 = d.s[0],
           s1 = d.s[1],
           p00 = T(i * s0, j * s1),
@@ -547,7 +606,10 @@ buildBg = function () {
           u1 = (i + 1) * s0 - Wd[cls(i + 1)] / 2 - 1,
           v0 = j * s1 + Wd[cls(j)] / 2 + 1,
           v1 = (j + 1) * s1 - Wd[cls(j + 1)] / 2 - 1,
-          P = (u, v) => T(u, v).map((x) => x.toFixed(1)).join(" ");
+          P = (u, v) =>
+            T(u, v)
+              .map((x) => x.toFixed(1))
+              .join(" ");
         bl += `M${P(u0, v0)}L${P(u1, v0)}L${P(u1, v1)}L${P(u0, v1)}Z`;
         if (d.dn) {
           BLKS.push(c);
@@ -559,7 +621,8 @@ buildBg = function () {
                 y0 = v0 + b2 * h + 2 + R() * 3,
                 x1 = u0 + (a2 + 1) * w - 2 - R() * 3,
                 y1 = v0 + (b2 + 1) * h - 2 - R() * 3;
-              if (x1 > x0 + 2 && y1 > y0 + 2) bd += `M${P(x0, y0)}L${P(x1, y0)}L${P(x1, y1)}L${P(x0, y1)}Z`;
+              if (x1 > x0 + 2 && y1 > y0 + 2)
+                bd += `M${P(x0, y0)}L${P(x1, y0)}L${P(x1, y1)}L${P(x0, y1)}Z`;
             }
         } else if (R() < 0.5) {
           BLKS.push(c);
@@ -575,9 +638,13 @@ buildBg = function () {
   bg.querySelector("rect.gd").insertAdjacentHTML("afterend", net);
   const H1 = "M-60 480C200 440 380 340 560 250S820 70 1060 -30",
     H2 = "M-60 330Q300 210 540 300T1060 420",
-    hw = (id, d) => `<path class="hwo" d="${d}"/><path id="${id}" class="hwf" d="${d}"/><path class="hwc" d="${d}"/>`;
+    hw = (id, d) =>
+      `<path class="hwo" d="${d}"/><path id="${id}" class="hwf" d="${d}"/><path class="hwc" d="${d}"/>`;
   let tf = "";
-  [["hw1", 22], ["hw2", 28]].forEach((h) => {
+  [
+    ["hw1", 22],
+    ["hw2", 28],
+  ].forEach((h) => {
     for (let k = 0; k < 4; k++)
       tf += `<circle class="tf" r="2.3"><animateMotion dur="${h[1] + k * 3}s" begin="-${k * 6.5}s" repeatCount="indefinite"><mpath href="#${h[0]}"/></animateMotion></circle>`;
   });
@@ -684,7 +751,10 @@ function fit(anim, focus) {
   apply(anim);
 }
 function zoomAt(f, px, py, anim) {
-  const k2 = Math.max(Math.max(innerWidth / 1000, innerHeight / 560), Math.min(3.5, view.k * f));
+  const k2 = Math.max(
+    Math.max(innerWidth / 1000, innerHeight / 560),
+    Math.min(3.5, view.k * f),
+  );
   view.x = px - ((px - view.x) * k2) / view.k;
   view.y = py - ((py - view.y) * k2) / view.k;
   view.k = k2;
@@ -1136,7 +1206,13 @@ $("#rows").innerHTML = P.map(
 function sizeBoard() {
   const r = $("#rows");
   if (!r || !r.clientWidth) return;
-  const tw = Math.max(6, Math.min(34, Math.floor((r.clientWidth - 17 - 6) / (Math.max(...WD) + 0.6))));
+  const tw = Math.max(
+    6,
+    Math.min(
+      34,
+      Math.floor((r.clientWidth - 17 - 6) / (Math.max(...WD) + 0.6)),
+    ),
+  );
   r.style.setProperty("--tw", tw + "px");
 }
 new ResizeObserver(sizeBoard).observe($("#rows"));
@@ -1294,9 +1370,11 @@ function petals() {
     if (cl($("#nm").value, 80).length < 2) o.nm = "Please enter your name";
     if (!att) o.att = "Please choose one";
     if (att === "y") {
-      if (!cl($("#diet").value, 300)) o.diet = "Please share dietary needs, or tap None";
+      if (!cl($("#diet").value, 300))
+        o.diet = "Please share dietary needs, or tap None";
       if (!cl($("#song").value, 300)) o.song = "Please share one song";
-      if (!cl($("#adv").value, 300)) o.adv = "Please share some advice, or tap No suggestion";
+      if (!cl($("#adv").value, 300))
+        o.adv = "Please share some advice, or tap No suggestion";
     }
     return o;
   };
@@ -1324,7 +1402,9 @@ function petals() {
         $$("#rv [data-a]").forEach((x) => x.classList.toggle("o", x !== b));
         fs.classList.toggle("off", no);
         fs.setAttribute("aria-disabled", no);
-        $$("#fs input,#fs textarea,#fs .chipq").forEach((el) => (el.disabled = no));
+        $$("#fs input,#fs textarea,#fs .chipq").forEach(
+          (el) => (el.disabled = no),
+        );
         $("#resp").textContent = no
           ? "We'll miss you, and we're grateful you told us. Just send your reply below."
           : "Yay! Save some energy for the dance floor.";
@@ -1338,7 +1418,9 @@ function petals() {
         upd();
       }),
   );
-  $$("#rv input,#rv textarea").forEach((el) => el.addEventListener("input", upd));
+  $$("#rv input,#rv textarea").forEach((el) =>
+    el.addEventListener("input", upd),
+  );
   $("#rv").addEventListener("keydown", (e) => {
     if (e.key === "Enter" && e.target.tagName === "INPUT") {
       e.preventDefault();
