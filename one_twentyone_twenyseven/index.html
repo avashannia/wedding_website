@@ -50,46 +50,33 @@
           <dt>RSVP</dt>
           <dd>
             By <span id="eRsvp"></span> ·
-            <a href="#" data-go="7" class="ln">Reply now</a>
+            <a href="#" data-go="9" class="ln">Reply now</a>
           </dd>
         </dl>
         <p class="k">Jump to</p>
         <div class="jg" id="jg"></div>
-        <p class="k">Find your table</p>
-        <div class="find">
-          <input id="tb" aria-label="Your name" /><button class="p" id="tf">
-            Find
-          </button>
-        </div>
-        <p id="tr" class="sm"></p>
-        <button class="disc" id="chartT">
-          <i class="tri"></i>See the full seating chart
-        </button>
-        <ul id="chart" class="hid sm">
-          <li>Tita Baby &amp; guest: <b>Table 4</b></li>
-          <li>Family: <b>Table 1</b></li>
-          <li>Entourage: <b>Table 2</b></li>
-          <li class="k">Sample data only</li>
-        </ul>
         <p class="k">Theme</p>
         <div class="swr" id="sw2"></div>
       </div>
     </div>
 
     <div id="rm" class="hid" aria-label="Map">
-      <canvas id="cl"></canvas>
+      <div id="rmw">
+        <svg id="rmbg" viewBox="0 0 1000 560"></svg
+        ><canvas id="cl" width="2000" height="1120"></canvas
+        ><svg id="rmsv" viewBox="0 0 1000 560"></svg>
+      </div>
       <div class="rmh">
         <h2>The road to forever</h2>
-        <p class="k" id="rmk"></p>
+        <p class="k" id="rmk">Abe &amp; Collyn · ten stops</p>
       </div>
-      <svg
-        id="rmsv"
-        viewBox="0 0 1000 560"
-        preserveAspectRatio="xMidYMid meet"
-      ></svg>
-      <button class="p rmx" id="rmX">
-        <i data-i="close"></i><span id="rmXt">Close</span></button
-      ><button class="p rmx sk hid" id="skip">Skip</button>
+      <div class="rmc">
+        <button class="p" id="rmFit">Fit</button
+        ><button class="p" id="rmIn">Zoom in</button
+        ><button class="p" id="rmX">
+          <i data-i="close"></i><span>Close</span></button
+        ><button class="p hid" id="skip">Skip</button>
+      </div>
     </div>
     <div id="sw" aria-label="Colour theme"></div>
 
@@ -103,43 +90,151 @@
       >
         <div id="boarding">
           <p class="k pulse">Tap your boarding pass</p>
-          <div
-            class="pass"
-            id="ps"
-            role="button"
-            tabindex="0"
-            aria-label="Open your boarding pass"
-          >
-            <div class="m">
-              <small>PASSENGER</small><b data-g>Tita Baby</b>
-              <div class="route">
-                <span><small>FROM</small><b>MNL</b></span
-                ><svg class="rt" viewBox="0 0 120 20">
-                  <path d="M2 10H118" stroke-dasharray="3 4" />
-                  <g class="pf">
-                    <path
-                      d="M0 0L-8 4 -6 0 -8 -4z"
-                      transform="translate(8 10) scale(1.4)"
-                    />
-                  </g></svg
-                ><span><small>TO</small><b>ANTIPOLO</b></span>
+          <div class="bpw">
+            <div
+              class="bp"
+              id="ps"
+              role="button"
+              tabindex="0"
+              aria-label="Open your boarding pass"
+            >
+              <div class="bps">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" />
+                  <ellipse cx="12" cy="12" rx="4" ry="9" />
+                  <path d="M3 12h18M5 7.5h14M5 16.5h14" />
+                </svg>
+                <span>A JOYFUL INVITATION</span>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 21V11l9-6 9 6v10zM12 5V1M10 2.5h4M9.5 21v-5.5a2.5 2.5 0 015 0V21"
+                  />
+                </svg>
               </div>
-              <small
-                >FLIGHT AC 2027 · 21 JANUARY 2027 · <span data-s>2</span> SEATS
-                RESERVED</small
-              >
-            </div>
-            <div class="s">
-              <svg viewBox="0 0 90 90" aria-hidden="true">
-                <g fill="none" stroke="#E5C583" stroke-width="1.5">
-                  <path d="M12 84V46l33-26 33 26v38z" />
-                  <path d="M45 20V6M39 12h12" />
-                  <path d="M33 84V62a12 12 0 0124 0v22" />
-                  <circle cx="45" cy="42" r="5" />
-                  <path d="M4 84h82" />
-                </g></svg
-              ><svg id="bar" viewBox="0 0 90 16"></svg
-              ><span class="stamp">AC 2027</span>
+              <div class="bpm">
+                <h2 class="bpn" data-g>Tita Baby</h2>
+                <p class="bpg"><small>GUEST</small><b data-g>Tita Baby</b></p>
+                <p class="bpf">
+                  <small>FROM:</small><b>Your Home</b><i>(Your home address)</i>
+                </p>
+                <svg class="bpr" viewBox="0 0 400 110" aria-hidden="true">
+                  <g class="ik">
+                    <path d="M6 60l22-21 22 21v28H6z" />
+                    <path
+                      class="hrt"
+                      d="M28 78c-9-5-11-13-5-15 3-1 5 1 5 3 0-2 2-4 5-3 6 2 4 10-5 15z"
+                    />
+                  </g>
+                  <g class="chn ik">
+                    <ellipse cx="68" cy="64" rx="10" ry="5.5" />
+                    <ellipse cx="86" cy="64" rx="7" ry="4" />
+                    <ellipse cx="104" cy="64" rx="10" ry="5.5" />
+                    <ellipse cx="122" cy="64" rx="7" ry="4" />
+                    <ellipse cx="206" cy="64" rx="7" ry="4" />
+                    <ellipse cx="224" cy="64" rx="10" ry="5.5" />
+                    <ellipse cx="242" cy="64" rx="7" ry="4" />
+                    <circle class="rg" cx="152" cy="64" r="14" />
+                    <circle class="rg" cx="176" cy="64" r="14" />
+                    <path
+                      class="gl3"
+                      d="M164 40l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"
+                    />
+                  </g>
+                  <g class="ik"><path d="M258 64h22M272 55l10 9-10 9" /></g>
+                  <g class="ik" transform="translate(296 6)">
+                    <path d="M2 98V52l36-27 36 27v46z" />
+                    <path d="M38 25V6M31 13h14" />
+                    <path d="M28 98V74a10 10 0 0120 0v24" />
+                    <path
+                      class="ht"
+                      d="M8 62h16M8 70h16M8 78h16M8 86h16M52 62h16M52 70h16M52 78h16M52 86h16M30 44h16M30 38h16"
+                    />
+                  </g>
+                </svg>
+                <p class="bpc">to the wedding</p>
+                <p class="bpp">
+                  <small>PASSENGER</small><b data-g>Tita Baby</b>
+                </p>
+                <table class="bpt">
+                  <tr>
+                    <th>1. DATE</th>
+                    <th>2. TIME</th>
+                    <th>3. FLIGHT</th>
+                    <th>4. SEAT</th>
+                  </tr>
+                  <tr>
+                    <td>21 JANUARY 2027</td>
+                    <td class="tm" data-t="cer"></td>
+                    <td>AC 2027</td>
+                    <td id="seatv">1 SEAT RESERVED</td>
+                  </tr>
+                </table>
+                <p class="bpl">
+                  A CELEBRATION OF LOVE
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="15" r="6" />
+                    <path d="M8 5l2-3h4l2 3-4 4z" />
+                  </svg>
+                </p>
+                <svg class="bpst" viewBox="0 0 100 100" aria-hidden="true">
+                  <defs>
+                    <path
+                      id="stc"
+                      d="M50 50m-34 0a34 34 0 1 1 68 0a34 34 0 1 1-68 0"
+                    />
+                  </defs>
+                  <circle cx="50" cy="50" r="47" />
+                  <circle cx="50" cy="50" r="41" />
+                  <text>
+                    <textPath href="#stc">
+                      CELEBRATION OF LOVE · AC 2027 ·
+                    </textPath>
+                  </text>
+                  <path
+                    class="hf"
+                    d="M50 66c-10-6-13-14-7-17 3-1 6 1 7 4 1-3 4-5 7-4 6 3 3 11-7 17z"
+                  />
+                  <path class="hf" d="M50 30v14M44 35h12" />
+                </svg>
+              </div>
+              <div class="bpz">
+                <div class="bpb">
+                  <span>TAP YOUR BOARDING PASS</span
+                  ><svg viewBox="0 0 24 24">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4z" />
+                  </svg>
+                </div>
+                <div class="bpj">
+                  <svg class="bpci" viewBox="0 0 60 50">
+                    <path
+                      d="M6 48V26l24-18 24 18v22zM30 8V1M26 4h8M22 48V36a8 8 0 0116 0v12"
+                    />
+                  </svg>
+                  <p>
+                    <small>FROM:</small><b>Your Home</b
+                    ><i>(Your home address)</i>
+                  </p>
+                  <p>
+                    <small>TO:</small><b>Antipolo, Rizal</b
+                    ><i>Parish of the Immaculate Heart of Mary</i>
+                  </p>
+                  <p class="bpd">
+                    DATE: 21 JANUARY 2027<br />SEAT:
+                    <span id="seatv2">1 SEAT RESERVED</span><br />FLIGHT: AC
+                    2027
+                  </p>
+                  <svg class="bpov" viewBox="0 0 80 34">
+                    <ellipse cx="40" cy="17" rx="37" ry="14" />
+                    <text x="40" y="21" text-anchor="middle">AC 2027</text>
+                  </svg>
+                  <svg
+                    id="bar"
+                    viewBox="0 0 90 16"
+                    preserveAspectRatio="none"
+                  ></svg>
+                  <small class="bcn" id="bcn">TITA BABY AC 2027</small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -167,7 +262,7 @@
             <svg
               id="pro"
               viewBox="0 0 420 380"
-              aria-label="Two people at sunset with a ring in front of a chapel"
+              aria-label="A boy and a girl on a rooftop at sunset; the boy holds up a shining ring"
             >
               <g class="stars2">
                 <circle cx="40" cy="30" r="1.5" />
@@ -176,70 +271,245 @@
                 <circle cx="380" cy="90" r="1.2" />
                 <circle cx="250" cy="25" r="1.3" />
               </g>
-              <circle class="sglow" cx="210" cy="285" r="120" />
-              <circle class="sun" cx="210" cy="285" r="48" />
+              <circle class="sglow" cx="210" cy="262" r="130" />
+              <circle class="sun" cx="210" cy="262" r="50" />
               <g class="bird"><path d="M0 0q6-8 12 0q6-8 12 0" /></g>
               <g class="bird b2"><path d="M0 0q5-6 10 0q5-6 10 0" /></g>
-              <rect x="0" y="300" width="420" height="80" fill="#24142f" />
-              <polygon class="shd" points="60,300 175,300 340,322 225,322" />
-              <polygon class="shd" points="265,300 285,300 330,326 312,326" />
+              <g fill="#2c1a45" opacity=".9">
+                <rect x="0" y="236" width="46" height="144" />
+                <rect x="50" y="268" width="40" height="112" />
+                <rect x="92" y="300" width="28" height="80" />
+                <rect x="326" y="246" width="50" height="134" />
+                <rect x="380" y="284" width="40" height="96" />
+              </g>
+              <polygon class="shd" points="120,380 306,380 420,380 420,360" />
               <g fill="#1b1230">
-                <rect x="62" y="190" width="112" height="110" />
-                <polygon points="52,190 118,130 184,190" />
-                <rect x="108" y="96" width="20" height="40" />
+                <rect x="120" y="205" width="186" height="175" />
+                <rect x="112" y="198" width="202" height="10" />
+                <rect x="266" y="176" width="26" height="22" />
                 <path
-                  d="M118 70v28M110 80h16"
+                  d="M146 198v-34M141 174h10"
                   stroke="#1b1230"
                   stroke-width="3"
                 />
-                <path d="M104 300v-34a14 14 0 0128 0v34z" fill="#3a2410" />
               </g>
               <g class="win">
-                <rect x="76" y="212" width="14" height="22" rx="7" />
-                <rect x="146" y="212" width="14" height="22" rx="7" />
-                <circle cx="118" cy="162" r="7" />
+                <rect
+                  x="134"
+                  y="222"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="194"
+                  y="222"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="224"
+                  y="222"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="254"
+                  y="222"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="284"
+                  y="222"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="134"
+                  y="250"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="194"
+                  y="250"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="224"
+                  y="250"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="254"
+                  y="250"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="284"
+                  y="250"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="134"
+                  y="278"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="194"
+                  y="278"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="224"
+                  y="278"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="254"
+                  y="278"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="284"
+                  y="278"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="134"
+                  y="306"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="194"
+                  y="306"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="224"
+                  y="306"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="254"
+                  y="306"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="284"
+                  y="306"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="134"
+                  y="334"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="194"
+                  y="334"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
+                <rect
+                  x="224"
+                  y="334"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -1.7s"
+                />
+                <rect
+                  x="254"
+                  y="334"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -2.7s"
+                />
+                <rect
+                  x="284"
+                  y="334"
+                  width="12"
+                  height="14"
+                  style="animation-delay: -0.7s"
+                />
               </g>
               <g class="ppl">
                 <g class="br">
-                  <circle cx="262" cy="236" r="10" fill="#1b1230" />
-                  <path d="M250 300v-48q12-14 24 0v48z" fill="#1b1230" />
+                  <circle cx="192" cy="152" r="10" fill="#1b1230" />
+                  <path d="M180 198v-40q12-12 24 0v40z" fill="#1b1230" />
                   <path
-                    d="M272 258l26 4"
+                    d="M200 164L222 130"
                     stroke="#1b1230"
                     stroke-width="5"
                     stroke-linecap="round"
                   />
-                  <rect
-                    x="296"
-                    y="258"
-                    width="12"
-                    height="9"
-                    rx="2"
-                    fill="#E5C583"
-                  />
-                  <g class="ring">
-                    <circle
-                      cx="302"
-                      cy="252"
-                      r="4.5"
-                      fill="none"
-                      stroke="#fff3c4"
-                      stroke-width="2"
-                    />
+                </g>
+                <g class="ring">
+                  <circle class="flare" cx="224" cy="118" r="20" />
+                  <g class="rays2">
                     <path
-                      class="gl2"
-                      d="M302 238l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"
+                      d="M224 118m0-34v-10M224 118m0 34v10M224 118m-34 0h-10M224 118m34 0h10M224 118m-24-24l-7-7M224 118m24-24l7-7M224 118m-24 24l-7 7M224 118m24 24l7 7"
                     />
                   </g>
+                  <circle
+                    cx="224"
+                    cy="118"
+                    r="7"
+                    fill="none"
+                    stroke="#fff3c4"
+                    stroke-width="2.5"
+                  />
+                  <path d="M219 108l5-7 5 7-5 6z" fill="#fff" />
+                  <path
+                    class="gl2"
+                    d="M224 88l4 26 26 4-26 4-4 26-4-26-26-4 26-4z"
+                  />
                 </g>
                 <g class="br b3">
-                  <circle cx="330" cy="234" r="10" fill="#1b1230" />
+                  <circle cx="240" cy="154" r="10" fill="#1b1230" />
                   <path
                     class="hair"
-                    d="M322 230q-12 6-8 22q8-8 8-22z"
+                    d="M232 150q-14 8-9 26q9-9 9-26z"
                     fill="#1b1230"
                   />
-                  <path d="M318 252q12-12 24 0l12 48h-48z" fill="#1b1230" />
+                  <path d="M226 198l6-40q8-8 16 0l6 40z" fill="#1b1230" />
                 </g>
               </g>
             </svg>
@@ -275,43 +545,242 @@
             </div>
           </div>
           <div class="vz">
-            <div class="vid" id="vid">
-              <video id="vd" playsinline preload="none"></video>
-              <div class="vph" id="vph">
-                <svg viewBox="0 0 120 80">
-                  <rect
-                    x="2"
-                    y="2"
-                    width="116"
-                    height="76"
-                    rx="6"
-                    fill="none"
+            <div class="cam" id="cam">
+              <svg
+                viewBox="0 0 520 400"
+                role="img"
+                aria-label="Camera that plays the prenup video on its screen"
+              >
+                <defs>
+                  <pattern
+                    id="tx"
+                    width="6"
+                    height="6"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <circle cx="1.5" cy="1.5" r="1" fill="#26272a" />
+                    <circle cx="4.5" cy="4.5" r="1" fill="#74777c" />
+                  </pattern>
+                  <linearGradient id="bdg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#75787d" />
+                    <stop offset="1" stop-color="#3b3d41" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M470 150C512 190 506 300 482 392"
+                  fill="none"
+                  stroke="#1f2023"
+                  stroke-width="9"
+                  stroke-linecap="round"
+                />
+                <circle
+                  cx="474"
+                  cy="146"
+                  r="7"
+                  fill="none"
+                  stroke="#999"
+                  stroke-width="3"
+                />
+                <path
+                  d="M160 100l22-50h160l22 50z"
+                  fill="url(#bdg)"
+                  stroke="#202124"
+                  stroke-width="2"
+                />
+                <rect
+                  x="212"
+                  y="56"
+                  width="96"
+                  height="40"
+                  rx="8"
+                  fill="#2b2d31"
+                  stroke="#111"
+                />
+                <rect
+                  x="232"
+                  y="64"
+                  width="56"
+                  height="26"
+                  rx="6"
+                  fill="#0d0e10"
+                />
+                <circle cx="260" cy="77" r="11" fill="#1a1c20" stroke="#666" />
+                <circle cx="260" cy="77" r="5" fill="#2e4a63" />
+                <rect
+                  x="236"
+                  y="36"
+                  width="48"
+                  height="16"
+                  rx="3"
+                  fill="#55585e"
+                  stroke="#222"
+                />
+                <rect
+                  x="22"
+                  y="96"
+                  width="456"
+                  height="280"
+                  rx="26"
+                  fill="url(#bdg)"
+                  stroke="#202124"
+                  stroke-width="2"
+                />
+                <rect
+                  x="60"
+                  y="76"
+                  width="82"
+                  height="26"
+                  rx="6"
+                  fill="#80838a"
+                  stroke="#222"
+                />
+                <path
+                  d="M68 78v22M76 78v22M84 78v22M92 78v22M100 78v22M108 78v22M116 78v22M124 78v22M132 78v22"
+                  stroke="#4a4c50"
+                />
+                <circle cx="376" cy="82" r="13" fill="#70737a" stroke="#222" />
+                <circle cx="376" cy="82" r="7" fill="#33363a" />
+                <rect
+                  x="404"
+                  y="76"
+                  width="56"
+                  height="26"
+                  rx="6"
+                  fill="#80838a"
+                  stroke="#222"
+                />
+                <circle cx="440" cy="132" r="15" fill="#2a2b2e" stroke="#999" />
+                <text
+                  x="440"
+                  y="135"
+                  text-anchor="middle"
+                  font-size="8"
+                  fill="#ddd"
+                >
+                  AF-ON
+                </text>
+                <circle cx="100" cy="130" r="13" fill="#2a2b2e" stroke="#999" />
+                <text
+                  x="100"
+                  y="133"
+                  text-anchor="middle"
+                  font-size="6.5"
+                  fill="#ddd"
+                >
+                  MENU
+                </text>
+                <path
+                  d="M372 112H462a16 16 0 0116 16V350a24 24 0 01-24 24H372z"
+                  fill="#3a3c3f"
+                  stroke="#202124"
+                />
+                <path
+                  d="M372 112H462a16 16 0 0116 16V350a24 24 0 01-24 24H372z"
+                  fill="url(#tx)"
+                />
+                <rect
+                  x="58"
+                  y="150"
+                  width="276"
+                  height="206"
+                  rx="10"
+                  fill="#17181a"
+                  stroke="#666"
+                />
+                <rect x="70" y="158" width="250" height="180" fill="#0b0c0d" />
+                <circle cx="372" cy="172" r="10" fill="#2a2b2e" stroke="#999" />
+                <text
+                  x="372"
+                  y="175"
+                  text-anchor="middle"
+                  font-size="6.5"
+                  fill="#ddd"
+                >
+                  INFO
+                </text>
+                <circle cx="372" cy="202" r="10" fill="#2a2b2e" stroke="#999" />
+                <circle cx="371" cy="201" r="4" fill="none" stroke="#ddd" />
+                <path d="M374 204l4 4" stroke="#ddd" stroke-width="1.6" />
+                <circle
+                  cx="418"
+                  cy="270"
+                  r="44"
+                  fill="#26272a"
+                  stroke="#999"
+                  stroke-width="1.5"
+                />
+                <g class="cb" data-a="l" role="button" tabindex="0">
+                  <title>Back 5 seconds</title>
+                  <circle cx="386" cy="270" r="13" fill="#26272a" />
+                  <path d="M390 263l-9 7 9 7z" fill="#ddd" />
+                </g>
+                <g class="cb" data-a="r" role="button" tabindex="0">
+                  <title>Forward 5 seconds</title>
+                  <circle cx="450" cy="270" r="13" fill="#26272a" />
+                  <path d="M446 263l9 7-9 7z" fill="#ddd" />
+                </g>
+                <path d="M412 242l6-8 6 8zM412 298l6 8 6-8z" fill="#ddd" />
+                <g class="cb" data-a="set" role="button" tabindex="0">
+                  <title>Play / pause</title>
+                  <circle
+                    cx="418"
+                    cy="270"
+                    r="18"
+                    fill="#1d1e21"
+                    stroke="#aaa"
                   />
-                  <circle cx="60" cy="40" r="20" class="pp" />
-                  <path d="M54 30l18 10-18 10z" /></svg
-                ><span class="k">Video coming soon</span>
-              </div>
-              <div class="vc">
-                <button class="rb" id="vpl" aria-label="Play">
-                  <svg viewBox="0 0 24 24">
-                    <path id="vpi" d="M7 4l13 8-13 8z" />
-                  </svg></button
-                ><input
-                  type="range"
-                  id="vpr"
-                  value="0"
-                  min="0"
-                  max="100"
-                  aria-label="Progress"
-                /><button class="rb" id="vmu" aria-label="Mute">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M4 9v6h4l5 4V5L8 9zM16 9q3 3 0 6" />
-                  </svg></button
-                ><button class="rb" id="vfs" aria-label="Fullscreen">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
-                  </svg>
-                </button>
+                  <text
+                    x="418"
+                    y="274"
+                    text-anchor="middle"
+                    font-size="9"
+                    fill="#eee"
+                    font-weight="700"
+                  >
+                    SET
+                  </text>
+                </g>
+                <g class="cb" data-a="del" role="button" tabindex="0">
+                  <title>Mute / unmute</title>
+                  <circle
+                    cx="392"
+                    cy="342"
+                    r="11"
+                    fill="#2a2b2e"
+                    stroke="#999"
+                  />
+                  <path
+                    d="M387 338h10M389 338v8h6v-8M391 336h2"
+                    fill="none"
+                    stroke="#ddd"
+                  />
+                </g>
+                <rect
+                  x="432"
+                  y="332"
+                  width="20"
+                  height="20"
+                  rx="4"
+                  fill="#2a2b2e"
+                  stroke="#999"
+                />
+                <g class="cb" data-a="fs" role="button" tabindex="0">
+                  <title>Fullscreen</title>
+                  <circle
+                    cx="62"
+                    cy="130"
+                    r="13"
+                    fill="#2a2b2e"
+                    stroke="#999"
+                  />
+                  <path d="M58 124l11 6-11 6z" fill="#ddd" />
+                </g>
+              </svg>
+              <div class="lcd">
+                <video id="vd" class="hid" playsinline preload="none"></video>
+                <div class="vph" id="vph">
+                  <span>VIDEO INSIDE TO PLAY</span>
+                </div>
               </div>
             </div>
           </div>
@@ -561,80 +1030,8 @@
         </div>
       </section>
 
-      <!-- 7 RSVP -->
-      <section class="pg" data-n="Your part · RSVP" data-l="7">
-        <div class="rv0">
-          <svg class="env" viewBox="0 0 160 110" aria-hidden="true">
-            <rect x="6" y="30" width="148" height="74" rx="5" />
-            <path class="flap" d="M6 34l74 46 74-46" />
-            <path d="M6 104l56-40M154 104L98 64" />
-          </svg>
-          <div class="card frame" id="rvc">
-            <svg class="co c1" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
-            ><svg class="co c2" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
-            ><svg class="co c3" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
-            ><svg class="co c4" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" />
-            </svg>
-            <svg class="seal" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="24" />
-              <circle cx="30" cy="30" r="17" class="s2" />
-              <path d="M30 20c-8-6-14 4-6 10l6 8 6-8c8-6 2-16-6-10z" />
-            </svg>
-            <div class="rib">
-              <span>Will you be there, <span data-g>Tita Baby</span>?</span>
-            </div>
-            <p class="sm c">
-              Kindly reply by <b id="rsvpBy"></b>. One seat is reserved for you.
-            </p>
-            <div id="rv" class="form">
-              <p class="k">Attendance</p>
-              <div class="row">
-                <button class="b" data-a="y">
-                  <i data-i="check"></i>Joyfully accepts</button
-                ><button class="b o" data-a="n">Regretfully declines</button>
-              </div>
-              <p class="sm c" id="resp">
-                Yay! Save some energy for the dance floor.
-              </p>
-              <svg class="dv" viewBox="0 0 200 10">
-                <path d="M0 5H80M120 5H200" />
-                <path d="M100 1l4 4-4 4-4-4z" />
-              </svg>
-              <div id="fs">
-                <p class="k">Your details</p>
-                <input id="diet" type="text" placeholder="Allergies or dietary needs"
-                  aria-label="Dietary"
-                /><input id="song" type="text" placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
-                  aria-label="Song"
-                />
-                <p class="k">Your message</p>
-                <textarea id="adv" rows="2"
-                  placeholder="Advice for the couple (optional)"
-                  aria-label="Advice"
-                ></textarea>
-              </div>
-              <button class="b" id="snd">
-                Send my RSVP<i data-i="ar"></i>
-              </button>
-              <div id="ok" class="hid">
-                <svg viewBox="0 0 50 50">
-                  <circle cx="25" cy="25" r="22" />
-                  <path d="M14 26l8 8 15-17" /></svg
-                ><span>Thank you. Your RSVP is sealed and sent.</span>
-              </div>
-              <p class="sm c hid" id="rerr">Could not send. Please check your connection and try again.</p>
-            </div>
-            <div id="petals"></div>
-          </div>
-        </div>
-      </section>
-
       <!-- 8 GIFTS -->
-      <section class="pg gift" data-n="Gifts" data-l="8">
+      <section class="pg gift" data-n="Gifts" data-l="7">
         <div class="rays"></div>
         <div id="hearts"></div>
         <div class="gc2">
@@ -687,10 +1084,10 @@
       </section>
 
       <!-- 9 QUESTIONS -->
-      <section class="pg" data-n="Questions" data-l="9">
+      <section class="pg" data-n="Questions" data-l="8">
         <div class="sp">
           <div class="tx">
-            <p class="k">Chapter nine</p>
+            <p class="k">Chapter eight</p>
             <h2>Questions, answered</h2>
             <p>Tap a question. We usually reply faster than this.</p>
           </div>
@@ -713,6 +1110,87 @@
               </div>
               <div class="row l" id="bubs"></div>
             </div>
+          </div>
+        </div>
+      </section>
+      <!-- 7 RSVP -->
+      <section class="pg" data-n="Your part · RSVP" data-l="9">
+        <div class="rv0">
+          <svg class="env" viewBox="0 0 160 110" aria-hidden="true">
+            <rect x="6" y="30" width="148" height="74" rx="5" />
+            <path class="flap" d="M6 34l74 46 74-46" />
+            <path d="M6 104l56-40M154 104L98 64" />
+          </svg>
+          <div class="card frame" id="rvc">
+            <svg class="co c1" viewBox="0 0 40 40">
+              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
+            ><svg class="co c2" viewBox="0 0 40 40">
+              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
+            ><svg class="co c3" viewBox="0 0 40 40">
+              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
+            ><svg class="co c4" viewBox="0 0 40 40">
+              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" />
+            </svg>
+            <svg class="seal" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="24" />
+              <circle cx="30" cy="30" r="17" class="s2" />
+              <path d="M30 20c-8-6-14 4-6 10l6 8 6-8c8-6 2-16-6-10z" />
+            </svg>
+            <div class="rib">
+              <span>Will you be there, <span data-g>Tita Baby</span>?</span>
+            </div>
+            <p class="sm c">
+              Kindly reply by <b id="rsvpBy"></b>. One seat is reserved for you.
+            </p>
+            <div id="rv" class="form">
+              <p class="k">Attendance</p>
+              <div class="row">
+                <button class="b" data-a="y">
+                  <i data-i="check"></i>Joyfully accepts</button
+                ><button class="b o" data-a="n">Regretfully declines</button>
+              </div>
+              <p class="sm c" id="resp">
+                Yay! Save some energy for the dance floor.
+              </p>
+              <svg class="dv" viewBox="0 0 200 10">
+                <path d="M0 5H80M120 5H200" />
+                <path d="M100 1l4 4-4 4-4-4z" />
+              </svg>
+              <div id="fs">
+                <p class="k">Your details</p>
+                <input
+                  id="diet"
+                  type="text"
+                  placeholder="Allergies or dietary needs"
+                  aria-label="Dietary"
+                /><input
+                  id="song"
+                  type="text"
+                  placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
+                  aria-label="Song"
+                />
+                <p class="k">Your message</p>
+                <textarea
+                  id="adv"
+                  rows="2"
+                  placeholder="Advice for the couple (optional)"
+                  aria-label="Advice"
+                ></textarea>
+              </div>
+              <button class="b" id="snd">
+                Send my RSVP<i data-i="ar"></i>
+              </button>
+              <div id="ok" class="hid">
+                <svg viewBox="0 0 50 50">
+                  <circle cx="25" cy="25" r="22" />
+                  <path d="M14 26l8 8 15-17" /></svg
+                ><span>Thank you. Your RSVP is sealed and sent.</span>
+              </div>
+              <p class="sm c hid" id="rerr">
+                Could not send. Please check your connection and try again.
+              </p>
+            </div>
+            <div id="petals"></div>
           </div>
         </div>
       </section>
