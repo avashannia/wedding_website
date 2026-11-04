@@ -113,7 +113,9 @@
               </div>
               <div class="bpm">
                 <h2 class="bpn">Welcome!</h2>
-                <p class="bpg"><small>GUEST</small><b><i>Your name goes on the RSVP</i></b></p>
+                <p class="bpg">
+                  <small>GUEST</small><b><i>Your name goes on the RSVP</i></b>
+                </p>
                 <p class="bpf">
                   <small>FROM:</small><b>Your Home</b><i>(Your home address)</i>
                 </p>
@@ -152,9 +154,7 @@
                   </g>
                 </svg>
                 <p class="bpc">to the wedding</p>
-                <p class="bpp">
-                  <small>PASSENGER</small><b>Dear guest</b>
-                </p>
+                <p class="bpp"><small>PASSENGER</small><b>Dear guest</b></p>
                 <table class="bpt">
                   <tr>
                     <th>1. DATE</th>
@@ -1143,15 +1143,26 @@
               Kindly reply by <b id="rsvpBy"></b>. One seat is reserved for you.
             </p>
             <div id="rv" class="form" novalidate>
-              <p class="k">Your name</p><input id="nm" type="text" maxlength="80" autocomplete="name" placeholder="Your full name" aria-label="Your name" /><p class="ferr hid" id="e-nm" role="alert"></p><p class="k">Attendance</p>
+              <p class="k">Your name</p>
+              <input
+                id="nm"
+                type="text"
+                maxlength="80"
+                autocomplete="name"
+                placeholder="Your full name"
+                aria-label="Your name"
+              />
+              <p class="ferr hid" id="e-nm" role="alert"></p>
+              <p class="k">Attendance</p>
               <div class="row">
                 <button class="b o" data-a="y" type="button">
                   <i data-i="check"></i>Joyfully accepts</button
-                ><button class="b o" data-a="n" type="button">Regretfully declines</button>
+                ><button class="b o" data-a="n" type="button">
+                  Regretfully declines
+                </button>
               </div>
-              <p class="sm c" id="resp">
-                Please choose one.
-              </p><p class="ferr hid" id="e-att" role="alert"></p>
+              <p class="sm c" id="resp">Please choose one.</p>
+              <p class="ferr hid" id="e-att" role="alert"></p>
               <svg class="dv" viewBox="0 0 200 10">
                 <path d="M0 5H80M120 5H200" />
                 <path d="M100 1l4 4-4 4-4-4z" />
@@ -1159,23 +1170,49 @@
               <div id="fs">
                 <p class="k">Your details</p>
                 <input
-                  id="diet" maxlength="300"
+                  id="diet"
+                  maxlength="300"
                   type="text"
                   placeholder="Allergies or dietary needs"
                   aria-label="Dietary"
-                /><span class="qc"><button type="button" class="chipq" data-fill="diet" data-v="None">None</button></span><p class="ferr hid" id="e-diet" role="alert"></p><input
-                  id="song" maxlength="300"
+                /><span class="qc"
+                  ><button
+                    type="button"
+                    class="chipq"
+                    data-fill="diet"
+                    data-v="None"
+                  >
+                    None
+                  </button></span
+                >
+                <p class="ferr hid" id="e-diet" role="alert"></p>
+                <input
+                  id="song"
+                  maxlength="300"
                   type="text"
                   placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
                   aria-label="Song"
-                /><p class="ferr hid" id="e-song" role="alert"></p>
+                />
+                <p class="ferr hid" id="e-song" role="alert"></p>
                 <p class="k">Your message</p>
                 <textarea
-                  id="adv" maxlength="300"
+                  id="adv"
+                  maxlength="300"
                   rows="2"
                   placeholder="Advice for the couple"
                   aria-label="Advice"
-                ></textarea><span class="qc"><button type="button" class="chipq" data-fill="adv" data-v="No suggestion">No suggestion</button></span><p class="ferr hid" id="e-adv" role="alert"></p>
+                ></textarea
+                ><span class="qc"
+                  ><button
+                    type="button"
+                    class="chipq"
+                    data-fill="adv"
+                    data-v="No suggestion"
+                  >
+                    No suggestion
+                  </button></span
+                >
+                <p class="ferr hid" id="e-adv" role="alert"></p>
               </div>
               <button class="b dis" id="snd" type="button" aria-disabled="true">
                 Send my RSVP<i data-i="ar"></i>
