@@ -7,8 +7,8 @@ const CFG = {
   rec: "7:00 PM", // PLACEHOLDER
   rsvpBy: "[RSVP-by date]", // PLACEHOLDER
   rsvpUrl: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL", // PLACEHOLDER
-  guest: Q.get("to") || "Tita Baby",
-  seats: Math.max(1, parseInt(Q.get("seats")) || 1),
+  guest: (Q.get("to") || "").slice(0, 80),
+  seats: 1,
   video: { src: "", poster: "" }, // put the prenup video path here, e.g. 'prenup.mp4'
   venues: {
     // map uses the ADDRESS query. Coordinates intentionally not guessed: verify on Google Maps, then fill in.
@@ -67,7 +67,7 @@ $$("[data-s]").forEach((e) => (e.textContent = CFG.seats));
   const sv = CFG.seats + " SEAT" + (CFG.seats > 1 ? "S" : "") + " RESERVED";
   [$("#seatv"), $("#seatv2")].forEach((e) => e && (e.textContent = sv));
   const bn = $("#bcn");
-  if (bn) bn.textContent = CFG.guest.toUpperCase() + " AC 2027";
+  if (bn) bn.textContent = "WEDDING PASS · AC 2027";
 }
 $("#rsvpBy").textContent = $("#eRsvp").textContent = CFG.rsvpBy;
 $$(".tm").forEach((e) => (e.textContent = CFG[e.dataset.t]));
@@ -973,6 +973,22 @@ $("#rows").innerHTML = P.map(
   (_, i) =>
     `<div class="rw" data-r="${i}" tabindex="0" role="button" aria-label="Show venue on the map">${WD.map((w) => `<div class="fg">${'<span class="fc"> </span>'.repeat(w)}</div>`).join("")}</div>`,
 ).join("");
+function sizeBoard() {
+  const r = $("#rows");
+  if (!r || !r.clientWidth) return;
+  const tw = Math.max(
+    6,
+    Math.min(
+      34,
+      Math.floor((r.clientWidth - 17 - 6) / (Math.max(...WD) + 0.6)),
+    ),
+  );
+  r.style.setProperty("--tw", tw + "px");
+}
+new ResizeObserver(sizeBoard).observe($("#rows"));
+window.addEventListener("resize", sizeBoard);
+document.fonts && document.fonts.ready.then(sizeBoard);
+sizeBoard();
 function runBoard() {
   const shuf = [...P.keys()].reverse();
   $$("#rows .rw").forEach((r, ri) =>
@@ -1111,36 +1127,101 @@ function petals() {
     .join("");
 }
 {
-  const fs = $("#fs");
+  const fs = $("#fs"),
+    btn = $("#snd"),
+    F = ["nm", "att", "diet", "song", "adv"];
+  let att = "",
+    touched = false,
+    sending = false;
+  const cl = (v, m) => String(v).replace(/\s+/g, " ").trim().slice(0, m);
+  if (CFG.guest) $("#nm").value = CFG.guest;
+  const check = () => {
+    const o = {};
+    if (cl($("#nm").value, 80).length < 2) o.nm = "Please enter your name";
+    if (!att) o.att = "Please choose one";
+    if (att === "y") {
+      if (!cl($("#diet").value, 300))
+        o.diet = "Please share dietary needs, or tap None";
+      if (!cl($("#song").value, 300)) o.song = "Please share one song";
+      if (!cl($("#adv").value, 300))
+        o.adv = "Please share some advice, or tap No suggestion";
+    }
+    return o;
+  };
+  const show = (o) =>
+    F.forEach((f) => {
+      const m = $("#e-" + f),
+        el = f === "att" ? $("#rv .row") : $("#" + f);
+      m.textContent = o[f] || "";
+      m.classList.toggle("hid", !o[f]);
+      el.classList.toggle("bad", !!o[f]);
+    });
+  const upd = () => {
+    const o = check(),
+      ok = !Object.keys(o).length;
+    btn.classList.toggle("dis", !ok);
+    btn.setAttribute("aria-disabled", !ok);
+    if (touched) show(o);
+    return o;
+  };
   $$("#rv [data-a]").forEach(
     (b) =>
       (b.onclick = () => {
-        const no = b.dataset.a === "n";
+        att = b.dataset.a;
+        const no = att === "n";
         $$("#rv [data-a]").forEach((x) => x.classList.toggle("o", x !== b));
         fs.classList.toggle("off", no);
         fs.setAttribute("aria-disabled", no);
-        $$("#fs input,#fs textarea,#fs button").forEach(
+        $$("#fs input,#fs textarea,#fs .chipq").forEach(
           (el) => (el.disabled = no),
         );
         $("#resp").textContent = no
           ? "We'll miss you, and we're grateful you told us. Just send your reply below."
           : "Yay! Save some energy for the dance floor.";
+        upd();
       }),
   );
-  let att = "y";
-  $$("#rv [data-a]").forEach((b) =>
-    b.addEventListener("click", () => (att = b.dataset.a)),
+  $$("#rv .chipq").forEach(
+    (b) =>
+      (b.onclick = () => {
+        $("#" + b.dataset.fill).value = b.dataset.v;
+        upd();
+      }),
   );
-  $("#snd").onclick = async () => {
-    const btn = $("#snd");
-    btn.disabled = true;
+  $$("#rv input,#rv textarea").forEach((el) =>
+    el.addEventListener("input", upd),
+  );
+  $("#rv").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.tagName === "INPUT") {
+      e.preventDefault();
+      btn.click();
+    }
+  });
+  btn.onclick = async () => {
+    if (sending) return;
+    touched = true;
+    const o = upd();
+    const first = F.find((f) => o[f]);
+    if (first) {
+      const rv = $("#rv");
+      rv.classList.remove("shake");
+      void rv.offsetWidth;
+      rv.classList.add("shake");
+      const t = first === "att" ? $("#rv [data-a]") : $("#" + first);
+      t.scrollIntoView({ block: "center", behavior: "smooth" });
+      t.focus({ preventScroll: true });
+      return;
+    }
+    sending = true;
+    btn.classList.add("ld");
     $("#rerr").classList.add("hid");
+    const yes = att === "y";
     const body = new URLSearchParams({
-      guest: CFG.guest,
-      attending: att === "y" ? "Yes" : "No",
-      diet: $("#diet").value,
-      song: $("#song").value,
-      advice: $("#adv").value,
+      name: cl($("#nm").value, 80),
+      attending: yes ? "Yes" : "No",
+      diet: yes ? cl($("#diet").value, 300) : "",
+      song: yes ? cl($("#song").value, 300) : "",
+      advice: yes ? cl($("#adv").value, 300) : "",
     });
     try {
       await fetch(CFG.rsvpUrl, { method: "POST", mode: "no-cors", body });
@@ -1180,7 +1261,8 @@ function petals() {
         );
       }
     } catch (err) {
-      btn.disabled = false;
+      sending = false;
+      btn.classList.remove("ld");
       $("#rerr").classList.remove("hid");
     }
   };
