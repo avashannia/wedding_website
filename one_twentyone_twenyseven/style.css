@@ -3234,3 +3234,90 @@ body.dark {
   height: 92px;
   overflow: auto;
 }
+
+.board {
+  overflow: hidden;
+}
+.board #rows {
+  padding: 0 12px;
+}
+.ferr {
+  color: #d9534f;
+  font-size: 13px;
+  margin: 4px 2px 8px;
+  text-align: left;
+}
+body:not(.dark) .ferr {
+  color: #a63a32;
+}
+.ferr.hid {
+  display: none;
+}
+#rv .bad {
+  outline: 2px solid #d9534f;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+#snd.dis {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: saturate(0.5);
+}
+#snd.ld {
+  pointer-events: none;
+  opacity: 0.8;
+}
+#snd.ld::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin-left: 10px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: -2px;
+  animation: spn 0.7s linear infinite;
+}
+@keyframes spn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+#rv.shake {
+  animation: shk 0.4s;
+}
+@keyframes shk {
+  20%,
+  60% {
+    transform: translateX(-7px);
+  }
+  40%,
+  80% {
+    transform: translateX(7px);
+  }
+}
+.qc {
+  display: block;
+  text-align: left;
+  margin: 4px 0;
+}
+.chipq {
+  font:
+    500 13px Jost,
+    sans-serif;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--bd);
+  background: transparent;
+  color: var(--tx);
+  cursor: pointer;
+}
+.chipq:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+#rv input,
+#rv textarea {
+  resize: none;
+}
