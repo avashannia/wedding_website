@@ -4066,3 +4066,28 @@ body:not(.dark) .rmc .p {
 #au.on {
   box-shadow: 0 0 0 1px var(--bd);
 }
+
+/* ===== phone/short screens: nothing hides under the top bar; tall pages scroll from the top ===== */
+.pg {
+  justify-content: flex-start;
+}
+.pg > :first-child {
+  margin-top: auto;
+}
+.pg > :last-child {
+  margin-bottom: auto;
+}
+@media (max-width: 640px), (max-height: 560px) {
+  .pg {
+    padding-top: calc(74px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+    scrollbar-width: none;
+  }
+  .pg::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pg {
+  overflow-x: hidden;
+}
