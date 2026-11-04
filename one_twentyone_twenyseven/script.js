@@ -394,37 +394,39 @@ function buildBg() {
 function gen() {
   lights = [];
   const R = mk((Math.random() * 1e6) | 0),
-    cap = innerWidth < 760 ? 1200 : 2300,
-    cs = [
-      [640, 300, 170, 0.5],
-      [820, 430, 120, 0.22],
-      [300, 200, 140, 0.16],
-      [180, 420, 100, 0.12],
-    ];
-  const riv = (x, y) => x > 620 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 78;
-  ROADS.forEach((r) => {
-    const L = Math.hypot(r[2] - r[0], r[3] - r[1]),
-      step = r[4] ? 16 : 30,
-      ux = (r[2] - r[0]) / L,
-      uy = (r[3] - r[1]) / L;
-    for (let d = R() * step; d < L; d += step) {
-      const x = r[0] + ux * d - uy * (r[4] ? 7 : 4) * (d % (2 * step) < step ? 1 : -1),
-        y = r[1] + uy * d + ux * (r[4] ? 7 : 4) * (d % (2 * step) < step ? 1 : -1);
-      if (x < 0 || x > 1000 || y < 0 || y > 560 || riv(x, y)) continue;
-      lights.push({ x, y, r: r[4] ? 1.2 : 0.9, p: R() * 6 });
+    cap = innerWidth < 760 ? 1200 : 2500,
+    lamps = [],
+    wins = [],
+    riv = (x, y) => x > 600 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 90;
+  SEGS.forEach((s) => {
+    const L = Math.hypot(s[2] - s[0], s[3] - s[1]),
+      n = Math.max(1, Math.round(L / [13, 19, 30][s[4]])),
+      nx = -(s[3] - s[1]) / L,
+      ny = (s[2] - s[0]) / L;
+    for (let k = 0; k < n; k++) {
+      const t = (k + 0.5) / n,
+        o = (k % 2 ? 1 : -1) * [4.5, 3.5, 2.5][s[4]];
+      lamps.push({ x: s[0] + (s[2] - s[0]) * t + nx * o, y: s[1] + (s[3] - s[1]) * t + ny * o, r: s[4] ? 0.9 : 1.2, p: R() * 6 });
+    }
+    if (R() < 0.5) lamps.push({ x: s[0], y: s[1], r: 1.7, p: R() * 6 });
+  });
+  ["hw1", "hw2"].forEach((id) => {
+    const p = document.getElementById(id);
+    if (!p) return;
+    const L = p.getTotalLength();
+    for (let d = 0, k = 0; d < L; d += 11, k++) {
+      const q = p.getPointAtLength(d);
+      if (!riv(q.x, q.y)) lamps.push({ x: q.x + (k % 2 ? 9 : -9), y: q.y, r: 1.5, p: R() * 6 });
     }
   });
-  cs.forEach((c) => {
-    const n = cap * c[3];
-    for (let i = 0; i < n; i++) {
-      const a = R() * 6.283,
-        r = Math.abs((R() + R() + R()) / 3 - 0.5) * 2 * c[2] * 1.7,
-        x = c[0] + Math.cos(a) * r,
-        y = c[1] + Math.sin(a) * r * 0.8;
-      if (x < 0 || x > 1000 || y < 0 || y > 560 || riv(x, y)) continue;
-      lights.push({ x, y, r: R() * 1.5 + 0.5, p: R() * 6 });
-    }
+  BLKS.forEach((b) => {
+    for (let k = 0; k < 3; k++)
+      if (R() < 0.75) wins.push({ x: b[0] + (R() - 0.5) * 30, y: b[1] + (R() - 0.5) * 26, r: R() * 0.7 + 0.6, p: R() * 6 });
   });
+  const kl = Math.min(1, (cap * 0.72) / lamps.length),
+    kw = Math.min(1, (cap * 0.28) / Math.max(1, wins.length));
+  lamps.forEach((l) => R() < kl && l.x > -5 && l.x < 1005 && l.y > -5 && l.y < 565 && lights.push(l));
+  wins.forEach((l) => R() < kw && l.x > 0 && l.x < 1000 && l.y > 0 && l.y < 560 && lights.push(l));
 }
 function paintLights(t) {
   const el = (t - lt0) / 1000;
@@ -444,6 +446,109 @@ function paintLights(t) {
   cc.globalCompositeOperation = "source-over";
   if (!rm.classList.contains("hid")) lraf = requestAnimationFrame(paintLights);
 }
+let SEGS = [],
+  BLKS = [];
+const _bb = buildBg;
+buildBg = function () {
+  const was = builtBg;
+  _bb();
+  if (was) return;
+  const R = mk(7),
+    bg = $("#rmbg"),
+    D = [
+      { o: [610, 290], a: 0.5, s: [46, 40], i: [-9, 9], j: [-9, 9], dn: 1 },
+      { o: [940, 430], a: -0.22, s: [88, 76], i: [-6, 6], j: [-6, 6] },
+      { o: [170, 250], a: 0.95, s: [84, 70], i: [-8, 8], j: [-8, 8] },
+      { o: [420, 540], a: 0.12, s: [92, 72], i: [-8, 8], j: [-5, 5] },
+      { o: [560, 20], a: -0.1, s: [90, 70], i: [-7, 7], j: [-3, 5] },
+    ],
+    rvD = "M690 -20Q810 70 1040 120L1040 280Q840 220 600 60Z",
+    riv = (x, y) => x > 590 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 98,
+    Wd = [11, 7, 4],
+    cls = (n) => (n % 6 === 0 ? 0 : n % 3 === 0 ? 1 : 2),
+    rd = ["", "", ""],
+    seen = new Set();
+  let bl = "",
+    bd = "";
+  SEGS = [];
+  BLKS = [];
+  const seg = (p, q, k) => {
+    const key = [p.map((v) => v.toFixed(1)).join(), q.map((v) => v.toFixed(1)).join()].sort().join("|");
+    if (seen.has(key)) return;
+    seen.add(key);
+    rd[k] += `M${p[0].toFixed(1)} ${p[1].toFixed(1)}L${q[0].toFixed(1)} ${q[1].toFixed(1)}`;
+    SEGS.push([p[0], p[1], q[0], q[1], k]);
+  };
+  D.forEach((d, di) => {
+    const ca = Math.cos(d.a),
+      sa = Math.sin(d.a),
+      T = (u, v) => [d.o[0] + u * ca - v * sa, d.o[1] + u * sa + v * ca];
+    for (let i = d.i[0]; i < d.i[1]; i++)
+      for (let j = d.j[0]; j < d.j[1]; j++) {
+        const c = T((i + 0.5) * d.s[0], (j + 0.5) * d.s[1]);
+        if (c[0] < -60 || c[0] > 1060 || c[1] < -60 || c[1] > 620) continue;
+        let best = 0,
+          bv = 1e9;
+        D.forEach((e, k) => {
+          const q = Math.hypot(c[0] - e.o[0], c[1] - e.o[1]) / (e.dn ? 1.5 : 1);
+          if (q < bv) ((bv = q), (best = k));
+        });
+        if (best !== di) continue;
+        if (riv(c[0], c[1]) || Math.hypot(c[0] - 640, c[1] - 310) < 48 || Math.hypot(c[0] - 500, c[1] - 388) < 44) continue;
+        const s0 = d.s[0],
+          s1 = d.s[1],
+          p00 = T(i * s0, j * s1),
+          p10 = T((i + 1) * s0, j * s1),
+          p11 = T((i + 1) * s0, (j + 1) * s1),
+          p01 = T(i * s0, (j + 1) * s1);
+        seg(p00, p10, cls(j));
+        seg(p00, p01, cls(i));
+        seg(p01, p11, cls(j + 1));
+        seg(p10, p11, cls(i + 1));
+        const u0 = i * s0 + Wd[cls(i)] / 2 + 1,
+          u1 = (i + 1) * s0 - Wd[cls(i + 1)] / 2 - 1,
+          v0 = j * s1 + Wd[cls(j)] / 2 + 1,
+          v1 = (j + 1) * s1 - Wd[cls(j + 1)] / 2 - 1,
+          P = (u, v) => T(u, v).map((x) => x.toFixed(1)).join(" ");
+        bl += `M${P(u0, v0)}L${P(u1, v0)}L${P(u1, v1)}L${P(u0, v1)}Z`;
+        if (d.dn) {
+          BLKS.push(c);
+          for (let a2 = 0; a2 < 2; a2++)
+            for (let b2 = 0; b2 < 2; b2++) {
+              const w = (u1 - u0) / 2,
+                h = (v1 - v0) / 2,
+                x0 = u0 + a2 * w + 2 + R() * 3,
+                y0 = v0 + b2 * h + 2 + R() * 3,
+                x1 = u0 + (a2 + 1) * w - 2 - R() * 3,
+                y1 = v0 + (b2 + 1) * h - 2 - R() * 3;
+              if (x1 > x0 + 2 && y1 > y0 + 2) bd += `M${P(x0, y0)}L${P(x1, y0)}L${P(x1, y1)}L${P(x0, y1)}Z`;
+            }
+        } else if (R() < 0.5) {
+          BLKS.push(c);
+        }
+      }
+  });
+  const net = `<g id="net"><path class="n3" d="${rd[2]}"/><path class="n2o" d="${rd[1]}"/><path class="n2" d="${rd[1]}"/><path class="n1o" d="${rd[0]}"/><path class="n1" d="${rd[0]}"/><path class="nb" d="${bl}"/><path class="nbd" d="${bd}"/>
+  <ellipse class="plz" cx="500" cy="388" rx="40" ry="32"/><ellipse class="plzi" cx="500" cy="388" rx="26" ry="20"/>
+  <circle class="n1o" cx="640" cy="310" r="27" fill="none"/><circle class="n1" cx="640" cy="310" r="27" fill="none"/><circle class="isl" cx="640" cy="310" r="15"/>
+  <path class="n2o" d="M590 310H613M667 310H700M640 262V283M640 337V358"/><path class="n2" d="M590 310H613M667 310H700M640 262V283M640 337V358"/></g>
+  <defs><radialGradient id="bloom"><stop offset="0" stop-color="var(--mbloom)" stop-opacity=".55"/><stop offset="1" stop-color="var(--mbloom)" stop-opacity="0"/></radialGradient><clipPath id="rvclip"><path d="${rvD}"/></clipPath></defs>
+  <circle cx="610" cy="300" r="230" fill="url(#bloom)" opacity=".22"/>`;
+  bg.querySelector("rect.gd").insertAdjacentHTML("afterend", net);
+  const H1 = "M-60 480C200 440 380 340 560 250S820 70 1060 -30",
+    H2 = "M-60 330Q300 210 540 300T1060 420",
+    hw = (id, d) => `<path class="hwo" d="${d}"/><path id="${id}" class="hwf" d="${d}"/><path class="hwc" d="${d}"/>`;
+  let tf = "";
+  [["hw1", 22], ["hw2", 28]].forEach((h) => {
+    for (let k = 0; k < 4; k++)
+      tf += `<circle class="tf" r="2.3"><animateMotion dur="${h[1] + k * 3}s" begin="-${k * 6.5}s" repeatCount="indefinite"><mpath href="#${h[0]}"/></animateMotion></circle>`;
+  });
+  bg.insertAdjacentHTML(
+    "beforeend",
+    `<g id="top">${hw("hw1", H1)}${hw("hw2", H2)}<g clip-path="url(#rvclip)"><path class="brg" d="${H1}"/><path class="brr" d="${H1}"/></g>${tf}
+    <g class="cmp" transform="translate(500 522)"><circle r="21"/><path d="M0-17L5 0H-5zM0 17L5 0H-5z" class="cmn"/><text y="-26" text-anchor="middle">N</text></g></g>`,
+  );
+};
 function buildTags(intro) {
   const s = $("#rmsv"),
     H = 32;
@@ -531,7 +636,7 @@ function fit(anim, focus) {
   const vw = innerWidth,
     vh = innerHeight,
     cov = Math.max(vw / 1000, vh / 560);
-  view.k = focus != null ? Math.max(cov, vw < 760 ? 2.3 : 1.75) : cov;
+  view.k = focus != null ? Math.max(cov, vw < 760 ? 1.5 : 1.75) : cov;
   const t = focus != null ? TAGS[focus] : null,
     cx = t ? t[1] * 10 : 500,
     cy = t ? t[2] * 5.6 : 280;

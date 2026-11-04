@@ -3275,3 +3275,29 @@ body:not(.dark) #rmsv .tg.here text{fill:#f6faef}
 body:not(.dark) #rmsv .ar{stroke:#3f5f45}
 body:not(.dark) #rmsv .af{stroke:#d98a12}
 #rm{height:100dvh;inset:0}
+
+/* ===== street map palette (theme variables) ===== */
+#rm{--mg:#0b1f45;--mroad:#07142f;--mrd:#2ee6ff;--mmain:#4aa8ff;--mblk:#0a1a3a;--medge:#2a7fb8;--mbld:#143a7a;--mbrg:#163a74;--mcore:#8ff1ff;--mplaza:#173868;--mtf:#fff3c4;--mbloom:#E5C583}
+body:not(.dark) #rm{--mg:#dce8d2;--mroad:#eef4e6;--mrd:#3f5f45;--mmain:#6f9a62;--mblk:#c6dbbb;--medge:#8fb083;--mbld:#aac6a0;--mbrg:#e6efd9;--mcore:#6f9a62;--mplaza:#eef2c9;--mtf:#b86e00;--mbloom:#e0a030}
+#rmbg .gd{fill:var(--mg)}
+#rmbg .sg,#rmbg .cm{display:none}
+#rmbg #net path,#rmbg #top path,#rmbg #net ellipse,#rmbg #net circle{transition:fill .6s,stroke .6s}
+#rmbg .n3{fill:none;stroke:var(--mmain);stroke-width:1.5;opacity:.7}
+#rmbg .n2o{fill:none;stroke:var(--mmain);stroke-width:8.6;opacity:.95}
+#rmbg .n2{fill:none;stroke:var(--mroad);stroke-width:5.4}
+#rmbg .n1o{fill:none;stroke:var(--mrd);stroke-width:13.4;filter:url(#glw)}
+#rmbg .n1{fill:none;stroke:var(--mroad);stroke-width:9.4}
+#rmbg .nb{fill:var(--mblk);stroke:var(--medge);stroke-width:.6}
+#rmbg .nbd{fill:var(--mbld);opacity:.9}
+#rmbg .plz{fill:var(--mblk);stroke:var(--mrd);stroke-width:1.4}
+#rmbg .plzi{fill:var(--mplaza);opacity:.9}
+#rmbg .isl{fill:var(--mplaza);stroke:var(--mmain);stroke-width:1}
+#rmbg .hwo{fill:none;stroke:var(--mrd);stroke-width:17;filter:url(#glw)}
+#rmbg .hwf{fill:none;stroke:var(--mroad);stroke-width:13}
+#rmbg .hwc{fill:none;stroke:var(--mcore);stroke-width:1.4;stroke-dasharray:10 8;opacity:.8}
+#rmbg .brg{fill:none;stroke:var(--mbrg);stroke-width:21}
+#rmbg .brr{fill:none;stroke:var(--mrd);stroke-width:21;stroke-dasharray:1.5 5;opacity:.9}
+#rmbg .tf{fill:var(--mtf);filter:url(#glw)}
+#rmbg .cmp circle{fill:none;stroke:var(--mrd);stroke-width:1.4;opacity:.85}
+#rmbg .cmp .cmn{fill:var(--mrd);stroke:none}
+#rmbg .cmp text{fill:var(--mrd);font:700 11px Jost,sans-serif}
