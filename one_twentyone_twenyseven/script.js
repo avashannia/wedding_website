@@ -10,6 +10,7 @@ const CFG = {
   guest: (Q.get("to") || "").slice(0, 80),
   seats: 1,
   video: { src: "", poster: "" }, // put the prenup video path here, e.g. 'prenup.mp4'
+  music: "./assets/song.mp3", // put your song file here, e.g. 'our-song.mp3' (same folder as index.html). Empty = soft synth hum
   venues: {
     // map uses the ADDRESS query. Coordinates intentionally not guessed: verify on Google Maps, then fill in.
     c: {
@@ -271,10 +272,21 @@ document.addEventListener("click", (e) => {
     requestAnimationFrame(f);
   })(0);
 }
-let ac,
+let song,
+  ac,
   ag,
   mon = false;
 $("#au").onclick = () => {
+  if (CFG.music) {
+    if (!song) {
+      song = new Audio(CFG.music);
+      song.loop = true;
+      song.volume = 0.6;
+    }
+    mon = !mon;
+    mon ? song.play().catch(() => (mon = false)) : song.pause();
+    return;
+  }
   if (!ac) {
     ac = new AudioContext();
     ag = ac.createGain();
