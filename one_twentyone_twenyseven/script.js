@@ -10,7 +10,7 @@ const CFG = {
   guest: (Q.get("to") || "").slice(0, 80),
   seats: 1,
   video: { src: "", poster: "" }, // put the prenup video path here, e.g. 'prenup.mp4'
-  music: "./assets/song.mp3", // put your song file here, e.g. 'our-song.mp3' (same folder as index.html). Empty = soft synth hum
+  music: "./assets/song.mp3", // path to your song file. Plays automatically (after the first tap if the browser blocks it).
   venues: {
     // map uses the ADDRESS query. Coordinates intentionally not guessed: verify on Google Maps, then fill in.
     c: {
@@ -273,35 +273,58 @@ document.addEventListener("click", (e) => {
   })(0);
 }
 let song,
-  ac,
-  ag,
-  mon = false;
-$("#au").onclick = () => {
-  if (CFG.music) {
-    if (!song) {
-      song = new Audio(CFG.music);
-      song.loop = true;
-      song.volume = 0.6;
-    }
-    mon = !mon;
-    mon ? song.play().catch(() => (mon = false)) : song.pause();
-    return;
-  }
-  if (!ac) {
-    ac = new AudioContext();
-    ag = ac.createGain();
-    ag.gain.value = 0;
-    ag.connect(ac.destination);
-    [261.6, 329.6, 392].forEach((f) => {
-      const o = ac.createOscillator();
-      o.frequency.value = f;
-      o.connect(ag);
-      o.start();
-    });
-  }
-  mon = !mon;
-  ag.gain.linearRampToValueAtTime(mon ? 0.04 : 0, ac.currentTime + 2.5);
+  mon = false,
+  userPaused = false;
+const au = $("#au");
+const syncAu = () => {
+  au.classList.toggle("on", mon);
+  au.setAttribute("aria-pressed", mon);
+  au.setAttribute("aria-label", mon ? "Pause music" : "Play music");
 };
+function startSong() {
+  if (!CFG.music || userPaused || mon) return;
+  if (!song) {
+    song = new Audio(CFG.music);
+    song.loop = true;
+    song.volume = 0.6;
+  }
+  song
+    .play()
+    .then(() => {
+      mon = true;
+      syncAu();
+    })
+    .catch(() => {});
+}
+au.onclick = (e) => {
+  e.stopPropagation();
+  if (!CFG.music) return;
+  if (mon) {
+    userPaused = true;
+    mon = false;
+    song && song.pause();
+  } else {
+    userPaused = false;
+    mon = false;
+    startSong();
+  }
+  syncAu();
+};
+/* try to autoplay on load; browsers usually block sound until the first tap, so retry on first interaction */
+startSong();
+["pointerdown", "keydown", "touchend"].forEach((ev) =>
+  addEventListener(ev, function once(e) {
+    if (e.target && e.target.closest && e.target.closest("#au")) return;
+    startSong();
+    if (mon || userPaused) removeEventListener(ev, once);
+  }),
+);
+document.addEventListener("visibilitychange", () => {
+  if (!song) return;
+  if (document.hidden) song.pause();
+  else if (mon) song.play().catch(() => {});
+});
+syncAu();
 
 /* ================= Prologue ================= */
 $("#bar").innerHTML = [...Array(34)]
