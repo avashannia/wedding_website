@@ -112,8 +112,8 @@
                 </svg>
               </div>
               <div class="bpm">
-                <h2 class="bpn" data-g>Tita Baby</h2>
-                <p class="bpg"><small>GUEST</small><b data-g>Tita Baby</b></p>
+                <h2 class="bpn">Welcome!</h2>
+                <p class="bpg"><small>GUEST</small><b><i>Your name goes on the RSVP</i></b></p>
                 <p class="bpf">
                   <small>FROM:</small><b>Your Home</b><i>(Your home address)</i>
                 </p>
@@ -153,7 +153,7 @@
                 </svg>
                 <p class="bpc">to the wedding</p>
                 <p class="bpp">
-                  <small>PASSENGER</small><b data-g>Tita Baby</b>
+                  <small>PASSENGER</small><b>Dear guest</b>
                 </p>
                 <table class="bpt">
                   <tr>
@@ -232,7 +232,7 @@
                     viewBox="0 0 90 16"
                     preserveAspectRatio="none"
                   ></svg>
-                  <small class="bcn" id="bcn">TITA BABY AC 2027</small>
+                  <small class="bcn" id="bcn">WEDDING PASS · AC 2027</small>
                 </div>
               </div>
             </div>
@@ -240,7 +240,7 @@
         </div>
         <div class="card inv hid" id="invite">
           <p class="k">You are invited</p>
-          <h3 class="it">Dear <span data-g>Tita Baby</span>,</h3>
+          <h3 class="it">Dear guest,</h3>
           <p>Together with their families,</p>
           <h2 class="nm">Abe &amp; Collyn</h2>
           <p>
@@ -1137,21 +1137,21 @@
               <path d="M30 20c-8-6-14 4-6 10l6 8 6-8c8-6 2-16-6-10z" />
             </svg>
             <div class="rib">
-              <span>Will you be there, <span data-g>Tita Baby</span>?</span>
+              <span>Will you be there?</span>
             </div>
             <p class="sm c">
               Kindly reply by <b id="rsvpBy"></b>. One seat is reserved for you.
             </p>
-            <div id="rv" class="form">
-              <p class="k">Attendance</p>
+            <div id="rv" class="form" novalidate>
+              <p class="k">Your name</p><input id="nm" type="text" maxlength="80" autocomplete="name" placeholder="Your full name" aria-label="Your name" /><p class="ferr hid" id="e-nm" role="alert"></p><p class="k">Attendance</p>
               <div class="row">
-                <button class="b" data-a="y">
+                <button class="b o" data-a="y" type="button">
                   <i data-i="check"></i>Joyfully accepts</button
-                ><button class="b o" data-a="n">Regretfully declines</button>
+                ><button class="b o" data-a="n" type="button">Regretfully declines</button>
               </div>
               <p class="sm c" id="resp">
-                Yay! Save some energy for the dance floor.
-              </p>
+                Please choose one.
+              </p><p class="ferr hid" id="e-att" role="alert"></p>
               <svg class="dv" viewBox="0 0 200 10">
                 <path d="M0 5H80M120 5H200" />
                 <path d="M100 1l4 4-4 4-4-4z" />
@@ -1159,25 +1159,25 @@
               <div id="fs">
                 <p class="k">Your details</p>
                 <input
-                  id="diet"
+                  id="diet" maxlength="300"
                   type="text"
                   placeholder="Allergies or dietary needs"
                   aria-label="Dietary"
-                /><input
-                  id="song"
+                /><span class="qc"><button type="button" class="chipq" data-fill="diet" data-v="None">None</button></span><p class="ferr hid" id="e-diet" role="alert"></p><input
+                  id="song" maxlength="300"
                   type="text"
                   placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
                   aria-label="Song"
-                />
+                /><p class="ferr hid" id="e-song" role="alert"></p>
                 <p class="k">Your message</p>
                 <textarea
-                  id="adv"
+                  id="adv" maxlength="300"
                   rows="2"
-                  placeholder="Advice for the couple (optional)"
+                  placeholder="Advice for the couple"
                   aria-label="Advice"
-                ></textarea>
+                ></textarea><span class="qc"><button type="button" class="chipq" data-fill="adv" data-v="No suggestion">No suggestion</button></span><p class="ferr hid" id="e-adv" role="alert"></p>
               </div>
-              <button class="b" id="snd">
+              <button class="b dis" id="snd" type="button" aria-disabled="true">
                 Send my RSVP<i data-i="ar"></i>
               </button>
               <div id="ok" class="hid">
