@@ -8,7 +8,7 @@ const CFG = {
   rsvpBy: "[RSVP-by date]", // PLACEHOLDER
   rsvpUrl: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL", // PLACEHOLDER
   guest: Q.get("to") || "Tita Baby",
-  seats: Math.max(1, parseInt(Q.get("seats")) || 2),
+  seats: Math.max(1, parseInt(Q.get("seats")) || 1),
   video: { src: "", poster: "" }, // put the prenup video path here, e.g. 'prenup.mp4'
   venues: {
     // map uses the ADDRESS query. Coordinates intentionally not guessed: verify on Google Maps, then fill in.
@@ -63,6 +63,12 @@ let cur = 0,
   manual = false;
 $$("[data-g]").forEach((e) => (e.textContent = CFG.guest));
 $$("[data-s]").forEach((e) => (e.textContent = CFG.seats));
+{
+  const sv = CFG.seats + " SEAT" + (CFG.seats > 1 ? "S" : "") + " RESERVED";
+  [$("#seatv"), $("#seatv2")].forEach((e) => e && (e.textContent = sv));
+  const bn = $("#bcn");
+  if (bn) bn.textContent = CFG.guest.toUpperCase() + " AC 2027";
+}
 $("#rsvpBy").textContent = $("#eRsvp").textContent = CFG.rsvpBy;
 $$(".tm").forEach((e) => (e.textContent = CFG[e.dataset.t]));
 const sget = (k) => {
@@ -117,7 +123,7 @@ function go(i) {
   if (!manual) document.body.classList.add("dark");
   $("#modal").classList.add("hid");
   $("#pv").style.visibility = cur ? "visible" : "hidden";
-  $("#nx").style.display = cur ? "" : "none";
+  $("#nx").style.display = cur && cur < pages.length - 1 ? "" : "none";
   $("#rmsv") && markHere();
   if (cur === 3) enterDay();
   if (cur === 4) enterProg();
@@ -127,8 +133,8 @@ function go(i) {
     void c.offsetWidth;
     c.style.animation = "";
   }
-  if (cur === 8) enterGift();
-  if (cur === 7) petals();
+  if (cur === 7) enterGift();
+  if (cur === 9) petals();
 }
 $("#nx").onclick = () => go(cur + 1);
 $("#pv").onclick = () => go(cur - 1);
@@ -153,57 +159,69 @@ document.addEventListener("click", (e) => {
 $("#eWhen").innerHTML =
   `Thursday, 21 January 2027<br><span class="sm">Ceremony at ${CFG.cer} (placeholder)</span>`;
 $("#eCer").innerHTML =
-  `${CFG.venues.c.name}<br><span class="sm">${CFG.venues.c.addr}</span>${mapL(CFG.venues.c)}`;
+  `${CFG.venues.c.name}<br><span class="sm">${CFG.venues.c.addr}</span>`;
 $("#eRec").innerHTML =
-  `${CFG.venues.r.name}, ${CFG.rec}<br><span class="sm">${CFG.venues.r.addr}</span>${mapL(CFG.venues.r)}`;
+  `${CFG.venues.r.name}, ${CFG.rec}<br><span class="sm">${CFG.venues.r.addr}</span>`;
 $("#jg").innerHTML = [
+  ["Proposal", 1],
+  ["Prenup", 2],
   ["Wedding day", 3],
   ["Programme", 4],
-  ["Getting there", 4],
   ["Dress code", 5],
   ["Entourage", 6],
-  ["RSVP", 7],
-  ["Gifts", 8],
-  ["FAQ", 9],
+  ["Gifts", 7],
+  ["FAQ", 8],
+  ["RSVP", 9],
 ]
   .map((a) => `<button class="p" data-go="${a[1]}">${a[0]}</button>`)
   .join("");
-$("#tb").value = CFG.guest;
-$("#tf").onclick = () => {
-  const v = $("#tb").value.trim();
-  $("#tr").textContent = v
-    ? `${v}: Table 4 (sample, real seating to be added)`
-    : "";
-};
-$("#chartT").onclick = function () {
-  this.classList.toggle("o");
-  $("#chart").classList.toggle("hid");
-};
 $("#inf").onclick = () => $("#modal").classList.remove("hid");
 $("#mX").onclick = () => $("#modal").classList.add("hid");
 $("#modal").onclick = (e) => {
   if (e.target.id === "modal") $("#modal").classList.add("hid");
 };
 $("#justD").onclick = () => $("#modal").classList.remove("hid");
+/* ===== Two themes only: Navy and Gold (dark) / Cream and Light Green (light) ===== */
 const TH = [
-  ["dark", "#1E293B"],
-  ["light", "#F9F6F0"],
+  ["dark", "#14264F", "#E5C583", "Navy and gold"],
+  ["light", "#F6F1E7", "#9CB88F", "Cream and light green"],
 ];
 $("#sw").innerHTML = $("#sw2").innerHTML = TH.map(
   (t) =>
-    `<button data-th="${t[0]}" style="background:${t[1]}" aria-label="${t[0]} mode"></button>`,
+    `<button data-th="${t[0]}" style="background:linear-gradient(135deg,${t[1]} 55%,${t[2]} 55%)" aria-label="${t[3]}" title="${t[3]}"></button>`,
 ).join("");
-document.addEventListener("click", (e) => {
-  const t = e.target.dataset && e.target.dataset.th;
-  if (!t) return;
+const setTheme = (t) => {
   manual = true;
   document.body.classList.toggle("dark", t === "dark");
+  try {
+    localStorage.setItem("theme", t);
+  } catch (e) {}
+};
+{
+  let st = null;
+  try {
+    st = localStorage.getItem("theme");
+  } catch (e) {}
+  setTheme(st === "light" ? "light" : "dark");
+}
+document.addEventListener("click", (e) => {
+  const t = e.target.dataset && e.target.dataset.th;
+  if (t) setTheme(t);
 });
 
 /* ================= Ambient layers: fog, glows, outlined clouds, slow plane, particles ================= */
 {
-  const cloud = (i, l) =>
-    `<svg class="cld" viewBox="0 0 160 80" style="top:${4 + i * 24}%;width:${(l ? 200 : 130) + i * 30}px;animation-duration:${(l ? 70 : 110) + i * 14}s;animation-delay:-${i * 19}s;opacity:${l ? 0.95 : 0.6}"><path d="M24 64a20 20 0 0 1 2-40 30 30 0 0 1 56-8 26 26 0 0 1 46 10 22 22 0 0 1 2 38z"/><path class="in" d="M44 52h70"/></svg>`;
+  const cloud = (top, w, dur, del, l) =>
+    `<svg class="cld" viewBox="0 0 160 80" style="top:${top}%;width:${w}px;animation-duration:${dur}s;animation-delay:-${del}s;opacity:${l ? 0.95 : 0.6}"><path d="M24 64a20 20 0 0 1 2-40 30 30 0 0 1 56-8 26 26 0 0 1 46 10 22 22 0 0 1 2 38z"/><path class="in" d="M44 52h70"/></svg>`;
+  /* 2 layers x 3 clouds, each in its own vertical band (>=14% apart), different sizes/speeds/offsets */
+  const CLB = [
+    [8, 150, 130, 20, 0],
+    [38, 120, 160, 100, 0],
+    [66, 170, 145, 60, 0],
+    [22, 230, 85, 45, 1],
+    [52, 260, 100, 12, 1],
+    [80, 210, 75, 70, 1],
+  ];
   $("#bgL").innerHTML =
     [0, 1, 2]
       .map(
@@ -217,8 +235,7 @@ document.addEventListener("click", (e) => {
         return `<div class="orb" style="width:${s}px;height:${s}px;left:${(i * 17) % 90}%;top:${(i * 29) % 80}%;animation-delay:-${i * 3}s,-${i}s;animation-duration:${18 + i * 3}s,${3 + (i % 3)}s"></div>`;
       })
       .join("") +
-    [0, 1, 2, 3].map((i) => cloud(i, 0)).join("") +
-    [0, 1, 2, 3].map((i) => cloud(i, 1)).join("") +
+    CLB.map((c) => cloud(...c)).join("") +
     `<div class="plane"><i></i><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></div>`;
   const cv = $("#fx"),
     cx = cv.getContext("2d");
@@ -245,7 +262,7 @@ document.addEventListener("click", (e) => {
         o.x += Math.sin(t / 3000 + o.p) * 0.0002;
         if (o.y < 0) o.y = 1;
         cx.globalAlpha = 0.3 + 0.5 * Math.sin(t / 800 + o.p) ** 2;
-        cx.fillStyle = d ? "#E5C583" : "#b8924a";
+        cx.fillStyle = d ? "#E5C583" : "#6f9a62";
         cx.beginPath();
         cx.arc(o.x * W, o.y * H, o.r * (d ? 1.3 : 1.1), 0, 7);
         cx.fill();
@@ -295,155 +312,249 @@ $("#begin").onclick = () => {
   else openMap(true);
 };
 
-/* ================= City-lights connection map (+ intro) ================= */
+/* ================= Street-style city-lights map (+ intro) ================= */
 const rm = $("#rm"),
+  rmw = $("#rmw"),
   cl = $("#cl"),
   cc = cl.getContext("2d");
 let lights = [],
   lt0 = 0,
   lraf = 0,
   introMode = false,
-  introTimer = 0;
-const MD = "M110 340C240 190 330 430 470 300S700 150 830 260 920 330 940 240";
-const lake = { x: 560, y: 450, rx: 190, ry: 80 };
+  introTimer = 0,
+  builtBg = false;
+let view = { k: 1, x: 0, y: 0 };
+const mk = (s) => () => {
+  s |= 0;
+  s = (s + 0x6d2b79f5) | 0;
+  let t = Math.imul(s ^ (s >>> 15), 1 | s);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+/* Story stops (percent of map). Order = page order. */
+const TAGS = [
+  ["Invitation ticket", 10, 18],
+  ["Proposal", 33, 16],
+  ["Prenup shot", 50, 24],
+  ["Wedding day", 72, 12],
+  ["Timeline and map", 60, 38],
+  ["Dress code", 85, 52],
+  ["Entourage", 92, 74],
+  ["Gift", 11, 54],
+  ["Question", 19, 76],
+  ["RSVP", 25, 36],
+];
+const BENDS = { 6: -230, 7: 0.1, 4: -0.2 };
+function lineD(ang, off, ext = 1400) {
+  const dx = Math.cos(ang),
+    dy = Math.sin(ang),
+    nx = -dy,
+    ny = dx,
+    cx = 500 + nx * off,
+    cy = 280 + ny * off;
+  return `M${(cx - dx * ext).toFixed(0)} ${(cy - dy * ext).toFixed(0)}L${(cx + dx * ext).toFixed(0)} ${(cy + dy * ext).toFixed(0)}`;
+}
+function buildBg() {
+  if (builtBg) return;
+  builtBg = true;
+  const R = mk(11),
+    A = 0.55,
+    B = A + 1.42;
+  let side = "";
+  for (let i = -9; i <= 9; i++) side += lineD(A, i * 76 + (R() - 0.5) * 26);
+  for (let i = -8; i <= 8; i++) side += lineD(B, i * 92 + (R() - 0.5) * 30);
+  side +=
+    "M-60 400Q300 250 560 330T1060 210M-60 120Q220 170 420 90T800 40M120 600Q240 470 420 480T760 600";
+  const mains = [
+    lineD(A, -60),
+    lineD(A, 160),
+    lineD(B, 70),
+    "M-60 330Q300 210 540 300T1060 420",
+  ];
+  const iso = (x, y, w, h) =>
+    `<g class="bd2"><polygon points="${x},${y} ${x + w},${y - w / 2} ${x + 2 * w},${y} ${x + w},${y + w / 2}"/><polygon points="${x},${y} ${x + w},${y + w / 2} ${x + w},${y + w / 2 + h} ${x},${y + h}"/><polygon points="${x + 2 * w},${y} ${x + w},${y + w / 2} ${x + w},${y + w / 2 + h} ${x + 2 * w},${y + h}"/></g>`;
+  const comets = mains
+    .map(
+      (d, i) =>
+        `<path id="mv${i}" d="${d}" fill="none"/><circle class="cm" r="3.2"><animateMotion dur="${15 + i * 4}s" begin="-${i * 5}s" repeatCount="indefinite"><mpath href="#mv${i}"/></animateMotion></circle><circle class="cm" r="2.2"><animateMotion dur="${19 + i * 3}s" begin="-${i * 7 + 3}s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#mv${i}"/></animateMotion></circle>`,
+    )
+    .join("");
+  $("#rmbg").innerHTML =
+    `<defs><filter id="glw" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect class="gd" width="1000" height="560"/>
+  <g class="sg"><path class="so" d="${side}"/><path class="mo" d="${mains.join("")}"/><path class="sf" d="${side}"/><path class="mf" d="${mains.join("")}"/>
+  <g class="bd2" opacity=".0"></g>${iso(40, 470, 46, 52)}${iso(120, 500, 38, 40)}${iso(150, 440, 30, 34)}${iso(800, 480, 44, 50)}${iso(890, 500, 36, 44)}${iso(850, 430, 30, 30)}</g>
+  <circle class="blob" cx="900" cy="80" r="120" fill="#1fd1c6"/><circle class="blob" cx="985" cy="190" r="110" fill="#7a4cff" style="animation-delay:-4s"/><circle class="blob" cx="810" cy="30" r="90" fill="#d23fb0" style="animation-delay:-8s"/>
+  <path class="rv" d="M690 -20Q810 70 1040 120L1040 280Q840 220 600 60Z" opacity=".92"/><path id="rvc" d="M640 14Q830 130 1040 205" fill="none"/><text class="rt1"><textPath href="#rvc">HINULUGANG TAKTAK</textPath></text>
+  ${comets}`;
+}
 function gen() {
   lights = [];
-  const cl2 = [
-    [240, 300, 95, 900],
-    [850, 250, 60, 380],
-    [560, 160, 80, 150],
-    [420, 380, 70, 160],
-  ];
-  cl2.forEach((c) => {
-    for (let i = 0; i < c[3]; i++) {
-      const a = Math.random() * 6.28,
-        r =
-          Math.abs((Math.random() + Math.random() + Math.random()) / 3 - 0.5) *
-          2 *
-          c[2] *
-          1.6,
+  const R = mk((Math.random() * 1e6) | 0),
+    cap = innerWidth < 760 ? 1200 : 2300,
+    cs = [
+      [640, 300, 170, 0.5],
+      [820, 430, 120, 0.22],
+      [300, 200, 140, 0.16],
+      [180, 420, 100, 0.12],
+    ];
+  const riv = (x, y) => x > 620 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 78;
+  cs.forEach((c) => {
+    const n = cap * c[3];
+    for (let i = 0; i < n; i++) {
+      const a = R() * 6.283,
+        r = Math.abs((R() + R() + R()) / 3 - 0.5) * 2 * c[2] * 1.7,
         x = c[0] + Math.cos(a) * r,
         y = c[1] + Math.sin(a) * r * 0.8;
-      if (((x - lake.x) / lake.rx) ** 2 + ((y - lake.y) / lake.ry) ** 2 < 1)
-        continue;
-      lights.push({ x, y, r: Math.random() * 1.6 + 0.5, p: Math.random() * 6 });
+      if (x < 0 || x > 1000 || y < 0 || y > 560 || riv(x, y)) continue;
+      lights.push({ x, y, r: R() * 1.5 + 0.5, p: R() * 6 });
     }
   });
-  for (let i = 0; i < 160; i++) {
-    const t = Math.random();
-    lights.push({
-      x: 110 + t * 830,
-      y: 330 - Math.sin(t * 6) * 70 + (Math.random() - 0.5) * 20,
-      r: 0.8,
-      p: Math.random() * 6,
-    });
-  }
 }
 function paintLights(t) {
-  const w = (cl.width = innerWidth),
-    h = (cl.height = innerHeight),
-    s = Math.min(w / 1000, h / 560),
-    ox = (w - 1000 * s) / 2,
-    oy = (h - 560 * s) / 2,
-    el = (t - lt0) / 1000;
-  cc.fillStyle = "#050b1c";
-  cc.fillRect(0, 0, w, h);
-  cc.fillStyle = "#08142e";
-  cc.beginPath();
-  cc.ellipse(
-    ox + lake.x * s,
-    oy + lake.y * s,
-    lake.rx * s,
-    lake.ry * s,
-    0,
-    0,
-    7,
-  );
-  cc.fill();
-  lights.forEach((l) => {
-    const wave = introMode
-      ? Math.max(0, Math.min(1, (el * 160 - (l.x - 80)) / 200))
-      : 1;
-    if (!wave) return;
-    cc.globalAlpha = wave * (0.35 + 0.65 * Math.sin(t / 500 + l.p) ** 2);
-    cc.fillStyle = l.r > 1.5 ? "#fff3c4" : "#E5C583";
+  const el = (t - lt0) / 1000;
+  cc.clearRect(0, 0, 2000, 1120);
+  cc.globalCompositeOperation = "lighter";
+  for (const l of lights) {
+    const w = introMode ? Math.max(0, Math.min(1, (el * 230 - l.x) / 220)) : 1;
+    if (!w) continue;
+    cc.globalAlpha = w * (0.3 + 0.7 * Math.sin(t / 500 + l.p) ** 2);
+    cc.fillStyle = l.r > 1.4 ? "#fff3c4" : "#E5C583";
     cc.beginPath();
-    cc.arc(ox + l.x * s, oy + l.y * s, l.r * s * 1.2, 0, 7);
+    cc.arc(l.x * 2, l.y * 2, l.r * 2.1, 0, 7);
     cc.fill();
-  });
+  }
   cc.globalAlpha = 1;
+  cc.globalCompositeOperation = "source-over";
   if (!rm.classList.contains("hid")) lraf = requestAnimationFrame(paintLights);
 }
-function buildMap(intro) {
-  const s = $("#rmsv");
-  s.innerHTML = `<ellipse class="lake" cx="${lake.x}" cy="${lake.y}" rx="${lake.rx}" ry="${lake.ry}" opacity=".0"/><text class="lb" x="${lake.x}" y="${lake.y + 6}">Laguna de Bay</text><text class="lb" x="240" y="440">Metro Manila</text><text class="lb" x="860" y="350">Antipolo</text>
-  <path class="rt" d="${MD}" opacity=".3"/><path id="rg" class="rt g" d="${MD}"/>
-  <g id="pm"><path d="M0 0L-14 7-10 0-14-7z" fill="#E5C583" transform="scale(1.3)"/></g>`;
-  const p = $("#rg"),
-    L = p.getTotalLength();
-  p.style.setProperty("--L", L);
-  p.style.strokeDasharray = L;
-  p.style.strokeDashoffset = intro ? L : 0;
-  p.style.transition = intro ? "stroke-dashoffset 5s ease-in-out" : "none";
-  const pts = [];
-  for (let i = 1; i <= 9; i++) {
-    const f = (i - 1) / 8,
-      pt = p.getPointAtLength(L * f);
-    pts.push(pt);
-    const g = document.createElementNS(NS, "g");
-    g.setAttribute("class", "st");
-    g.dataset.i = i;
-    g.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
-    g.style.animationDelay = intro ? f * 5 + 0.4 + "s" : "0s";
-    g.innerHTML = `<title>${names[i]}</title><circle class="gl" r="24"/><circle class="nd" r="14"/><text y="4">${i}</text><text class="tt" y="-26">${names[i].toUpperCase().slice(0, 14)}</text>`;
-    g.onclick = () => {
-      if (!introMode) {
-        closeMap();
-        go(i);
-      }
-    };
-    s.append(g);
+function buildTags(intro) {
+  const s = $("#rmsv"),
+    H = 32;
+  s.innerHTML = "";
+  const P = TAGS.map((t) => ({
+    x: t[1] * 10,
+    y: t[2] * 5.6,
+    w: t[0].length * 9.4 + 30,
+  }));
+  const edge = (p, u) => {
+    const ax = Math.abs(u.x) || 1e-6,
+      ay = Math.abs(u.y) || 1e-6,
+      t = Math.min((p.w / 2 + 5) / ax, (H / 2 + 12) / ay);
+    return { x: p.x + u.x * t, y: p.y + u.y * t };
+  };
+  let arrows = "";
+  for (let i = 0; i < P.length - 1; i++) {
+    const a = P[i],
+      b = P[i + 1],
+      dx = b.x - a.x,
+      dy = b.y - a.y,
+      d = Math.hypot(dx, dy),
+      u = { x: dx / d, y: dy / d },
+      s0 = edge(a, u),
+      e0 = edge(b, { x: -u.x, y: -u.y });
+    const bend =
+        BENDS[i] !== undefined
+          ? Math.abs(BENDS[i]) < 1
+            ? BENDS[i] * d
+            : BENDS[i]
+          : (i % 2 ? -0.16 : 0.16) * d,
+      cx = (s0.x + e0.x) / 2 + -u.y * bend,
+      cy = (s0.y + e0.y) / 2 + u.x * bend;
+    const dd = `M${s0.x.toFixed(1)} ${s0.y.toFixed(1)}Q${cx.toFixed(1)} ${cy.toFixed(1)} ${e0.x.toFixed(1)} ${e0.y.toFixed(1)}`;
+    arrows += `<path class="ar" data-d="${i}" d="${dd}"/><path class="af" d="${dd}" style="opacity:${intro ? 0 : 1}" data-f="${i}"/>`;
   }
-  const pl = $("#pm");
-  const an = document.createElementNS(NS, "animateMotion");
-  an.setAttribute("dur", intro ? "5s" : "14s");
-  an.setAttribute("rotate", "auto");
-  an.setAttribute("repeatCount", intro ? "1" : "indefinite");
-  an.setAttribute("fill", "freeze");
-  an.innerHTML = `<mpath href="#rg"/>`;
-  pl.append(an);
-  if (intro) an.beginElement && setTimeout(() => an.beginElement(), 0);
-  if (intro)
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => (p.style.strokeDashoffset = 0)),
-    );
+  const tags = P.map(
+    (p, i) =>
+      `<g class="tg" data-i="${i}" tabindex="0" role="button" aria-label="${TAGS[i][0]}" transform="translate(${p.x} ${p.y})" style="animation-delay:${intro ? 1.8 + i * 0.45 : 0}s"><g class="tgi" style="animation-delay:-${i * 0.7}s"><polygon points="-7,${H / 2 - 2} 7,${H / 2 - 2} 0,${H / 2 + 10}"/><rect class="hr" x="${-p.w / 2 - 4}" y="${-H / 2 - 4}" width="${p.w + 8}" height="${H + 8}" rx="10"/><rect x="${-p.w / 2}" y="${-H / 2}" width="${p.w}" height="${H}" rx="7"/><text y="5">${TAGS[i][0].toUpperCase()}</text></g></g>`,
+  ).join("");
+  s.innerHTML = `<g>${arrows}</g>${tags}`;
+  $$("#rmsv .ar").forEach((p, i) => {
+    const L = p.getTotalLength();
+    if (intro) {
+      p.style.strokeDasharray = L;
+      p.style.strokeDashoffset = L;
+      p.style.transition = "stroke-dashoffset .7s ease-out";
+      setTimeout(
+        () => {
+          p.style.strokeDashoffset = 0;
+        },
+        2000 + i * 450 + 400,
+      );
+      setTimeout(
+        () => {
+          const f = $(`#rmsv .af[data-f="${i}"]`);
+          if (f) f.style.opacity = 1;
+        },
+        2000 + i * 450 + 1100,
+      );
+    }
+  });
   markHere();
-  return pts;
+  return P;
 }
 function markHere() {
-  $$("#rmsv .st").forEach((g) =>
+  $$("#rmsv .tg").forEach((g) =>
     g.classList.toggle("here", +g.dataset.i === cur),
   );
 }
+const apply = (anim) => {
+  rmw.classList.toggle("tr", !!anim);
+  rmw.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.k})`;
+};
+function clampV() {
+  const vw = innerWidth,
+    vh = innerHeight,
+    w = 1000 * view.k,
+    h = 560 * view.k;
+  view.x = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, view.x));
+  view.y = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, view.y));
+}
+function fit(anim, focus) {
+  const vw = innerWidth,
+    vh = innerHeight,
+    f = Math.min(vw / 1000, vh / 560) * 0.97;
+  view.k = vw < 760 ? Math.max(f, 0.9) : f;
+  const t = focus != null ? TAGS[focus] : null,
+    cx = t ? t[1] * 10 : 500,
+    cy = t ? t[2] * 5.6 : 280;
+  view.x = vw / 2 - cx * view.k;
+  view.y = vh / 2 - cy * view.k;
+  clampV();
+  apply(anim);
+}
+function zoomAt(f, px, py, anim) {
+  const k2 = Math.max(0.5, Math.min(3.5, view.k * f));
+  view.x = px - ((px - view.x) * k2) / view.k;
+  view.y = py - ((py - view.y) * k2) / view.k;
+  view.k = k2;
+  clampV();
+  apply(anim);
+}
 function openMap(intro) {
   introMode = !!intro;
-  rm.classList.remove("hid", "zoom");
+  buildBg();
+  rm.classList.remove("hid");
+  rmw.classList.toggle("intro", introMode);
   gen();
   lt0 = performance.now();
   cancelAnimationFrame(lraf);
   lraf = requestAnimationFrame(paintLights);
-  $("#rmk").textContent = `Abe & Collyn · nine stops`;
-  const pts = buildMap(introMode);
+  const P = buildTags(introMode);
   $("#skip").classList.toggle("hid", !introMode);
   $("#rmX").classList.toggle("hid", introMode);
+  $("#rmFit").classList.toggle("hid", introMode);
+  $("#rmIn").classList.toggle("hid", introMode);
+  fit(false, introMode ? null : cur);
   if (introMode) {
     clearTimeout(introTimer);
     introTimer = setTimeout(() => {
-      const f = pts[0];
-      rm.style.setProperty("--zo", `${f.x / 10}% ${f.y / 5.6}%`);
-      rm.classList.add("zoom");
-      introTimer = setTimeout(endIntro, 1300);
-    }, 6200);
+      view.k = 2.6;
+      view.x = innerWidth / 2 - P[0].x * view.k;
+      view.y = innerHeight / 2 - P[0].y * view.k;
+      apply(true);
+      introTimer = setTimeout(endIntro, 1350);
+    }, 6600);
   }
 }
 function endIntro() {
@@ -458,9 +569,91 @@ function closeMap() {
   cancelAnimationFrame(lraf);
   introMode = false;
 }
+{
+  const ptrs = new Map();
+  let moved = 0,
+    pd = 0,
+    startTag = null;
+  rm.addEventListener("pointerdown", (e) => {
+    if (e.target.closest("button") || introMode) return;
+    ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    moved = 0;
+    startTag = e.target.closest(".tg");
+    pd =
+      ptrs.size === 2
+        ? Math.hypot(
+            ...[...ptrs.values()]
+              .reduce(
+                (a, p) => [Math.abs(a[0] - p.x), Math.abs(a[1] - p.y)],
+                [0, 0],
+              )
+              .map((v, i, a) => v),
+          )
+        : 0;
+  });
+  addEventListener("pointermove", (e) => {
+    const p = ptrs.get(e.pointerId);
+    if (!p) return;
+    if (ptrs.size === 1) {
+      const dx = e.clientX - p.x,
+        dy = e.clientY - p.y;
+      moved += Math.abs(dx) + Math.abs(dy);
+      view.x += dx;
+      view.y += dy;
+      clampV();
+      apply(false);
+    } else if (ptrs.size === 2) {
+      const o = [...ptrs.entries()].find(([id]) => id !== e.pointerId)[1],
+        d0 = Math.hypot(p.x - o.x, p.y - o.y),
+        d1 = Math.hypot(e.clientX - o.x, e.clientY - o.y);
+      moved += 20;
+      if (d0 > 0)
+        zoomAt(d1 / d0, (e.clientX + o.x) / 2, (e.clientY + o.y) / 2, false);
+    }
+    p.x = e.clientX;
+    p.y = e.clientY;
+  });
+  const up = (e) => {
+    if (!ptrs.has(e.pointerId)) return;
+    const single = ptrs.size === 1;
+    ptrs.delete(e.pointerId);
+    if (single && moved < 8 && startTag && !introMode) {
+      const i = +startTag.dataset.i;
+      closeMap();
+      go(i);
+    }
+  };
+  addEventListener("pointerup", up);
+  addEventListener("pointercancel", (e) => ptrs.delete(e.pointerId));
+  rm.addEventListener(
+    "wheel",
+    (e) => {
+      if (introMode) return;
+      e.preventDefault();
+      zoomAt(e.deltaY < 0 ? 1.15 : 0.87, e.clientX, e.clientY, false);
+    },
+    { passive: false },
+  );
+  rm.addEventListener("keydown", (e) => {
+    const t = e.target.closest && e.target.closest(".tg");
+    if (t && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      closeMap();
+      go(+t.dataset.i);
+    }
+    if (e.key === "+" || e.key === "=")
+      zoomAt(1.3, innerWidth / 2, innerHeight / 2, true);
+    if (e.key === "-") zoomAt(0.77, innerWidth / 2, innerHeight / 2, true);
+  });
+}
+addEventListener("resize", () => {
+  if (!rm.classList.contains("hid") && !introMode) fit(false, cur);
+});
 $("#openMap").onclick = () => openMap(false);
 $("#rmX").onclick = closeMap;
 $("#skip").onclick = endIntro;
+$("#rmFit").onclick = () => fit(true, cur);
+$("#rmIn").onclick = () => zoomAt(1.4, innerWidth / 2, innerHeight / 2, true);
 
 /* ================= Ch2 prenup: polaroids + video ================= */
 {
@@ -534,30 +727,42 @@ $("#skip").onclick = endIntro;
     lay();
   };
   lay();
-  const v = $("#vd"),
+  const vd = $("#vd"),
     has = !!CFG.video.src;
   if (has) {
-    v.src = CFG.video.src;
-    v.poster = CFG.video.poster;
+    vd.src = CFG.video.src;
+    if (CFG.video.poster) vd.poster = CFG.video.poster;
+    vd.classList.remove("hid");
     $("#vph").classList.add("hid");
   }
-  const pi = $("#vpi");
-  const setI = (p) =>
-    pi.setAttribute("d", p ? "M8 5v14M16 5v14" : "M7 4l13 8-13 8z");
-  $("#vpl").onclick = () => {
-    if (!has) return;
-    v.paused ? v.play() : v.pause();
+  const acts = {
+    set() {
+      if (has) vd.paused ? vd.play() : vd.pause();
+    },
+    l() {
+      if (has) vd.currentTime = Math.max(0, vd.currentTime - 5);
+    },
+    r() {
+      if (has) vd.currentTime = Math.min(vd.duration || 0, vd.currentTime + 5);
+    },
+    del() {
+      vd.muted = !vd.muted;
+    },
+    fs() {
+      const w = $("#cam");
+      (w.requestFullscreen || w.webkitRequestFullscreen || (() => {})).call(w);
+    },
   };
-  v.onplay = () => setI(1);
-  v.onpause = () => setI(0);
-  v.ontimeupdate = () =>
-    ($("#vpr").value = (v.currentTime / (v.duration || 1)) * 100);
-  $("#vpr").oninput = (e) => {
-    if (has) v.currentTime = (e.target.value / 100) * v.duration;
-  };
-  $("#vmu").onclick = () => (v.muted = !v.muted);
-  $("#vfs").onclick = () =>
-    $("#vid").requestFullscreen && $("#vid").requestFullscreen();
+  $$("#cam .cb").forEach((b) => {
+    const f = () => acts[b.dataset.a] && acts[b.dataset.a]();
+    b.onclick = f;
+    b.onkeydown = (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        f();
+      }
+    };
+  });
 }
 
 /* ================= Ch3 wedding day ================= */
@@ -795,7 +1000,7 @@ function setVenue(v, row) {
   const f = $("#mif");
   if (mapInit && navigator.onLine) {
     f.style.display = "";
-    f.src = `https://www.google.com/maps?q=${enc(VQ(CFG.venues[v]))}&output=embed`;
+    f.src = `https://www.google.com/maps?q=${enc(VQ(CFG.venues[v]))}&z=17&output=embed`;
   }
 }
 $("#rows").onclick = (e) => {
@@ -933,7 +1138,6 @@ function petals() {
     const body = new URLSearchParams({
       guest: CFG.guest,
       attending: att === "y" ? "Yes" : "No",
-      seats: att === "y" ? 1 : 0,
       diet: $("#diet").value,
       song: $("#song").value,
       advice: $("#adv").value,
@@ -942,8 +1146,39 @@ function petals() {
       await fetch(CFG.rsvpUrl, { method: "POST", mode: "no-cors", body });
       btn.classList.add("hid");
       $("#ok").classList.remove("hid");
-      if (window.confetti)
-        window.confetti({ particleCount: 220, spread: 90, origin: { y: 0.6 } });
+      if (window.confetti) {
+        const colors = document.body.classList.contains("dark")
+          ? ["#E5C583", "#F8F5EE", "#B8924A", "#7590BF"]
+          : ["#9CB88F", "#3F5F45", "#F6F1E7", "#D2B89A"];
+        window.confetti({
+          particleCount: 140,
+          spread: 100,
+          origin: { y: 0.6 },
+          colors,
+        });
+        setTimeout(
+          () =>
+            window.confetti({
+              particleCount: 90,
+              angle: 60,
+              spread: 70,
+              origin: { x: 0, y: 0.7 },
+              colors,
+            }),
+          350,
+        );
+        setTimeout(
+          () =>
+            window.confetti({
+              particleCount: 90,
+              angle: 120,
+              spread: 70,
+              origin: { x: 1, y: 0.7 },
+              colors,
+            }),
+          650,
+        );
+      }
     } catch (err) {
       btn.disabled = false;
       $("#rerr").classList.remove("hid");
@@ -1022,7 +1257,6 @@ $("#gbox").onclick = () => {
     }, 1200);
   };
 }
-
 
 icons();
 go(0);
