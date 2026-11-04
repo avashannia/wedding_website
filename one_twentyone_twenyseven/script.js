@@ -317,7 +317,8 @@ const rm = $("#rm"),
   rmw = $("#rmw"),
   cl = $("#cl"),
   cc = cl.getContext("2d");
-let lights = [],
+let ROADS = [],
+  lights = [],
   lt0 = 0,
   lraf = 0,
   introMode = false,
@@ -371,6 +372,8 @@ function buildBg() {
     lineD(B, 70),
     "M-60 330Q300 210 540 300T1060 420",
   ];
+  ROADS = [];
+  (mains.join("") + side).replace(/M(-?\d+) (-?\d+)L(-?\d+) (-?\d+)/g, (m, a, b, c2, d) => ROADS.push([+a, +b, +c2, +d, mains.join("").includes(m) ? 1 : 0]));
   const iso = (x, y, w, h) =>
     `<g class="bd2"><polygon points="${x},${y} ${x + w},${y - w / 2} ${x + 2 * w},${y} ${x + w},${y + w / 2}"/><polygon points="${x},${y} ${x + w},${y + w / 2} ${x + w},${y + w / 2 + h} ${x},${y + h}"/><polygon points="${x + 2 * w},${y} ${x + w},${y + w / 2} ${x + w},${y + w / 2 + h} ${x + 2 * w},${y + h}"/></g>`;
   const comets = mains
@@ -399,6 +402,18 @@ function gen() {
       [180, 420, 100, 0.12],
     ];
   const riv = (x, y) => x > 620 && Math.abs(y - (-20 + (x - 680) * 0.647)) < 78;
+  ROADS.forEach((r) => {
+    const L = Math.hypot(r[2] - r[0], r[3] - r[1]),
+      step = r[4] ? 16 : 30,
+      ux = (r[2] - r[0]) / L,
+      uy = (r[3] - r[1]) / L;
+    for (let d = R() * step; d < L; d += step) {
+      const x = r[0] + ux * d - uy * (r[4] ? 7 : 4) * (d % (2 * step) < step ? 1 : -1),
+        y = r[1] + uy * d + ux * (r[4] ? 7 : 4) * (d % (2 * step) < step ? 1 : -1);
+      if (x < 0 || x > 1000 || y < 0 || y > 560 || riv(x, y)) continue;
+      lights.push({ x, y, r: r[4] ? 1.2 : 0.9, p: R() * 6 });
+    }
+  });
   cs.forEach((c) => {
     const n = cap * c[3];
     for (let i = 0; i < n; i++) {
@@ -414,12 +429,13 @@ function gen() {
 function paintLights(t) {
   const el = (t - lt0) / 1000;
   cc.clearRect(0, 0, 2000, 1120);
-  cc.globalCompositeOperation = "lighter";
+  const dk = document.body.classList.contains("dark");
+  cc.globalCompositeOperation = dk ? "lighter" : "source-over";
   for (const l of lights) {
     const w = introMode ? Math.max(0, Math.min(1, (el * 230 - l.x) / 220)) : 1;
     if (!w) continue;
-    cc.globalAlpha = w * (0.3 + 0.7 * Math.sin(t / 500 + l.p) ** 2);
-    cc.fillStyle = l.r > 1.4 ? "#fff3c4" : "#E5C583";
+    cc.globalAlpha = w * (dk ? 0.3 : 0.55) * (1 + (dk ? 2.3 : 0.8) * Math.sin(t / 500 + l.p) ** 2);
+    cc.fillStyle = dk ? (l.r > 1.4 ? "#fff3c4" : "#E5C583") : l.r > 1.4 ? "#d98a12" : l.p > 3 ? "#2f5a3a" : "#e0a030";
     cc.beginPath();
     cc.arc(l.x * 2, l.y * 2, l.r * 2.1, 0, 7);
     cc.fill();
@@ -503,18 +519,19 @@ const apply = (anim) => {
   rmw.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.k})`;
 };
 function clampV() {
+  view.k = Math.max(view.k, innerWidth / 1000, innerHeight / 560);
   const vw = innerWidth,
     vh = innerHeight,
     w = 1000 * view.k,
     h = 560 * view.k;
-  view.x = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, view.x));
-  view.y = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, view.y));
+  view.x = Math.min(0, Math.max(vw - w, view.x));
+  view.y = Math.min(0, Math.max(vh - h, view.y));
 }
 function fit(anim, focus) {
   const vw = innerWidth,
     vh = innerHeight,
-    f = Math.min(vw / 1000, vh / 560) * 0.97;
-  view.k = vw < 760 ? Math.max(f, 0.9) : f;
+    cov = Math.max(vw / 1000, vh / 560);
+  view.k = focus != null ? Math.max(cov, vw < 760 ? 2.3 : 1.75) : cov;
   const t = focus != null ? TAGS[focus] : null,
     cx = t ? t[1] * 10 : 500,
     cy = t ? t[2] * 5.6 : 280;
@@ -524,7 +541,7 @@ function fit(anim, focus) {
   apply(anim);
 }
 function zoomAt(f, px, py, anim) {
-  const k2 = Math.max(0.5, Math.min(3.5, view.k * f));
+  const k2 = Math.max(Math.max(innerWidth / 1000, innerHeight / 560), Math.min(3.5, view.k * f));
   view.x = px - ((px - view.x) * k2) / view.k;
   view.y = py - ((py - view.y) * k2) / view.k;
   view.k = k2;
@@ -652,7 +669,7 @@ addEventListener("resize", () => {
 $("#openMap").onclick = () => openMap(false);
 $("#rmX").onclick = closeMap;
 $("#skip").onclick = endIntro;
-$("#rmFit").onclick = () => fit(true, cur);
+$("#rmFit").onclick = () => fit(true, null);
 $("#rmIn").onclick = () => zoomAt(1.4, innerWidth / 2, innerHeight / 2, true);
 
 /* ================= Ch2 prenup: polaroids + video ================= */
@@ -976,13 +993,7 @@ $("#rows").innerHTML = P.map(
 function sizeBoard() {
   const r = $("#rows");
   if (!r || !r.clientWidth) return;
-  const tw = Math.max(
-    6,
-    Math.min(
-      34,
-      Math.floor((r.clientWidth - 17 - 6) / (Math.max(...WD) + 0.6)),
-    ),
-  );
+  const tw = Math.max(6, Math.min(34, Math.floor((r.clientWidth - 17 - 6) / (Math.max(...WD) + 0.6))));
   r.style.setProperty("--tw", tw + "px");
 }
 new ResizeObserver(sizeBoard).observe($("#rows"));
@@ -1140,11 +1151,9 @@ function petals() {
     if (cl($("#nm").value, 80).length < 2) o.nm = "Please enter your name";
     if (!att) o.att = "Please choose one";
     if (att === "y") {
-      if (!cl($("#diet").value, 300))
-        o.diet = "Please share dietary needs, or tap None";
+      if (!cl($("#diet").value, 300)) o.diet = "Please share dietary needs, or tap None";
       if (!cl($("#song").value, 300)) o.song = "Please share one song";
-      if (!cl($("#adv").value, 300))
-        o.adv = "Please share some advice, or tap No suggestion";
+      if (!cl($("#adv").value, 300)) o.adv = "Please share some advice, or tap No suggestion";
     }
     return o;
   };
@@ -1172,9 +1181,7 @@ function petals() {
         $$("#rv [data-a]").forEach((x) => x.classList.toggle("o", x !== b));
         fs.classList.toggle("off", no);
         fs.setAttribute("aria-disabled", no);
-        $$("#fs input,#fs textarea,#fs .chipq").forEach(
-          (el) => (el.disabled = no),
-        );
+        $$("#fs input,#fs textarea,#fs .chipq").forEach((el) => (el.disabled = no));
         $("#resp").textContent = no
           ? "We'll miss you, and we're grateful you told us. Just send your reply below."
           : "Yay! Save some energy for the dance floor.";
@@ -1188,9 +1195,7 @@ function petals() {
         upd();
       }),
   );
-  $$("#rv input,#rv textarea").forEach((el) =>
-    el.addEventListener("input", upd),
-  );
+  $$("#rv input,#rv textarea").forEach((el) => el.addEventListener("input", upd));
   $("#rv").addEventListener("keydown", (e) => {
     if (e.key === "Enter" && e.target.tagName === "INPUT") {
       e.preventDefault();
