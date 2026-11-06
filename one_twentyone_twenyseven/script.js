@@ -1,12 +1,13 @@
 /* ================= EDIT YOUR DETAILS HERE ================= */
 const CONFIG = {
-  names: "Nancy & John",
-  date: new Date(2026, 9, 16, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
-  dateLabel: "16.10.2026",
-  rsvpDeadline: "10 May",
+  names: "Nancy & John", // replace with your names
+  date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
+  dateLabel: "21.01.2027",
+  rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
   maxGuests: 6,
   songUrl: "", // Paste your MP3 link here, e.g. "music/song.mp3" or a full URL
-  flowerImage: "", // Replace with your transparent PNG flower image
+  flowerImages: ["assets/flower-cream.svg", "assets/flower-gold.svg"], // used in rotation at section corners
+  flowerImage: "", // optional: ONE image (e.g. your own PNG) to use everywhere instead
   heroPhoto: "", // Hero arch photo
   photos: [
     // Gallery photos (src = image URL, cap = caption)
@@ -18,18 +19,26 @@ const CONFIG = {
     { src: "", cap: "Just us" },
   ],
   ceremony: {
-    name: "Saint Name Church",
-    addr: "Street Address, City",
-    when: "16 October 2026 · 4:00 PM",
-    mapUrl: "#",
+    name: "Parish of the Immaculate Heart of Mary",
+    addr: "Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
+    when: "21 January 2027 · 4:00 PM",
     note: "",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=" +
+      encodeURIComponent(
+        "Parish of the Immaculate Heart of Mary, Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
+      ),
   },
   reception: {
-    name: "Venue Name",
-    addr: "Street Address, City",
+    name: "The Chandelier Events Place",
+    addr: "267 San Jose Ext. St., Antipolo",
     when: "6:00 PM onward",
-    mapUrl: "#",
     note: "Cocktails to follow right after the ceremony.",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=" +
+      encodeURIComponent(
+        "The Chandelier Events Place, 267 San Jose Ext. St., Antipolo",
+      ),
   },
   timeline: [
     ["15:00", "Guest arrival", "Settle in and say hello"],
@@ -39,14 +48,18 @@ const CONFIG = {
     ["20:00", "First dance & cake", "Then the dance floor opens"],
     ["23:00", "End of evening", "Sparklers and goodbyes"],
   ],
-  dressText: "Formal attire in harmony with our colors.",
-  dressAvoid: "Kindly avoid all white.",
+  dressText: "Semi-formal attire in harmony with our wedding colors.",
+  dressLadies: "Long dress, knee-length dress or cocktail dress",
+  dressGents: "Long pants, black coat and tie",
+  dressAvoid: "Kindly avoid jeans and sneakers.",
   dressColors: [
     ["Navy", "#14213D"],
+    ["Royal blue", "#3F5A8C"],
+    ["Light blue", "#A9B9DA"],
     ["Gold", "#C9A24B"],
-    ["Ivory", "#F3EEE4"],
+    ["Cream", "#F3EEE4"],
+    ["White", "#FFFFFF"],
     ["Sage", "#A8C3A0"],
-    ["Silver", "#B9BCC4"],
   ],
   entourage: [
     ["Parents", ["[Name] & [Name]", "[Name] & [Name]"]],
@@ -94,6 +107,17 @@ $("ft").textContent = "With love, " + CONFIG.names;
 $("hp").innerHTML = media(CONFIG.heroPhoto, "The couple");
 $("dd").textContent = CONFIG.dressText;
 $("da").textContent = CONFIG.dressAvoid;
+$("dl").textContent = CONFIG.dressLadies;
+$("dg").textContent = CONFIG.dressGents;
+/* gold ornament divider under every section heading */
+document
+  .querySelectorAll("section h2")
+  .forEach((h) =>
+    h.insertAdjacentHTML(
+      "afterend",
+      '<div class="orn" aria-hidden="true"><b></b></div>',
+    ),
+  );
 
 /* ---------- date strip (5 days around the wedding date) ---------- */
 $("days").innerHTML = [-2, -1, 0, 1, 2]
@@ -193,29 +217,30 @@ const FL = [
   ["bottom:-34px;right:-40px", 30],
 ];
 document.querySelectorAll("section").forEach((s, i) => {
-  [FL[(i % 2) * 2], FL[(i % 2) * 2 + 1]].forEach((f) => {
+  [FL[(i % 2) * 2], FL[(i % 2) * 2 + 1]].forEach((f, j) => {
     const im = new Image();
     im.className = "fl";
     im.alt = "";
-    im.src = CONFIG.flowerImage || FLOWER_PH;
+    const fi = CONFIG.flowerImages;
+    im.src = CONFIG.flowerImage || fi[(i + j) % fi.length];
+    im.onerror = () => {
+      im.onerror = null;
+      im.src = FLOWER_PH;
+    };
     im.style.cssText = f[0] + ";transform:rotate(" + f[1] + "deg)";
     s.appendChild(im);
   });
   [
     [
-      "top:" +
-        (60 + ((i * 7) % 40)) +
-        "px;left:" +
-        (50 + ((i * 13) % 60)) +
-        "px",
+      "top:" + (60 + ((i * 7) % 40)) + "px;left:" + (8 + ((i * 17) % 70)) + "%",
       14,
     ],
     [
       "bottom:" +
         (50 + ((i * 9) % 30)) +
         "px;right:" +
-        (30 + ((i * 11) % 40)) +
-        "px",
+        (5 + ((i * 11) % 30)) +
+        "%",
       9,
     ],
   ].forEach((p) => {
@@ -483,7 +508,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   addEventListener("resize", rs);
   (function f(t) {
     x.clearRect(0, 0, w, h);
-    x.fillStyle = getComputedStyle(root).getPropertyValue("--ac");
+    x.fillStyle = getComputedStyle(root).getPropertyValue("--gold");
     S.forEach((p) => {
       p.y -= p.v;
       if (p.y < 0) p.y = 1;
