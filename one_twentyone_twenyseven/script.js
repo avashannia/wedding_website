@@ -6,7 +6,7 @@ const CONFIG = {
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
   maxGuests: 6,
   songUrl: "", // Paste your MP3 link here, e.g. "music/song.mp3" or a full URL
-  flowerImages: ["assets/flower-cream.svg", "assets/flower-gold.svg"], // used in rotation at section corners
+  flowerImages: ["flower.png", "assets/flower-gold.svg"], // used in rotation at section corners
   flowerImage: "", // optional: ONE image (e.g. your own PNG) to use everywhere instead
   heroPhoto: "", // Hero arch photo
   photos: [
