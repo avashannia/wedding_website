@@ -1,6 +1,6 @@
 /* ================= EDIT YOUR DETAILS HERE ================= */
 const CONFIG = {
-  names: "Nancy & John", // replace with your names
+  names: "Abe & Collyn", // replace with your names
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
@@ -27,6 +27,7 @@ const CONFIG = {
     addr: "Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
     when: "21 January 2027 · 4:00 PM",
     note: "",
+    mapEmbed: "", // optional: paste the src of Google Maps > Share > Embed a map; leave "" to search by name + address
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
       encodeURIComponent(
@@ -38,6 +39,7 @@ const CONFIG = {
     addr: "267 San Jose Ext. St., Antipolo",
     when: "6:00 PM onward",
     note: "Cocktails to follow right after the ceremony.",
+    mapEmbed: "", // optional: same as above
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
       encodeURIComponent(
@@ -146,7 +148,14 @@ function venue(id, v) {
     '<p style="margin-top:16px"><a class="btn" href="' +
     v.mapUrl +
     '" target="_blank" rel="noopener">View on map</a></p>' +
-    '<div class="map frame"><div class="ph">MAP</div></div>';
+    '<div class="map frame"><iframe title="Map of ' +
+    v.name +
+    '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="' +
+    (v.mapEmbed ||
+      "https://www.google.com/maps?q=" +
+        encodeURIComponent(v.name + ", " + v.addr) +
+        "&output=embed") +
+    '"></iframe></div>';
 }
 venue("cer", CONFIG.ceremony);
 venue("rec", CONFIG.reception);
@@ -500,15 +509,8 @@ PL.forEach((p) => {
 
 /* ---------- parallax: flowers and a few frames drift at different speeds while scrolling ---------- */
 document
-  .querySelectorAll(".arc,.map,.sw")
-  .forEach(
-    (e, i) =>
-      (e.dataset.par = e.classList.contains("arc")
-        ? 0.05
-        : i % 2
-          ? 0.06
-          : -0.05),
-  );
+  .querySelectorAll(".arc,.sw")
+  .forEach((e) => (e.dataset.par = e.classList.contains("arc") ? 0.05 : -0.05));
 const prog = document.createElement("div");
 prog.id = "prog";
 document.body.appendChild(prog);
