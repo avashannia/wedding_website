@@ -4,7 +4,7 @@ const CONFIG = {
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
-  maxGuests: 6,
+  sheetUrl: "", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
     "assets/flower-1.png",
@@ -326,35 +326,43 @@ lb.onclick = (e) => {
   if (e.target === lb) lb.close();
 };
 
-/* ---------- RSVP (no seats / tables) ---------- */
-const dlg = $("dlg");
-let gn = 1;
-$("op").onclick = () => {
-  $("f").classList.remove("hide");
-  $("ty").classList.add("hide");
+/* ---------- RSVP: one reply per guest, sent to Google Sheets (no seats, no plus-ones) ---------- */
+const dlg = $("dlg"),
+  openBtn = $("op");
+const doneInfo = () => {
+  try {
+    return JSON.parse(store("rsvpDone") || "null");
+  } catch (_) {
+    return null;
+  }
+};
+function showState(s) {
+  // "form" | "thanks" | "already"
+  $("f").classList.toggle("hide", s !== "form");
+  $("dh").classList.toggle("hide", s !== "form");
+  $("ty").classList.toggle("hide", s === "form");
+  $("tyh").textContent =
+    s === "already" ? "You’ve already replied" : "Thank you!";
+  $("typ").textContent =
+    s === "already"
+      ? "We already have your answer, so there is nothing more to do. See you soon!"
+      : "Your reply has been received. We can’t wait to celebrate with you.";
+}
+function updateBtn() {
+  if (doneInfo()) openBtn.textContent = "You’ve replied ✓";
+}
+updateBtn();
+openBtn.onclick = () => {
+  showState(doneInfo() ? "already" : "form");
   dlg.showModal();
 };
 $("x").onclick = $("x2").onclick = () => dlg.close();
 dlg.onclick = (e) => {
   if (e.target === dlg) dlg.close();
 };
-document
-  .querySelectorAll("[name=a]")
-  .forEach(
-    (r) =>
-      (r.onchange = () =>
-        $("gw").classList.toggle("hide", r.value !== "Joyfully accepts")),
-  );
-$("g-").onclick = () => {
-  gn = Math.max(1, gn - 1);
-  $("gn").textContent = gn;
-};
-$("g+").onclick = () => {
-  gn = Math.min(CONFIG.maxGuests, gn + 1);
-  $("gn").textContent = gn;
-};
-$("f").onsubmit = (e) => {
+$("f").onsubmit = async (e) => {
   e.preventDefault();
+  if (doneInfo()) return showState("already"); // answer only once per device
   let ok = true;
   const a = document.querySelector("[name=a]:checked");
   const ck = (id, bad, msg) => {
@@ -369,22 +377,49 @@ $("f").onsubmit = (e) => {
   );
   ck("e3", !a, "Please choose a response.");
   if (!ok) return;
-  let list = [];
-  try {
-    list = JSON.parse(store("rsvps") || "[]");
-  } catch (_) {}
-  list.push({
-    name: $("n").value,
-    contact: $("c").value,
+  const data = {
+    name: $("n").value.trim(),
+    contact: $("c").value.trim(),
     attending: a.value,
-    guests: a.value === "Joyfully accepts" ? gn : 0,
-    diet: $("d").value,
-    song: $("s").value,
-    msg: $("m").value,
-  });
-  store("rsvps", JSON.stringify(list)); // demo storage – connect to your own backend/form service to receive replies
-  $("f").classList.add("hide");
-  $("ty").classList.remove("hide");
+    diet: $("d").value.trim(),
+    song: $("s").value.trim(),
+    msg: $("m").value.trim(),
+  };
+  const btn = $("send");
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+  $("e4").textContent = "";
+  try {
+    let status = "ok";
+    if (CONFIG.sheetUrl) {
+      // text/plain body avoids a CORS preflight; Google Apps Script answers with JSON
+      const r = await fetch(CONFIG.sheetUrl, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      status = (await r.json()).status;
+    } else {
+      // test mode: keep a copy in this browser only
+      let list = [];
+      try {
+        list = JSON.parse(store("rsvps") || "[]");
+      } catch (_) {}
+      list.push(data);
+      store("rsvps", JSON.stringify(list));
+    }
+    if (status !== "ok" && status !== "duplicate") throw new Error(status);
+    store(
+      "rsvpDone",
+      JSON.stringify({ name: data.name, attending: data.attending }),
+    );
+    updateBtn();
+    showState(status === "duplicate" ? "already" : "thanks");
+  } catch (_) {
+    $("e4").textContent =
+      "We couldn’t send your reply. Please check your connection and try again.";
+  }
+  btn.disabled = false;
+  btn.textContent = "Send";
 };
 
 /* ---------- countdown ---------- */
