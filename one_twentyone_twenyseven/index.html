@@ -191,23 +191,17 @@
           >
         </div>
         <div class="err" id="e3"></div>
-        <div id="gw" class="hide">
-          <label>Number of guests</label>
-          <div class="step">
-            <button type="button" id="g-" aria-label="Fewer guests">−</button
-            ><b id="gn">1</b
-            ><button type="button" id="g+" aria-label="More guests">+</button>
-          </div>
-        </div>
         <label for="d">Meal preference or dietary needs (optional)</label
         ><input id="d" /> <label for="s">Song request (optional)</label
         ><input id="s" />
         <label for="m">A message for the couple (optional)</label
         ><textarea id="m" rows="2"></textarea>
+        <div class="err" id="e4" role="alert"></div>
         <div class="two">
           <button
             class="btn f"
             type="submit"
+            id="send"
             style="justify-content: center; flex: 1"
           >
             Send</button
@@ -222,8 +216,8 @@
         </div>
       </form>
       <div id="ty" class="hide" style="text-align: center">
-        <h2 class="gt">Thank you!</h2>
-        <p>
+        <h2 class="gt" id="tyh">Thank you!</h2>
+        <p id="typ">
           Your reply has been received. We can’t wait to celebrate with you.
         </p>
         <button class="btn f" id="x2" style="margin-top: 14px">Close</button>
