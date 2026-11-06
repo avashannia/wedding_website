@@ -1,13 +1,17 @@
 /* ================= EDIT YOUR DETAILS HERE ================= */
 const CONFIG = {
-  names: "Abe & Collyn", // replace with your names
+  names: "Nancy & John", // replace with your names
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
   maxGuests: 6,
-  songUrl: "assets/song.mp3", // Paste your MP3 link here, e.g. "music/song.mp3" or a full URL
-  flowerImages: ["flower.png", ""], // used in rotation at section corners
-  flowerImage: "", // optional: ONE image (e.g. your own PNG) to use everywhere instead
+  songUrl: "song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
+  flowers: [
+    "images/flower-1.png",
+    "images/flower-2.png",
+    "images/flower-3.png",
+    "images/flower-4.png",
+  ], // your 4 flower pictures
   heroPhoto: "", // Hero arch photo
   photos: [
     // Gallery photos (src = image URL, cap = caption)
@@ -89,11 +93,6 @@ const store = (k, v) => {
     return null;
   }
 };
-const FLOWER_PH =
-  "data:image/svg+xml," +
-  encodeURIComponent(
-    "<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><circle cx='110' cy='110' r='104' fill='#8A9BC4' fill-opacity='.25' stroke='#C9A24B' stroke-width='3' stroke-dasharray='9 7'/><text x='110' y='104' text-anchor='middle' font-family='Arial' font-size='20' fill='#C9A24B'>FLOWER</text><text x='110' y='132' text-anchor='middle' font-family='Arial' font-size='17' fill='#C9A24B'>PNG HERE</text></svg>",
-  );
 const media = (src, alt) =>
   src
     ? '<img src="' + src + '" alt="' + alt + '">'
@@ -208,48 +207,6 @@ document.querySelectorAll(".ac>button").forEach(
       }
     }),
 );
-
-/* ---------- flower image slots + pearls on every section ---------- */
-const FL = [
-  ["top:-30px;right:-38px", 20],
-  ["bottom:-30px;left:-40px", -25],
-  ["top:90px;left:-46px", -15],
-  ["bottom:-34px;right:-40px", 30],
-];
-document.querySelectorAll("section").forEach((s, i) => {
-  [FL[(i % 2) * 2], FL[(i % 2) * 2 + 1]].forEach((f, j) => {
-    const im = new Image();
-    im.className = "fl";
-    im.alt = "";
-    const fi = CONFIG.flowerImages;
-    im.src = CONFIG.flowerImage || fi[(i + j) % fi.length];
-    im.onerror = () => {
-      im.onerror = null;
-      im.src = FLOWER_PH;
-    };
-    im.style.cssText = f[0] + ";transform:rotate(" + f[1] + "deg)";
-    s.appendChild(im);
-  });
-  [
-    [
-      "top:" + (60 + ((i * 7) % 40)) + "px;left:" + (8 + ((i * 17) % 70)) + "%",
-      14,
-    ],
-    [
-      "bottom:" +
-        (50 + ((i * 9) % 30)) +
-        "px;right:" +
-        (5 + ((i * 11) % 30)) +
-        "%",
-      9,
-    ],
-  ].forEach((p) => {
-    const e = document.createElement("i");
-    e.className = "pl";
-    e.style.cssText = p[0] + ";width:" + p[1] + "px;height:" + p[1] + "px";
-    s.appendChild(e);
-  });
-});
 
 /* ---------- gallery: stack + grid ---------- */
 const P = CONFIG.photos,
@@ -458,13 +415,140 @@ const io = new IntersectionObserver(
   (es) =>
     es.forEach((e) => {
       if (e.isIntersecting) {
-        e.target.classList.add("in-view");
-        io.unobserve(e.target);
+        const t = e.target;
+        t.classList.add("in-view");
+        io.unobserve(t);
+        setTimeout(() => t.style.removeProperty("--d"), 1600);
       }
     }),
   { threshold: 0.12 },
 );
 document.querySelectorAll(".rv").forEach((x) => io.observe(x));
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* ---------- scroll animations: every element reveals with a staggered effect ---------- */
+function rev(el, i, t) {
+  if (
+    el.classList.contains("rv") ||
+    el.tagName === "CANVAS" ||
+    el.matches(".sw,.cd,.en,#tl,.two2,#cer,#rec")
+  )
+    return;
+  el.classList.add("rv");
+  if (t) el.classList.add(t);
+  el.style.setProperty("--d", (i * 0.09).toFixed(2) + "s");
+  io.observe(el);
+}
+document.querySelectorAll("section").forEach((sec) => {
+  let i = 0;
+  sec.querySelectorAll(".in > *, #cer > *, #rec > *").forEach((el) => {
+    const t = /^H[12]$/.test(el.tagName)
+      ? "rv-b"
+      : el.classList.contains("frame") || el.classList.contains("orn")
+        ? "rv-z"
+        : "";
+    rev(el, Math.min(i++, 5), t);
+  });
+});
+document.querySelectorAll(".sw i,.cd>div,.two2>div").forEach((e, i) => {
+  e.classList.add("rv", "rv-z");
+  e.style.setProperty("--d", ((i % 7) * 0.09).toFixed(2) + "s");
+  io.observe(e);
+});
+document.querySelectorAll(".ac").forEach((e, i) => {
+  e.classList.add("rv", i % 2 ? "rv-r" : "rv-l");
+  e.style.setProperty("--d", ((i % 3) * 0.1).toFixed(2) + "s");
+  io.observe(e);
+});
+
+/* ---------- flower pictures: 4 images, 8 fixed placements (each image used twice, alternating sides) ---------- */
+// [section id, flower no. 1-4, side, top %, side offset %, rotation, mirrored, size, parallax speed]
+const PL = [
+  ["top", 1, "r", 6, -4, 15, 0, 1.1, 0.14],
+  ["story", 2, "l", 44, -6, -18, 0, 1, -0.1],
+  ["ceremony", 3, "r", 52, -5, 22, 0, 1, 0.12],
+  ["reception", 4, "l", 55, -5, -25, 0, 1.05, -0.12],
+  ["program", 1, "r", 8, -6, -20, 1, 0.95, 0.1],
+  ["dress", 2, "l", 58, -6, 20, 1, 1, -0.1],
+  ["entourage", 3, "r", 3, -5, -15, 1, 1, 0.12],
+  ["rsvp", 4, "l", 62, -5, 18, 1, 1.05, -0.12],
+];
+PL.forEach((p) => {
+  const d = document.createElement("div");
+  d.className = "fl";
+  d.dataset.name = "flower-" + p[1];
+  d.dataset.par = p[8];
+  d.style.cssText =
+    "top:" +
+    p[3] +
+    "%;" +
+    (p[2] === "r" ? "right:" : "left:") +
+    p[4] +
+    "%;--r:" +
+    p[5] +
+    "deg;--f:" +
+    (p[6] ? -1 : 1) +
+    ";--s:" +
+    p[7];
+  const im = new Image();
+  im.alt = "";
+  im.src = CONFIG.flowers[p[1] - 1];
+  im.onerror = () => d.classList.add("missing");
+  d.appendChild(im);
+  $(p[0]).appendChild(d);
+  io.observe(d);
+});
+
+/* ---------- parallax: flowers and a few frames drift at different speeds while scrolling ---------- */
+document
+  .querySelectorAll(".arc,.map,.sw")
+  .forEach(
+    (e, i) =>
+      (e.dataset.par = e.classList.contains("arc")
+        ? 0.05
+        : i % 2
+          ? 0.06
+          : -0.05),
+  );
+const prog = document.createElement("div");
+prog.id = "prog";
+document.body.appendChild(prog);
+const parEls = [...document.querySelectorAll("[data-par]")];
+let pq = false;
+function par() {
+  pq = false;
+  const vh = innerHeight;
+  parEls.forEach((el) => {
+    const r = el.parentElement.getBoundingClientRect();
+    if (r.bottom < -300 || r.top > vh + 300) return;
+    el.style.setProperty(
+      "--py",
+      (-(r.top + r.height / 2 - vh / 2) * parseFloat(el.dataset.par)).toFixed(
+        1,
+      ) + "px",
+    );
+  });
+  prog.style.setProperty(
+    "--p",
+    Math.min(
+      1,
+      scrollY / Math.max(1, document.documentElement.scrollHeight - vh),
+    ),
+  );
+}
+if (!REDUCE) {
+  addEventListener(
+    "scroll",
+    () => {
+      if (!pq) {
+        pq = true;
+        requestAnimationFrame(par);
+      }
+    },
+    { passive: true },
+  );
+  addEventListener("resize", par);
+  par();
+}
 
 /* ---------- theme (dark / light) ---------- */
 const MOON = "M12 3a9 9 0 109 9 7 7 0 01-9-9z",
@@ -539,6 +623,7 @@ function ui() {
 if (CONFIG.songUrl) {
   au.src = CONFIG.songUrl;
   mu.classList.remove("hide");
+  au.onerror = () => mu.classList.add("hide"); // no backup track: if the file is missing, the button just hides
   au.onplay = au.onpause = ui;
   ui();
   const ev = ["pointerdown", "touchstart", "keydown", "scroll"];
