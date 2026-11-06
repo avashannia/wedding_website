@@ -1,12 +1,12 @@
 /* ================= EDIT YOUR DETAILS HERE ================= */
 const CONFIG = {
-  names: "Nancy & John", // replace with your names
+  names: "Abe & Collyn", // replace with your names
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
   maxGuests: 6,
-  songUrl: "", // Paste your MP3 link here, e.g. "music/song.mp3" or a full URL
-  flowerImages: ["flower.png", "assets/flower-gold.svg"], // used in rotation at section corners
+  songUrl: "assets/song.mp3", // Paste your MP3 link here, e.g. "music/song.mp3" or a full URL
+  flowerImages: ["flower.png", ""], // used in rotation at section corners
   flowerImage: "", // optional: ONE image (e.g. your own PNG) to use everywhere instead
   heroPhoto: "", // Hero arch photo
   photos: [
