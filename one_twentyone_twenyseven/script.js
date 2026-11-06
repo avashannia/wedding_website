@@ -5,12 +5,12 @@ const CONFIG = {
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
   maxGuests: 6,
-  songUrl: "song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
+  songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
-    "images/flower-1.png",
-    "images/flower-2.png",
-    "images/flower-3.png",
-    "images/flower-4.png",
+    "assets/flower-1.png",
+    "assets/flower-2.png",
+    "assets/flower-3.png",
+    "assets/flower-4.png",
   ], // your 4 flower pictures
   heroPhoto: "", // Hero arch photo
   photos: [
