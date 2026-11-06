@@ -1,1245 +1,243 @@
 <!doctype html>
-<html lang="en" data-t="linen">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <title>Abe &amp; Collyn · The Road to Forever</title>
+    <title>Nancy &amp; John – Wedding Invitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500&display=swap"
     />
-    <link rel="icon" type="image/png" href="./assets/logo.png">
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="dark">
-    <canvas id="fx"></canvas>
-    <div id="bgL" aria-hidden="true"></div>
-
-    <header id="top">
-      <button class="t" id="openMap" aria-label="Open the map">
-        <i data-i="map"></i><span>Open the map</span>
-      </button>
-      <span class="row"
-        ><button class="t" id="au" aria-label="Toggle music">
-          <i data-i="note"></i></button
-        ><button class="t" id="inf" aria-label="Info">
-          <i data-i="info"></i><span>Info</span>
-        </button></span
-      >
-    </header>
-
-    <div id="modal" class="hid" role="dialog" aria-label="Info">
-      <div class="sheet">
-        <button class="rb x" id="mX" aria-label="Close">
-          <i data-i="close"></i>
-        </button>
-        <h3 class="it">The essentials</h3>
-        <dl class="ess">
-          <dt>When</dt>
-          <dd id="eWhen"></dd>
-          <dt>Ceremony</dt>
-          <dd id="eCer"></dd>
-          <dt>Reception</dt>
-          <dd id="eRec"></dd>
-          <dt>Dress code</dt>
-          <dd>
-            Semi-formal in navy, gold and cream. Strictly no jeans and sneakers.
-          </dd>
-          <dt>RSVP</dt>
-          <dd>
-            By <span id="eRsvp"></span> ·
-            <a href="#" data-go="9" class="ln">Reply now</a>
-          </dd>
-        </dl>
-        <p class="k">Jump to</p>
-        <div class="jg" id="jg"></div>
-        <p class="k">Theme</p>
-        <div class="swr" id="sw2"></div>
+  <body>
+    <nav id="nav" aria-label="Main">
+      <button id="bg" aria-label="Menu" aria-expanded="false">☰</button>
+      <div id="mn">
+        <a href="#ceremony">Ceremony</a><a href="#reception">Reception</a
+        ><a href="#program">Program</a><a href="#dress">Dress Code</a
+        ><a href="#entourage">Entourage</a><a href="#rsvp">RSVP</a>
       </div>
-    </div>
+    </nav>
 
-    <div id="rm" class="hid" aria-label="Map">
-      <div id="rmw">
-        <svg id="rmbg" viewBox="0 0 1000 560"></svg
-        ><canvas id="cl" width="2000" height="1120"></canvas
-        ><svg id="rmsv" viewBox="0 0 1000 560"></svg>
-      </div>
-      <div class="rmh">
-        <h2>The road to forever</h2>
-        <p class="k" id="rmk">Abe &amp; Collyn · ten stops</p>
-      </div>
-      <div class="rmc">
-        <button class="p" id="rmFit">Fit</button
-        ><button class="p" id="rmIn">Zoom in</button
-        ><button class="p" id="rmX">
-          <i data-i="close"></i><span>Close</span></button
-        ><button class="p hid" id="skip">Skip</button>
-      </div>
-    </div>
-    <div id="sw" aria-label="Colour theme"></div>
-
-    <main>
-      <!-- PROLOGUE -->
-      <section
-        class="pg on"
-        data-d="1"
-        data-n="The invitation"
-        data-l="Prologue"
-      >
-        <div id="boarding">
-          <p class="k pulse">Tap your boarding pass</p>
-          <div class="bpw">
-            <div
-              class="bp"
-              id="ps"
-              role="button"
-              tabindex="0"
-              aria-label="Open your boarding pass"
-            >
-              <div class="bps">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9" />
-                  <ellipse cx="12" cy="12" rx="4" ry="9" />
-                  <path d="M3 12h18M5 7.5h14M5 16.5h14" />
-                </svg>
-                <span>A JOYFUL INVITATION</span>
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M3 21V11l9-6 9 6v10zM12 5V1M10 2.5h4M9.5 21v-5.5a2.5 2.5 0 015 0V21"
-                  />
-                </svg>
-              </div>
-              <div class="bpm">
-                <h2 class="bpn">Welcome!</h2>
-                <p class="bpg">
-                  <small>GUEST</small><b><i>Your name goes on the RSVP</i></b>
-                </p>
-                <p class="bpf">
-                  <small>FROM:</small><b>Your Home</b><i>(Your home address)</i>
-                </p>
-                <svg class="bpr" viewBox="0 0 400 110" aria-hidden="true">
-                  <g class="ik">
-                    <path d="M6 60l22-21 22 21v28H6z" />
-                    <path
-                      class="hrt"
-                      d="M28 78c-9-5-11-13-5-15 3-1 5 1 5 3 0-2 2-4 5-3 6 2 4 10-5 15z"
-                    />
-                  </g>
-                  <g class="chn ik">
-                    <ellipse cx="68" cy="64" rx="10" ry="5.5" />
-                    <ellipse cx="86" cy="64" rx="7" ry="4" />
-                    <ellipse cx="104" cy="64" rx="10" ry="5.5" />
-                    <ellipse cx="122" cy="64" rx="7" ry="4" />
-                    <ellipse cx="206" cy="64" rx="7" ry="4" />
-                    <ellipse cx="224" cy="64" rx="10" ry="5.5" />
-                    <ellipse cx="242" cy="64" rx="7" ry="4" />
-                    <circle class="rg" cx="152" cy="64" r="14" />
-                    <circle class="rg" cx="176" cy="64" r="14" />
-                    <path
-                      class="gl3"
-                      d="M164 40l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"
-                    />
-                  </g>
-                  <g class="ik"><path d="M258 64h22M272 55l10 9-10 9" /></g>
-                  <g class="ik" transform="translate(296 6)">
-                    <path d="M2 98V52l36-27 36 27v46z" />
-                    <path d="M38 25V6M31 13h14" />
-                    <path d="M28 98V74a10 10 0 0120 0v24" />
-                    <path
-                      class="ht"
-                      d="M8 62h16M8 70h16M8 78h16M8 86h16M52 62h16M52 70h16M52 78h16M52 86h16M30 44h16M30 38h16"
-                    />
-                  </g>
-                </svg>
-                <p class="bpc">to the wedding</p>
-                <p class="bpp"><small>PASSENGER</small><b>Dear guest</b></p>
-                <table class="bpt">
-                  <tr>
-                    <th>1. DATE</th>
-                    <th>2. TIME</th>
-                    <th>3. FLIGHT</th>
-                    <th>4. SEAT</th>
-                  </tr>
-                  <tr>
-                    <td>21 JANUARY 2027</td>
-                    <td class="tm" data-t="cer"></td>
-                    <td>AC 2027</td>
-                    <td id="seatv">1 SEAT RESERVED</td>
-                  </tr>
-                </table>
-                <p class="bpl">
-                  A CELEBRATION OF LOVE
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="15" r="6" />
-                    <path d="M8 5l2-3h4l2 3-4 4z" />
-                  </svg>
-                </p>
-                <svg class="bpst" viewBox="0 0 100 100" aria-hidden="true">
-                  <defs>
-                    <path
-                      id="stc"
-                      d="M50 50m-34 0a34 34 0 1 1 68 0a34 34 0 1 1-68 0"
-                    />
-                  </defs>
-                  <circle cx="50" cy="50" r="47" />
-                  <circle cx="50" cy="50" r="41" />
-                  <text>
-                    <textPath href="#stc">
-                      CELEBRATION OF LOVE · AC 2027 ·
-                    </textPath>
-                  </text>
-                  <path
-                    class="hf"
-                    d="M50 66c-10-6-13-14-7-17 3-1 6 1 7 4 1-3 4-5 7-4 6 3 3 11-7 17z"
-                  />
-                  <path class="hf" d="M50 30v14M44 35h12" />
-                </svg>
-              </div>
-              <div class="bpz">
-                <div class="bpb">
-                  <span>TAP YOUR BOARDING PASS</span
-                  ><svg viewBox="0 0 24 24">
-                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4z" />
-                  </svg>
-                </div>
-                <div class="bpj">
-                  <svg class="bpci" viewBox="0 0 60 50">
-                    <path
-                      d="M6 48V26l24-18 24 18v22zM30 8V1M26 4h8M22 48V36a8 8 0 0116 0v12"
-                    />
-                  </svg>
-                  <p>
-                    <small>FROM:</small><b>Your Home</b
-                    ><i>(Your home address)</i>
-                  </p>
-                  <p>
-                    <small>TO:</small><b>Antipolo, Rizal</b
-                    ><i>Parish of the Immaculate Heart of Mary</i>
-                  </p>
-                  <p class="bpd">
-                    <span><em>DATE</em><b>21 JANUARY 2027</b></span
-                    ><span><em>SEAT</em><b id="seatv2">1 SEAT RESERVED</b></span
-                    ><span><em>FLIGHT</em><b>AC 2027</b></span>
-                  </p>
-                  <svg class="bpov" viewBox="0 0 80 34">
-                    <ellipse cx="40" cy="17" rx="37" ry="14" />
-                    <text x="40" y="21" text-anchor="middle">AC 2027</text>
-                  </svg>
-                  <svg
-                    id="bar"
-                    viewBox="0 0 90 16"
-                    preserveAspectRatio="none"
-                  ></svg>
-                  <small class="bcn" id="bcn">WEDDING PASS · AC 2027</small>
-                </div>
-              </div>
-            </div>
+    <main class="col">
+      <!-- HERO -->
+      <section class="s1 hero" id="top">
+        <canvas id="sp" aria-hidden="true"></canvas>
+        <div class="in">
+          <div class="k meta">
+            <span id="dt"></span><i></i><span id="nm"></span>
           </div>
-        </div>
-        <div class="card inv hid" id="invite">
-          <p class="k">You are invited</p>
-          <h3 class="it">Dear guest,</h3>
-          <p>Together with their families,</p>
-          <h2 class="nm">Abe &amp; Collyn</h2>
-          <p>
-            would love for you to celebrate their wedding<br />Thursday, 21
-            January 2027 · Antipolo
+          <h1 class="gt rv">We invite you to our wedding!</h1>
+          <div class="frame arc rv" id="hp"></div>
+          <p class="rv" style="margin-top: 24px">
+            Dear family and friends,<br />we would love to share this day with
+            you.
           </p>
-          <div class="row">
-            <button class="b" id="begin">
-              Begin our story<i data-i="ar"></i></button
-            ><button class="b o" id="justD">Just the details</button>
+          <div style="margin-top: 28px">
+            <div class="rl"></div>
+            <div class="days" id="days"></div>
+            <div class="rl"></div>
           </div>
         </div>
       </section>
 
-      <!-- 1 PROPOSAL -->
-      <section class="pg sunset" data-d="1" data-n="The proposal" data-l="1">
-        <div class="sp rev">
-          <div class="vz">
-            <svg
-              id="pro"
-              viewBox="0 0 420 380"
-              aria-label="A boy and a girl on a rooftop at sunset; the boy holds up a shining ring"
-            >
-              <g class="stars2">
-                <circle cx="40" cy="30" r="1.5" />
-                <circle cx="120" cy="60" r="1.2" />
-                <circle cx="330" cy="40" r="1.6" />
-                <circle cx="380" cy="90" r="1.2" />
-                <circle cx="250" cy="25" r="1.3" />
-              </g>
-              <circle class="sglow" cx="210" cy="262" r="130" />
-              <circle class="sun" cx="210" cy="262" r="50" />
-              <g class="bird"><path d="M0 0q6-8 12 0q6-8 12 0" /></g>
-              <g class="bird b2"><path d="M0 0q5-6 10 0q5-6 10 0" /></g>
-              <g fill="#2c1a45" opacity=".9">
-                <rect x="0" y="236" width="46" height="144" />
-                <rect x="50" y="268" width="40" height="112" />
-                <rect x="92" y="300" width="28" height="80" />
-                <rect x="326" y="246" width="50" height="134" />
-                <rect x="380" y="284" width="40" height="96" />
-              </g>
-              <polygon class="shd" points="120,380 306,380 420,380 420,360" />
-              <g fill="#1b1230">
-                <rect x="120" y="205" width="186" height="175" />
-                <rect x="112" y="198" width="202" height="10" />
-                <rect x="266" y="176" width="26" height="22" />
-                <path
-                  d="M146 198v-34M141 174h10"
-                  stroke="#1b1230"
-                  stroke-width="3"
-                />
-              </g>
-              <g class="win">
-                <rect
-                  x="134"
-                  y="222"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="194"
-                  y="222"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="224"
-                  y="222"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="254"
-                  y="222"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="284"
-                  y="222"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="134"
-                  y="250"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="194"
-                  y="250"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="224"
-                  y="250"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="254"
-                  y="250"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="284"
-                  y="250"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="134"
-                  y="278"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="194"
-                  y="278"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="224"
-                  y="278"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="254"
-                  y="278"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="284"
-                  y="278"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="134"
-                  y="306"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="194"
-                  y="306"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="224"
-                  y="306"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="254"
-                  y="306"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="284"
-                  y="306"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="134"
-                  y="334"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="194"
-                  y="334"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-                <rect
-                  x="224"
-                  y="334"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -1.7s"
-                />
-                <rect
-                  x="254"
-                  y="334"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -2.7s"
-                />
-                <rect
-                  x="284"
-                  y="334"
-                  width="12"
-                  height="14"
-                  style="animation-delay: -0.7s"
-                />
-              </g>
-              <g class="ppl">
-                <g class="br">
-                  <circle cx="192" cy="152" r="10" fill="#1b1230" />
-                  <path d="M180 198v-40q12-12 24 0v40z" fill="#1b1230" />
-                  <path
-                    d="M200 164L222 130"
-                    stroke="#1b1230"
-                    stroke-width="5"
-                    stroke-linecap="round"
-                  />
-                </g>
-                <g class="ring">
-                  <circle class="flare" cx="224" cy="118" r="20" />
-                  <g class="rays2">
-                    <path
-                      d="M224 118m0-34v-10M224 118m0 34v10M224 118m-34 0h-10M224 118m34 0h10M224 118m-24-24l-7-7M224 118m24-24l7-7M224 118m-24 24l-7 7M224 118m24 24l7 7"
-                    />
-                  </g>
-                  <circle
-                    cx="224"
-                    cy="118"
-                    r="7"
-                    fill="none"
-                    stroke="#fff3c4"
-                    stroke-width="2.5"
-                  />
-                  <path d="M219 108l5-7 5 7-5 6z" fill="#fff" />
-                  <path
-                    class="gl2"
-                    d="M224 88l4 26 26 4-26 4-4 26-4-26-26-4 26-4z"
-                  />
-                </g>
-                <g class="br b3">
-                  <circle cx="240" cy="154" r="10" fill="#1b1230" />
-                  <path
-                    class="hair"
-                    d="M232 150q-14 8-9 26q9-9 9-26z"
-                    fill="#1b1230"
-                  />
-                  <path d="M226 198l6-40q8-8 16 0l6 40z" fill="#1b1230" />
-                </g>
-              </g>
-            </svg>
-          </div>
-          <div class="tx glass">
-            <p class="k">Chapter one</p>
-            <h2>The proposal</h2>
-            <p>
-              [Your proposal story goes here: where it happened, who was there,
-              and what was said.] The sun was setting, the sky turned gold, and
-              a small box changed everything.
-            </p>
-            <p class="sm">
-              Story text is a placeholder until the couple adds the real one.
+      <!-- OUR STORY (the wrapper .j1 fills the arch corners with the hero's color) -->
+      <div class="join j1">
+        <section class="s1b arch" id="story">
+          <div class="in">
+            <div class="k">Our Story</div>
+            <h2 class="gt">Tap to explore</h2>
+            <div class="seg" role="group" aria-label="Gallery view">
+              <button id="m1" aria-pressed="true">Stack</button
+              ><button id="m2" aria-pressed="false">Grid</button>
+            </div>
+            <div class="stack" id="stack"></div>
+            <div class="ctl" id="ctl">
+              <button id="pv" aria-label="Previous photo">‹</button>
+              <div class="dots" id="dots"></div>
+              <button id="nx" aria-label="Next photo">›</button>
+            </div>
+            <p class="k" style="margin-top: 18px" id="hint">
+              Tap a card’s top edge · swipe · tap to enlarge
             </p>
           </div>
+        </section>
+      </div>
+
+      <!-- CEREMONY -->
+      <div class="join j1b">
+        <section class="s2 arch" id="ceremony">
+          <div class="in">
+            <div class="k">Where we say “I do”</div>
+            <h2 class="gt">Ceremony</h2>
+            <div id="cer"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RECEPTION -->
+      <div class="join j2">
+        <section class="s1 arch" id="reception">
+          <div class="in">
+            <div class="k">Celebrate with us</div>
+            <h2 class="gt">Reception</h2>
+            <div id="rec"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- PROGRAM -->
+      <section class="s2" id="program">
+        <div class="in">
+          <h2 class="gt" style="margin-bottom: 24px">Program of the Day</h2>
+          <div id="tl"></div>
         </div>
       </section>
 
-      <!-- 2 PRENUP -->
-      <section class="pg" data-n="The prenup shoot" data-l="2">
-        <div class="hd">
-          <p class="k">Chapter two</p>
-          <h2>The prenup shoot</h2>
-          <p class="sm">Flick the top photo away, or spread them all out.</p>
+      <!-- DRESS CODE -->
+      <section class="s1" id="dress">
+        <div class="in">
+          <div class="k">What to wear</div>
+          <h2 class="gt">Dress Code</h2>
+          <p id="dd"></p>
+          <p id="da"></p>
+          <div class="sw" id="sw"></div>
         </div>
-        <div class="sp">
-          <div class="vz">
-            <div class="deck" id="deck"></div>
-            <div class="row">
-              <button class="b" id="spread">Spread them out</button
-              ><span class="k" id="cnt">1 / 12</span>
-            </div>
-          </div>
-          <div class="vz">
-            <div class="cam" id="cam">
-              <svg
-                viewBox="0 0 520 400"
-                role="img"
-                aria-label="Camera that plays the prenup video on its screen"
-              >
-                <defs>
-                  <pattern
-                    id="tx"
-                    width="6"
-                    height="6"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <circle cx="1.5" cy="1.5" r="1" fill="#26272a" />
-                    <circle cx="4.5" cy="4.5" r="1" fill="#74777c" />
-                  </pattern>
-                  <linearGradient id="bdg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#75787d" />
-                    <stop offset="1" stop-color="#3b3d41" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M470 150C512 190 506 300 482 392"
-                  fill="none"
-                  stroke="#1f2023"
-                  stroke-width="9"
-                  stroke-linecap="round"
-                />
-                <circle
-                  cx="474"
-                  cy="146"
-                  r="7"
-                  fill="none"
-                  stroke="#999"
-                  stroke-width="3"
-                />
-                <path
-                  d="M160 100l22-50h160l22 50z"
-                  fill="url(#bdg)"
-                  stroke="#202124"
-                  stroke-width="2"
-                />
-                <rect
-                  x="212"
-                  y="56"
-                  width="96"
-                  height="40"
-                  rx="8"
-                  fill="#2b2d31"
-                  stroke="#111"
-                />
-                <rect
-                  x="232"
-                  y="64"
-                  width="56"
-                  height="26"
-                  rx="6"
-                  fill="#0d0e10"
-                />
-                <circle cx="260" cy="77" r="11" fill="#1a1c20" stroke="#666" />
-                <circle cx="260" cy="77" r="5" fill="#2e4a63" />
-                <rect
-                  x="236"
-                  y="36"
-                  width="48"
-                  height="16"
-                  rx="3"
-                  fill="#55585e"
-                  stroke="#222"
-                />
-                <rect
-                  x="22"
-                  y="96"
-                  width="456"
-                  height="280"
-                  rx="26"
-                  fill="url(#bdg)"
-                  stroke="#202124"
-                  stroke-width="2"
-                />
-                <rect
-                  x="60"
-                  y="76"
-                  width="82"
-                  height="26"
-                  rx="6"
-                  fill="#80838a"
-                  stroke="#222"
-                />
-                <path
-                  d="M68 78v22M76 78v22M84 78v22M92 78v22M100 78v22M108 78v22M116 78v22M124 78v22M132 78v22"
-                  stroke="#4a4c50"
-                />
-                <circle cx="376" cy="82" r="13" fill="#70737a" stroke="#222" />
-                <circle cx="376" cy="82" r="7" fill="#33363a" />
-                <rect
-                  x="404"
-                  y="76"
-                  width="56"
-                  height="26"
-                  rx="6"
-                  fill="#80838a"
-                  stroke="#222"
-                />
-                <circle cx="440" cy="132" r="15" fill="#2a2b2e" stroke="#999" />
-                <text
-                  x="440"
-                  y="135"
-                  text-anchor="middle"
-                  font-size="8"
-                  fill="#ddd"
-                >
-                  AF-ON
-                </text>
-                <circle cx="100" cy="130" r="13" fill="#2a2b2e" stroke="#999" />
-                <text
-                  x="100"
-                  y="133"
-                  text-anchor="middle"
-                  font-size="6.5"
-                  fill="#ddd"
-                >
-                  MENU
-                </text>
-                <path
-                  d="M372 112H462a16 16 0 0116 16V350a24 24 0 01-24 24H372z"
-                  fill="#3a3c3f"
-                  stroke="#202124"
-                />
-                <path
-                  d="M372 112H462a16 16 0 0116 16V350a24 24 0 01-24 24H372z"
-                  fill="url(#tx)"
-                />
-                <rect
-                  x="58"
-                  y="150"
-                  width="276"
-                  height="206"
-                  rx="10"
-                  fill="#17181a"
-                  stroke="#666"
-                />
-                <rect x="70" y="158" width="250" height="180" fill="#0b0c0d" />
-                <circle cx="372" cy="172" r="10" fill="#2a2b2e" stroke="#999" />
-                <text
-                  x="372"
-                  y="175"
-                  text-anchor="middle"
-                  font-size="6.5"
-                  fill="#ddd"
-                >
-                  INFO
-                </text>
-                <circle cx="372" cy="202" r="10" fill="#2a2b2e" stroke="#999" />
-                <circle cx="371" cy="201" r="4" fill="none" stroke="#ddd" />
-                <path d="M374 204l4 4" stroke="#ddd" stroke-width="1.6" />
-                <circle
-                  cx="418"
-                  cy="270"
-                  r="44"
-                  fill="#26272a"
-                  stroke="#999"
-                  stroke-width="1.5"
-                />
-                <g class="cb" data-a="l" role="button" tabindex="0">
-                  <title>Back 5 seconds</title>
-                  <circle cx="386" cy="270" r="13" fill="#26272a" />
-                  <path d="M390 263l-9 7 9 7z" fill="#ddd" />
-                </g>
-                <g class="cb" data-a="r" role="button" tabindex="0">
-                  <title>Forward 5 seconds</title>
-                  <circle cx="450" cy="270" r="13" fill="#26272a" />
-                  <path d="M446 263l9 7-9 7z" fill="#ddd" />
-                </g>
-                <path d="M412 242l6-8 6 8zM412 298l6 8 6-8z" fill="#ddd" />
-                <g class="cb" data-a="set" role="button" tabindex="0">
-                  <title>Play / pause</title>
-                  <circle
-                    cx="418"
-                    cy="270"
-                    r="18"
-                    fill="#1d1e21"
-                    stroke="#aaa"
-                  />
-                  <text
-                    x="418"
-                    y="274"
-                    text-anchor="middle"
-                    font-size="9"
-                    fill="#eee"
-                    font-weight="700"
-                  >
-                    SET
-                  </text>
-                </g>
-                <g class="cb" data-a="del" role="button" tabindex="0">
-                  <title>Mute / unmute</title>
-                  <circle
-                    cx="392"
-                    cy="342"
-                    r="11"
-                    fill="#2a2b2e"
-                    stroke="#999"
-                  />
-                  <path
-                    d="M387 338h10M389 338v8h6v-8M391 336h2"
-                    fill="none"
-                    stroke="#ddd"
-                  />
-                </g>
-                <rect
-                  x="432"
-                  y="332"
-                  width="20"
-                  height="20"
-                  rx="4"
-                  fill="#2a2b2e"
-                  stroke="#999"
-                />
-                <g class="cb" data-a="fs" role="button" tabindex="0">
-                  <title>Fullscreen</title>
-                  <circle
-                    cx="62"
-                    cy="130"
-                    r="13"
-                    fill="#2a2b2e"
-                    stroke="#999"
-                  />
-                  <path d="M58 124l11 6-11 6z" fill="#ddd" />
-                </g>
-              </svg>
-              <div class="lcd">
-                <video id="vd" class="hid" playsinline preload="none"></video>
-                <div class="vph" id="vph">
-                  <span>VIDEO INSIDE TO PLAY</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="lb" class="hid"></div>
       </section>
 
-      <!-- 3 WEDDING DAY -->
-      <section class="pg wday" data-d="1" data-n="The wedding day" data-l="3">
-        <canvas id="fw"></canvas>
-        <svg class="chand" viewBox="0 0 300 190" aria-hidden="true">
-          <path d="M150 0v34" stroke="currentColor" />
-          <circle cx="150" cy="38" r="6" class="cg" />
-          <path
-            d="M150 44C90 44 50 70 40 100M150 44c60 0 100 26 110 56M150 44v100"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          />
-          <g id="crys"></g>
-          <circle class="lit" cx="150" cy="110" r="90" />
-        </svg>
-        <svg class="bell bl" viewBox="0 0 80 100" aria-hidden="true">
-          <g class="bw">
-            <circle cx="40" cy="60" r="18" class="wv" />
-            <circle cx="40" cy="60" r="18" class="wv w2" />
-          </g>
-          <g class="bsw">
-            <path
-              d="M40 6v10M18 70q4-10 4-26a18 18 0 0136 0q0 16 4 26zM14 74h52M36 78a4 4 0 008 0"
-              fill="none"
-            />
-          </g>
-        </svg>
-        <svg class="bell br2" viewBox="0 0 80 100" aria-hidden="true">
-          <g class="bw">
-            <circle cx="40" cy="60" r="18" class="wv" />
-            <circle cx="40" cy="60" r="18" class="wv w2" />
-          </g>
-          <g class="bsw s2">
-            <path
-              d="M40 6v10M18 70q4-10 4-26a18 18 0 0136 0q0 16 4 26zM14 74h52M36 78a4 4 0 008 0"
-              fill="none"
-            />
-          </g>
-        </svg>
-        <div class="wc">
-          <p class="k">Chapter three</p>
-          <div class="date" id="date" aria-label="21 January 2027"></div>
-          <div class="cd" id="cd"></div>
-          <button class="hold" id="hold" aria-label="Hold to light the day">
-            <svg viewBox="0 0 80 80">
-              <circle cx="40" cy="40" r="34" class="ring0" />
-              <circle cx="40" cy="40" r="34" class="ringp" id="rp" />
-              <path
-                d="M40 22l4 12 12 2-10 8 4 12-10-7-10 7 4-12-10-8 12-2z"
-              /></svg
-            ><span>Hold to light the day</span>
-          </button>
-          <div class="tkt">
-            <div class="th">
-              <b>HOME</b
-              ><svg viewBox="0 0 60 12"><path d="M2 6H56M50 2l6 4-6 4" /></svg
-              ><b>YOU</b>
-            </div>
-            <p class="sm">
-              Ceremony · <span class="tm" data-t="cer"></span> · Parish of the
-              Immaculate Heart of Mary<br />Reception ·
-              <span class="tm" data-t="rec"></span> · The Chandelier Events
-              Place<br /><i class="k">Times are placeholders</i>
+      <!-- ENTOURAGE -->
+      <section class="s2" id="entourage">
+        <div class="in wide">
+          <h2 class="gt" style="margin-bottom: 22px">Our Entourage</h2>
+          <div class="en" id="en"></div>
+        </div>
+      </section>
+
+      <!-- COUNTDOWN -->
+      <section class="s1" id="countdown">
+        <div class="in">
+          <div class="k">Until we say “I do”</div>
+          <h2 class="gt" style="margin-bottom: 20px">The Countdown</h2>
+          <div class="cd" role="timer">
+            <div><b id="c0">00</b><span>DAYS</span></div>
+            <div><b id="c1">00</b><span>HOURS</span></div>
+            <div><b id="c2">00</b><span>MINUTES</span></div>
+            <div><b id="c3">00</b><span>SECONDS</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RSVP -->
+      <div class="join j1">
+        <section class="s1b arch" id="rsvp">
+          <div class="in">
+            <div class="k" id="by"></div>
+            <h2 class="gt">Kindly Reply</h2>
+            <p style="margin-bottom: 22px">
+              We would be honored by your presence.
             </p>
+            <button class="btn f" id="op">Confirm attendance</button>
+            <p class="k" style="margin-top: 44px" id="ft"></p>
           </div>
-          <div class="row">
-            <a class="b" id="ics" download="abe-collyn.ics"
-              ><i data-i="cal"></i>Add to calendar</a
-            ><a class="b o" target="_blank" rel="noopener" id="gcal"
-              ><i data-i="gc"></i>Google Calendar</a
-            >
-          </div>
-        </div>
-      </section>
-
-      <!-- 4 PROGRAMME + JOURNEY -->
-      <section class="pg" data-n="The programme and journey" data-l="4">
-        <div class="hd">
-          <p class="k">Chapter four</p>
-          <h2>The programme and journey</h2>
-        </div>
-        <div class="sp pj">
-          <div class="boardc">
-            <div class="board">
-              <div class="bh">
-                <svg viewBox="0 0 24 24">
-                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4z" /></svg
-                >DEPARTURES<span class="led"></span>
-              </div>
-              <div class="rw hd2">
-                <span>TIME</span><span>EVENT</span><span>PLACE</span
-                ><span>STATUS</span>
-              </div>
-              <div id="rows"></div>
-            </div>
-            <p class="sm">
-              Tap a row to show its venue on the map. Times are placeholders.
-            </p>
-          </div>
-          <div class="mapc">
-            <div class="mapf" id="mapf">
-              <svg id="fb" viewBox="0 0 320 220" aria-label="Fallback map">
-                <rect width="320" height="220" fill="var(--mbg)" />
-                <g id="fbl"></g>
-                <path
-                  class="lk2"
-                  d="M30 160C90 120 120 150 170 110S250 100 276 70"
-                />
-                <g class="fp"><circle cx="276" cy="70" r="6" /></g>
-                <g class="fp f2"><circle cx="260" cy="84" r="6" /></g>
-                <text x="12" y="176" class="mt">Manila</text>
-                <text x="212" y="54" class="mt">Antipolo</text></svg
-              ><iframe
-                id="mif"
-                title="Venue map"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-            <div class="row">
-              <button class="b" id="vc2">
-                <svg class="ic" viewBox="0 0 24 24">
-                  <path
-                    d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"
-                  /></svg
-                >Ceremony</button
-              ><button class="b o" id="vr2">
-                <svg class="ic" viewBox="0 0 24 24">
-                  <path
-                    d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"
-                  /></svg
-                >Reception
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 WHAT TO WEAR -->
-      <section class="pg" data-n="What to wear" data-l="5">
-        <div class="hd">
-          <p class="k">Chapter five</p>
-          <h2>What to wear</h2>
-        </div>
-        <div class="sp">
-          <div class="tx">
-            <div class="row l" id="wt">
-              <button class="b" data-w="g">Guests</button
-              ><button class="b o" data-w="e">Entourage</button>
-            </div>
-            <div class="ed">
-              <p>
-                <b>Women</b> · semi-formal long dress, knee-length dress or
-                cocktail dress.
-              </p>
-              <p>
-                <b>Men</b> · semi-formal: long sleeves and slacks, coat and tie.
-              </p>
-              <div class="skip">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M6 6l12 12" /></svg
-                ><span>Please skip · jeans and sneakers</span>
-              </div>
-            </div>
-            <div class="chips" id="chips"></div>
-            <p class="sm" id="cnote"></p>
-          </div>
-          <div class="vz">
-            <svg
-              id="rack"
-              viewBox="0 0 340 250"
-              aria-label="Suit and cocktail dress on a rack"
-            >
-              <path
-                d="M10 22H330M40 22v215M300 22v215M20 237h300"
-                stroke="currentColor"
-                stroke-width="3"
-                fill="none"
-              />
-              <g class="sway" id="suitG">
-                <path
-                  d="M105 22q0-14 10-14"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <path
-                  d="M95 22l10 5 10-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <g class="gar" id="jk">
-                  <path
-                    d="M70 36l28-8 7 22 7-22 28 8 8 60-12 4 2 20h-66l2-20-12-4z"
-                  />
-                </g>
-                <path d="M97 30l8 34 8-34-8-6z" fill="#f7f0e0" />
-                <path d="M105 40l-4 6 4 20 4-20z" class="tie" />
-                <g class="gar" id="pt">
-                  <path d="M72 124h66l4 100h-28l-8-70-8 70h-28z" />
-                </g>
-                <path d="M105 124v30" stroke="#fff6" />
-              </g>
-              <g class="sway s2" id="gownG">
-                <path
-                  d="M232 22q0-14 10-14"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <path
-                  d="M222 22l10 5 10-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <g class="gar" id="dr">
-                  <path
-                    d="M220 34q12 8 24 0l6 4 4 54q-14 8-44 0l4-54zM208 92q-22 56-34 112 40 14 112 0-12-56-34-112z"
-                  />
-                </g>
-                <path d="M214 92q18 6 36 0" stroke="#fff8" fill="none" />
-              </g>
-            </svg>
-          </div>
-        </div>
-      </section>
-
-      <!-- 6 CAST -->
-      <section class="pg" data-d="1" data-n="The cast" data-l="6">
-        <div class="cc">
-          <p class="k">Chapter six</p>
-          <h2>The cast</h2>
-          <div class="credits" id="cr"><div id="crIn"></div></div>
-          <button class="b o" id="pc">
-            <i data-i="pause"></i><span>Pause the credits</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- 8 GIFTS -->
-      <section class="pg gift" data-n="Gifts" data-l="7">
-        <div class="rays"></div>
-        <div id="hearts"></div>
-        <div class="gc2">
-          <svg
-            id="gbox"
-            viewBox="0 0 200 190"
-            role="button"
-            aria-label="Replay the gift animation"
-          >
-            <g id="glid">
-              <rect
-                x="20"
-                y="58"
-                width="160"
-                height="28"
-                rx="3"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="3"
-              />
-              <path d="M100 58V86" stroke="var(--gd)" stroke-width="12" />
-              <g class="bow">
-                <path
-                  d="M100 58C60 14 36 50 100 58zM100 58C140 14 164 50 100 58z"
-                />
-                <circle cx="100" cy="58" r="7" />
-              </g>
-            </g>
-            <rect
-              x="30"
-              y="86"
-              width="140"
-              height="96"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
-            <path d="M100 86V182" stroke="var(--gd)" stroke-width="12" />
-            <path
-              class="rib1"
-              d="M100 62C80 40 60 30 40 44M100 62C120 40 140 30 160 44"
-              fill="none"
-              stroke="var(--gd)"
-              stroke-width="4"
-            />
-          </svg>
-          <h2 class="big" id="big" aria-label="Your presence is the gift."></h2>
-          <p class="sub">Having you there is everything.</p>
-        </div>
-      </section>
-
-      <!-- 9 QUESTIONS -->
-      <section class="pg" data-n="Questions" data-l="8">
-        <div class="sp">
-          <div class="tx">
-            <p class="k">Chapter eight</p>
-            <h2>Questions, answered</h2>
-            <p>Tap a question. We usually reply faster than this.</p>
-          </div>
-          <div class="vz">
-            <div class="card chat">
-              <div class="who">
-                <span class="av"
-                  ><svg viewBox="0 0 24 24">
-                    <path
-                      d="M12 21C4 14 3 9 6 6.5S11 5 12 8c1-3 4.5-3.5 6-1.5S20 14 12 21z"
-                    /></svg></span
-                ><span
-                  >Abe &amp; Collyn<br /><small
-                    ><i class="dot"></i>usually active</small
-                  ></span
-                >
-              </div>
-              <div class="log" id="log">
-                <div class="a">Hi there! Ask us anything.</div>
-              </div>
-              <div class="row l" id="bubs"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- 7 RSVP -->
-      <section class="pg" data-n="Your part · RSVP" data-l="9">
-        <div class="rv0">
-          <svg class="env" viewBox="0 0 160 110" aria-hidden="true">
-            <rect x="6" y="30" width="148" height="74" rx="5" />
-            <path class="flap" d="M6 34l74 46 74-46" />
-            <path d="M6 104l56-40M154 104L98 64" />
-          </svg>
-          <div class="card frame" id="rvc">
-            <svg class="co c1" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
-            ><svg class="co c2" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
-            ><svg class="co c3" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" /></svg
-            ><svg class="co c4" viewBox="0 0 40 40">
-              <path d="M2 38V8q0-6 6-6h30M10 38V14q0-4 4-4h24M2 2l12 12" />
-            </svg>
-            <svg class="seal" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="24" />
-              <circle cx="30" cy="30" r="17" class="s2" />
-              <path d="M30 20c-8-6-14 4-6 10l6 8 6-8c8-6 2-16-6-10z" />
-            </svg>
-            <div class="rib">
-              <span>Will you be there?</span>
-            </div>
-            <p class="sm c">
-              Kindly reply by <b id="rsvpBy"></b>. One seat is reserved for you.
-            </p>
-            <div id="rv" class="form" novalidate>
-              <p class="k">Your name</p>
-              <input
-                id="nm"
-                type="text"
-                maxlength="80"
-                autocomplete="name"
-                placeholder="Your full name"
-                aria-label="Your name"
-              />
-              <p class="ferr hid" id="e-nm" role="alert"></p>
-              <p class="k">Attendance</p>
-              <div class="row">
-                <button class="b o" data-a="y" type="button">
-                  <i data-i="check"></i>Joyfully accepts</button
-                ><button class="b o" data-a="n" type="button">
-                  Regretfully declines
-                </button>
-              </div>
-              <p class="sm c" id="resp">Please choose one.</p>
-              <p class="ferr hid" id="e-att" role="alert"></p>
-              <svg class="dv" viewBox="0 0 200 10">
-                <path d="M0 5H80M120 5H200" />
-                <path d="M100 1l4 4-4 4-4-4z" />
-              </svg>
-              <div id="fs">
-                <p class="k">Your details</p>
-                <input
-                  id="diet"
-                  maxlength="300"
-                  type="text"
-                  placeholder="Allergies or dietary needs"
-                  aria-label="Dietary"
-                /><span class="qc"
-                  ><button
-                    type="button"
-                    class="chipq"
-                    data-fill="diet"
-                    data-v="None"
-                  >
-                    None
-                  </button></span
-                >
-                <p class="ferr hid" id="e-diet" role="alert"></p>
-                <input
-                  id="song"
-                  maxlength="300"
-                  type="text"
-                  placeholder="ONE SONG THAT GETS YOU ON THE DANCE FLOOR"
-                  aria-label="Song"
-                />
-                <p class="ferr hid" id="e-song" role="alert"></p>
-                <p class="k">Your message</p>
-                <textarea
-                  id="adv"
-                  maxlength="300"
-                  rows="2"
-                  placeholder="Advice for the couple"
-                  aria-label="Advice"
-                ></textarea
-                ><span class="qc"
-                  ><button
-                    type="button"
-                    class="chipq"
-                    data-fill="adv"
-                    data-v="No suggestion"
-                  >
-                    No suggestion
-                  </button></span
-                >
-                <p class="ferr hid" id="e-adv" role="alert"></p>
-              </div>
-              <button class="b dis" id="snd" type="button" aria-disabled="true">
-                Send my RSVP<i data-i="ar"></i>
-              </button>
-              <div id="ok" class="hid">
-                <svg viewBox="0 0 50 50">
-                  <circle cx="25" cy="25" r="22" />
-                  <path d="M14 26l8 8 15-17" /></svg
-                ><span>Thank you. Your RSVP is sealed and sent.</span>
-              </div>
-              <p class="sm c hid" id="rerr">
-                Could not send. Please check your connection and try again.
-              </p>
-            </div>
-            <div id="petals"></div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
-    <footer id="bot">
-      <button class="t" id="pv" aria-label="Previous">
-        <i data-i="al"></i></button
-      ><small class="hint">Use <kbd>←</kbd> <kbd>→</kbd> to turn the page</small
-      ><button class="b" id="nx">Next stop<i data-i="ar"></i></button>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script src="./script.js"></script>
+
+    <!-- Photo viewer -->
+    <dialog id="lb" aria-label="Photo viewer">
+      <div id="lbc" class="lbc"></div>
+      <p id="lbt" style="text-align: center; margin-top: 10px"></p>
+      <div class="two">
+        <button class="btn" id="lp" aria-label="Previous">‹</button
+        ><button class="btn" id="lx" aria-label="Next">›</button
+        ><button class="btn f" id="lc">Close</button>
+      </div>
+    </dialog>
+
+    <!-- RSVP form (no seat or table questions) -->
+    <dialog id="dlg" aria-labelledby="dh">
+      <h2 class="gt" id="dh" style="font-size: 34px">Will you join us?</h2>
+      <form id="f" novalidate>
+        <label for="n">Full name</label><input id="n" autocomplete="name" />
+        <div class="err" id="e1"></div>
+        <label for="c">Email or mobile number</label><input id="c" />
+        <div class="err" id="e2"></div>
+        <div class="two" role="radiogroup" aria-label="Attendance">
+          <label
+            ><input type="radio" name="a" value="Joyfully accepts" />Joyfully
+            accepts</label
+          ><label
+            ><input
+              type="radio"
+              name="a"
+              value="Regretfully declines"
+            />Regretfully declines</label
+          >
+        </div>
+        <div class="err" id="e3"></div>
+        <div id="gw" class="hide">
+          <label>Number of guests</label>
+          <div class="step">
+            <button type="button" id="g-" aria-label="Fewer guests">−</button
+            ><b id="gn">1</b
+            ><button type="button" id="g+" aria-label="More guests">+</button>
+          </div>
+        </div>
+        <label for="d">Meal preference or dietary needs (optional)</label
+        ><input id="d" /> <label for="s">Song request (optional)</label
+        ><input id="s" />
+        <label for="m">A message for the couple (optional)</label
+        ><textarea id="m" rows="2"></textarea>
+        <div class="two">
+          <button
+            class="btn f"
+            type="submit"
+            style="justify-content: center; flex: 1"
+          >
+            Send</button
+          ><button
+            class="btn"
+            type="button"
+            id="x"
+            style="justify-content: center; flex: 1"
+          >
+            Close
+          </button>
+        </div>
+      </form>
+      <div id="ty" class="hide" style="text-align: center">
+        <h2 class="gt">Thank you!</h2>
+        <p>
+          Your reply has been received. We can’t wait to celebrate with you.
+        </p>
+        <button class="btn f" id="x2" style="margin-top: 14px">Close</button>
+      </div>
+    </dialog>
+
+    <!-- Paste your MP3 link in CONFIG.songUrl inside script.js -->
+    <audio id="song" loop preload="auto"></audio>
+    <button class="fab" id="th" aria-label="Switch theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path id="thp" d="M12 3a9 9 0 109 9 7 7 0 01-9-9z" />
+      </svg>
+    </button>
+    <button
+      class="fab hide"
+      id="mu"
+      aria-pressed="false"
+      aria-label="Play music"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path id="mup" d="M8 5v14l11-7z" />
+      </svg>
+    </button>
+
+    <script src="script.js"></script>
   </body>
 </html>
