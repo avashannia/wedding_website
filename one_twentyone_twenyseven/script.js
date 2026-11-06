@@ -4,7 +4,7 @@ const CONFIG = {
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
-  sheetUrl: "", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
+  sheetUrl: "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
     "assets/flower-1.png",
