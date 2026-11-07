@@ -8,7 +8,7 @@
     />
     <title>Abe &amp; Collyn – Wedding Invitation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="icon" type="image/x-icon" href="./assets/logo.png">
+    <link rel="icon" type="image/x-icon" href="./assets/logo.png" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
@@ -22,7 +22,8 @@
       <div id="mn">
         <a href="#ceremony">Ceremony</a><a href="#reception">Reception</a
         ><a href="#program">Program</a><a href="#dress">Dress Code</a
-        ><a href="#entourage">Entourage</a><a href="#rsvp">RSVP</a>
+        ><a href="#entourage">Entourage</a><a href="#video">Video</a
+        ><a href="#rsvp">RSVP</a>
       </div>
     </nav>
 
@@ -31,6 +32,11 @@
       <section class="s1 hero" id="top">
         <canvas id="sp" aria-hidden="true"></canvas>
         <div class="in">
+          <div class="crest rv rv-z" id="crest">
+            <i></i>
+            <div class="medal"><img id="lg" alt="Abe &amp; Collyn logo" /></div>
+            <i></i>
+          </div>
           <div class="k meta">
             <span id="dt"></span><i></i><span id="nm"></span>
           </div>
@@ -144,8 +150,24 @@
         </div>
       </section>
 
+      <!-- VIDEO (autoplays muted so the background song keeps playing) -->
+      <section class="s2" id="video">
+        <div class="in wide">
+          <div class="k">A glimpse of us</div>
+          <h2 class="gt">Watch Our Story</h2>
+          <div class="vid frame" id="vw">
+            <video id="vd" muted loop playsinline preload="metadata"></video>
+            <button class="vbtn" id="vb" aria-label="Pause video">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path id="vbp" d="M6 5h4v14H6zM14 5h4v14h-4z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
       <!-- RSVP -->
-      <div class="join j1">
+      <div class="join j2">
         <section class="s1b arch" id="rsvp">
           <div class="in">
             <div class="k" id="by"></div>
