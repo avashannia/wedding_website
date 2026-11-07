@@ -652,6 +652,24 @@ button {
 .eg3 {
   grid-template-columns: repeat(3, 1fr);
 }
+.rows p {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.rows .l {
+  text-align: right;
+}
+.rows .r {
+  text-align: left;
+}
+@media (max-width: 420px) {
+  .rows p {
+    font-size: 11px;
+  }
+}
 .ec {
   text-align: center;
 }
@@ -680,20 +698,18 @@ button {
 
 /* hero: focused layout – logo, names, welcome title */
 .hero {
-  min-height: 100vh;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  display: block;
+  padding-top: clamp(40px, 8vw, 72px);
+  padding-bottom: clamp(36px, 6vw, 56px);
+} /* content starts at the top */
 .hero .in {
   width: 100%;
 }
 .hlogo {
   display: block;
-  width: clamp(190px, 54vw, 340px);
+  width: clamp(270px, 78vw, 480px);
   height: auto;
-  margin: 0 auto 20px;
+  margin: 0 auto 14px;
 }
 :root[data-theme="light"] .hlogo {
   filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.1));
