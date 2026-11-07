@@ -4,7 +4,8 @@ const CONFIG = {
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "21.01.2027",
   rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
-  sheetUrl: "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
+  sheetUrl:
+    "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
     "assets/flower-1.png",
@@ -12,7 +13,11 @@ const CONFIG = {
     "assets/flower-3.png",
     "assets/flower-4.png",
   ], // your 4 flower pictures
-  heroPhoto: "", // Hero arch photo
+  logo: "assets/logo.png", // your logo – shown in a gold medallion at the top of the hero
+  heroPhoto: "", // photo inside the hero arch (leave "" for the placeholder)
+  videoUrl: "assets/video.mp4", // the autoplay video (muted, so the background song keeps playing)
+  videoPoster: "", // optional still image shown before the video loads
+  videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
     // Gallery photos (src = image URL, cap = caption)
     { src: "", cap: "Our first trip" },
@@ -67,45 +72,45 @@ const CONFIG = {
     ["White", "#FFFFFF"],
     ["Sage", "#A8C3A0"],
   ],
-  entourage: [
-    ["Parents", [
-      "Abemel A. Obordo & Hermenia E Obordo",
-      "Joselito P. Panganiban & Josephine D. Panganiban",
-    ]],
-    ["Principal Sponsors", [
-      "Ponciano Tugonon & Evelyn Tugonon",
-      "Anthony Ocampo & Jailyn Ocampo",
-      "PLTCOL Bryan Salvacion & Mrs. Racquel Salvacion",
-      "PLTCOL Ruel Burlat & Byng Acevedo",
-      "JSUPT Jayrex Joseph Bustinera & Ma Fatima Montoya",
-      "JCSUPT Lyndon Torres (Ret.) & PLTCOL Catherine Ramos",
-      "PLTCOL Neil E. Gumana & Lourdes Eyao Icoy",
-      "JCSUPT Lyndon Torres (Ret.) & Julgen A. Obordo",
-      "JSSUPT Xavier Solda",
-    ]],
-    ["Best Man & Maid of Honor", [
-      "PCPT Joedhel Lloyd E Obordo & Paula Kat-yana Tugonon-Manuel, Anne Sofia Lou Ocampo",
-    ]],
-    ["Groomsmen & Bridesmaids", [
-      "Luigi Edward Panganiban & Melnia Andrea E Obordo",
-      "Joerald Buen E Obordo & Apple Serrano",
-      "PCPT Harren Ralph Dunton & JSINSP Krizza Jane Bermudo",
-      "PCPT Michael John Bañes & Princess Arianne Macaranas",
-    ]],
-    /*
-    ["Secondary Sponsors", [
-      "Candle: [Name] & [Name]",
-      "Veil: [Name] & [Name]",
-      "Cord: [Name] & [Name]",
-    ]],
-    */
-    ["Little Ones", [
-      "Flower girls: Gwen Mestidio & Amarah Obordo",
-      "Ring bearer: Axl Obordo",
-      "Coin bearer: Kenzo S Laylo",
-      "Bible bearer: Kenneth Cordovero",
-    ]],
-  ],
+  // Entourage: everything is shown on the page (nothing to tap). One name per row.
+  // principal = [left name, right name] pairs. Left column = groom's side / men, right column = bride's side / women.
+  // Leave a list empty ([]) and that block is hidden (e.g. Secondary Sponsors).
+  entourage: {
+    parentsGroom: ["Abemel A. Obordo", "Hermenia E Obordo"],
+    parentsBride: ["Joselito P. Panganiban", "Josephine D. Panganiban"],
+    principal: [
+      ["Ponciano Tugonon", "Evelyn Tugonon"],
+      ["Anthony Ocampo", "Jailyn Ocampo"],
+      ["PLTCOL Bryan Salvacion", "Mrs. Racquel Salvacion"],
+      ["PLTCOL Ruel Burlat", "Byng Acevedo"],
+      ["JSUPT Jayrex Joseph Bustinera", "Ma Fatima Montoya"],
+      ["JCSUPT Lyndon Torres (Ret.)", "PLTCOL Catherine Ramos"],
+      ["PLTCOL Neil E. Gumana", "Lourdes Eyao Icoy"],
+      ["JCSUPT Lyndon Torres (Ret.)", "Julgen A. Obordo"],
+      ["JSSUPT Xavier Solda", ""],
+    ],
+    bestMan: ["PCPT Joedhel Lloyd E Obordo"],
+    maidOfHonor: ["Paula Kat-yana Tugonon-Manuel", "Anne Sofia Lou Ocampo"],
+    groomsmen: [
+      "Luigi Edward Panganiban",
+      "Joerald Buen E Obordo",
+      "PCPT Harren Ralph Dunton",
+      "PCPT Michael John Bañes",
+    ],
+    bridesmaids: [
+      "Melnia Andrea E Obordo",
+      "Apple Serrano",
+      "JSINSP Krizza Jane Bermudo",
+      "Princess Arianne Macaranas",
+    ],
+    candle: [],
+    veil: [],
+    cord: [], // Secondary Sponsors – add names to show this block
+    coinBearer: ["Kenzo S Laylo"],
+    bibleBearer: ["Kenneth Cordovero"],
+    ringBearer: ["Axl Obordo"],
+    flowerGirls: ["Gwen Mestidio", "Amarah Obordo"],
+  },
 };
 /* ========================================================== */
 
@@ -130,6 +135,8 @@ $("dt").textContent = CONFIG.dateLabel;
 $("by").textContent = "Please respond by " + CONFIG.rsvpDeadline;
 $("ft").textContent = "With love, " + CONFIG.names;
 $("hp").innerHTML = media(CONFIG.heroPhoto, "The couple");
+$("lg").src = CONFIG.logo;
+$("lg").onerror = () => $("crest").classList.add("hide"); // no logo file yet: medallion stays hidden
 $("dd").textContent = CONFIG.dressText;
 $("da").textContent = CONFIG.dressAvoid;
 $("dl").textContent = CONFIG.dressLadies;
@@ -209,37 +216,73 @@ $("sw").innerHTML = CONFIG.dressColors
       '"></i>',
   )
   .join("");
-$("en").innerHTML = CONFIG.entourage
-  .map(
-    (g, i) =>
-      '<div class="ac"><button aria-expanded="false" aria-controls="eg' +
-      i +
-      '"><span>' +
-      g[0] +
-      '</span><span>+</span></button><div id="eg' +
-      i +
+/* entourage: all names visible. Two-column blocks put the left column against the middle (right-aligned)
+   and the right column against the middle (left-aligned), like a printed program. */
+{
+  const E = CONFIG.entourage,
+    has = (x) => x && x.length;
+  const col = (c) =>
+    '<div class="ec ' +
+    c.s +
+    '">' +
+    (c.h ? '<div class="eh">' + c.h + "</div>" : "") +
+    c.n.map((n) => "<p>" + n + "</p>").join("") +
+    "</div>";
+  const blk = (cols, title) => {
+    cols = cols.filter((c) => has(c.n));
+    if (!cols.length) return "";
+    if (cols.length === 1) cols[0].s = "c";
+    return (
+      '<div class="eblk rv">' +
+      (title ? '<div class="eh mid">' + title + "</div>" : "") +
+      '<div class="eg eg' +
+      cols.length +
       '">' +
-      g[1].map((n) => "<p>" + n + "</p>").join("") +
-      "</div></div>",
-  )
-  .join("");
-document.querySelectorAll(".ac>button").forEach(
-  (b) =>
-    (b.onclick = () => {
-      const a = b.parentNode,
-        open = !a.classList.contains("open");
-      document.querySelectorAll(".ac").forEach((x) => {
-        x.classList.remove("open");
-        x.firstChild.setAttribute("aria-expanded", "false");
-        x.firstChild.lastChild.textContent = "+";
-      });
-      if (open) {
-        a.classList.add("open");
-        b.setAttribute("aria-expanded", "true");
-        b.lastChild.textContent = "−";
-      }
-    }),
-);
+      cols.map(col).join("") +
+      "</div></div>"
+    );
+  };
+  const two = (h1, a, h2, b) =>
+    blk([
+      { s: "l", h: h1, n: a },
+      { s: "r", h: h2, n: b },
+    ]);
+  $("en").innerHTML =
+    two(
+      "Parents of the Groom",
+      E.parentsGroom,
+      "Parents of the Bride",
+      E.parentsBride,
+    ) +
+    blk(
+      [
+        { s: "l", n: E.principal.map((p) => p[0]).filter(Boolean) },
+        { s: "r", n: E.principal.map((p) => p[1]).filter(Boolean) },
+      ],
+      "Principal Sponsors",
+    ) +
+    two(
+      "Best Man",
+      E.bestMan,
+      E.maidOfHonor.length > 1 ? "Maids of Honor" : "Maid of Honor",
+      E.maidOfHonor,
+    ) +
+    two("Groomsmen", E.groomsmen, "Bridesmaids", E.bridesmaids) +
+    blk(
+      [
+        { s: "c", h: "Candle", n: E.candle },
+        { s: "c", h: "Veil", n: E.veil },
+        { s: "c", h: "Cord", n: E.cord },
+      ],
+      "Secondary Sponsors",
+    ) +
+    blk([
+      { s: "c", h: "Coin Bearer", n: E.coinBearer },
+      { s: "c", h: "Bible Bearer", n: E.bibleBearer },
+      { s: "c", h: "Ring Bearer", n: E.ringBearer },
+    ]) +
+    blk([{ s: "c", n: E.flowerGirls }], "Flower Girls");
+}
 
 /* ---------- gallery: stack + grid ---------- */
 const P = CONFIG.photos,
@@ -522,11 +565,6 @@ document.querySelectorAll(".sw i,.cd>div,.two2>div").forEach((e, i) => {
   e.style.setProperty("--d", ((i % 7) * 0.09).toFixed(2) + "s");
   io.observe(e);
 });
-document.querySelectorAll(".ac").forEach((e, i) => {
-  e.classList.add("rv", i % 2 ? "rv-r" : "rv-l");
-  e.style.setProperty("--d", ((i % 3) * 0.1).toFixed(2) + "s");
-  io.observe(e);
-});
 
 /* ---------- flower pictures: 4 images, 8 fixed placements (each image used twice, alternating sides) ---------- */
 // [section id, flower no. 1-4, side, top %, side offset %, rotation, mirrored, size, parallax speed]
@@ -714,4 +752,45 @@ if (CONFIG.songUrl) {
       au.pause();
     } else if (wasOn && !userPaused) au.play().catch(() => {});
   });
+}
+
+/* ---------- video: autoplays (muted) when it scrolls into view and pauses when it leaves; the background song keeps playing ---------- */
+{
+  const vd = $("vd"),
+    vb = $("vb"),
+    vw = $("vw");
+  let vPaused = false; // true once a guest pauses it themselves
+  vw.style.setProperty("--va", CONFIG.videoRatio || "16 / 9");
+  vd.muted = true;
+  if (CONFIG.videoPoster) vd.poster = CONFIG.videoPoster;
+  vd.src = CONFIG.videoUrl;
+  vd.onerror = () => {
+    vw.innerHTML = '<div class="ph">VIDEO</div>';
+  };
+  const sync = () => {
+    const p = $("vbp");
+    if (!p) return;
+    const on = !vd.paused;
+    vb.setAttribute("aria-label", on ? "Pause video" : "Play video");
+    p.setAttribute("d", on ? "M6 5h4v14H6zM14 5h4v14h-4z" : "M8 5v14l11-7z");
+  };
+  vd.onplay = vd.onpause = sync;
+  new IntersectionObserver(
+    (es) =>
+      es.forEach((e) => {
+        if (e.isIntersecting) {
+          if (!vPaused) vd.play().catch(() => {});
+        } else vd.pause();
+      }),
+    { threshold: 0.4 },
+  ).observe(vw);
+  vb.onclick = () => {
+    if (vd.paused) {
+      vPaused = false;
+      vd.play().catch(() => {});
+    } else {
+      vPaused = true;
+      vd.pause();
+    }
+  };
 }
