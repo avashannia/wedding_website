@@ -13,8 +13,8 @@ const CONFIG = {
     "assets/flower-3.png",
     "assets/flower-4.png",
   ], // your 4 flower pictures
-  logo: "assets/logo.png", // your logo (transparent PNG) – shown large at the top of the hero, no frame
-  logoDark: "", // optional: a light / gold version of the logo, used only in the dark theme
+  logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
+  logoDarkTheme: "assets/logo-dark.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
   videoUrl: "assets/video.mp4", // the autoplay video (muted, so the background song keeps playing)
   videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
@@ -136,7 +136,19 @@ $("nm").textContent = CONFIG.names;
 $("dt").textContent = CONFIG.dateLabel;
 $("by").textContent = "Please respond by " + CONFIG.rsvpDeadline;
 $("ft").textContent = "With love, " + CONFIG.names;
-$("lg").onerror = () => $("lg").classList.add("hide"); // no logo file yet: it stays hidden
+/* logo swaps with the theme; falls back to the other file if one is missing, hides if both are */
+function setLogo(t) {
+  const lg = $("lg"),
+    want = t === "dark" ? CONFIG.logoDarkTheme : CONFIG.logoLightTheme,
+    fb = CONFIG.logoLightTheme;
+  lg.classList.remove("hide");
+  lg.onerror = () => {
+    lg.onerror = () => lg.classList.add("hide");
+    if (want && want !== fb) lg.src = fb;
+    else lg.classList.add("hide");
+  };
+  lg.src = want || fb;
+}
 $("dd").textContent = CONFIG.dressText;
 $("da").textContent = CONFIG.dressAvoid;
 $("dl").textContent = CONFIG.dressLadies;
@@ -656,17 +668,14 @@ const MOON = "M12 3a9 9 0 109 9 7 7 0 01-9-9z",
     "M12 7a5 5 0 100 10 5 5 0 000-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3z";
 function theme(t) {
   root.dataset.theme = t;
-  $("lg").src = t === "dark" && CONFIG.logoDark ? CONFIG.logoDark : CONFIG.logo;
+  setLogo(t);
   $("thp").setAttribute("d", t === "dark" ? SUN : MOON);
   $("th").setAttribute(
     "aria-label",
     t === "dark" ? "Switch to light theme" : "Switch to dark theme",
   );
 }
-theme(
-  store("theme") ||
-    (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"),
-);
+theme(store("theme") || "dark"); // dark is the default theme; a guest's own choice is remembered
 $("th").onclick = () => {
   const t = root.dataset.theme === "dark" ? "light" : "dark";
   theme(t);
