@@ -68,34 +68,43 @@ const CONFIG = {
     ["Sage", "#A8C3A0"],
   ],
   entourage: [
-    ["Parents", ["Abemel A. Obordo & Hermenia E Obordo", "Joselito P. Panganiban & Josephine D. Panganiban"]],
-    ["Principal Sponsors", ["Ponciano Tugonon & Evelyn Tugonon", 
-      "Anthony Ocampo & Jailyn Ocampo", 
-      "PLTCOL Bryan Salvacion & Mrs. Racquel Salvacion", 
-      "PLTCOL Ruel Burlat & Byng Acevedo", 
-      "JSUPT Jayrex Joseph Bustinera & Ma Fatima Montoya", 
-      "JCSUPT Lyndon Torres (Ret.) & PLTCOL Catherine Ramos", 
-      "PLTCOL Neil E. Gumana & Lourdes Eyao Icoy", 
-      "JCSUPT Lyndon Torres (Ret.) & Julgen A. Obordo", 
-      "JSSUPT Xavier Solda] "],
-    ["Best Man & Maid of Honor", ["PCPT Joedhel Lloyd E Obordo & Paula Kat-yana Tugonon-Manuel, Anne Sofia Lou Ocampo"]],
-    ["Groomsmen & Bridesmaids", ["Luigi Edward Panganiban & Melnia Andrea E Obordo", 
+    ["Parents", [
+      "Abemel A. Obordo & Hermenia E Obordo",
+      "Joselito P. Panganiban & Josephine D. Panganiban",
+    ]],
+    ["Principal Sponsors", [
+      "Ponciano Tugonon & Evelyn Tugonon",
+      "Anthony Ocampo & Jailyn Ocampo",
+      "PLTCOL Bryan Salvacion & Mrs. Racquel Salvacion",
+      "PLTCOL Ruel Burlat & Byng Acevedo",
+      "JSUPT Jayrex Joseph Bustinera & Ma Fatima Montoya",
+      "JCSUPT Lyndon Torres (Ret.) & PLTCOL Catherine Ramos",
+      "PLTCOL Neil E. Gumana & Lourdes Eyao Icoy",
+      "JCSUPT Lyndon Torres (Ret.) & Julgen A. Obordo",
+      "JSSUPT Xavier Solda",
+    ]],
+    ["Best Man & Maid of Honor", [
+      "PCPT Joedhel Lloyd E Obordo & Paula Kat-yana Tugonon-Manuel, Anne Sofia Lou Ocampo",
+    ]],
+    ["Groomsmen & Bridesmaids", [
+      "Luigi Edward Panganiban & Melnia Andrea E Obordo",
       "Joerald Buen E Obordo & Apple Serrano",
       "PCPT Harren Ralph Dunton & JSINSP Krizza Jane Bermudo",
-      "PCPT Michael John Bañes & Princess Arianne Macaranas"]],
-    /*[
-      "Secondary Sponsors",
-      [
-        "Candle: [Name] & [Name]",
-        "Veil: [Name] & [Name]",
-        "Cord: [Name] & [Name]",
-      ],
-    ],*/
-    ["Little Ones", ["Flower girls: [Gwen Mestidio] & [Amarah Obordo]", 
-                      "Ring bearer: [Axl Obordo]", 
-                      "Coin bearer: [Kenzo S Laylo]",
-                      "Bible bearer: [Kenneth Cordovero]"
-                      ]],
+      "PCPT Michael John Bañes & Princess Arianne Macaranas",
+    ]],
+    /*
+    ["Secondary Sponsors", [
+      "Candle: [Name] & [Name]",
+      "Veil: [Name] & [Name]",
+      "Cord: [Name] & [Name]",
+    ]],
+    */
+    ["Little Ones", [
+      "Flower girls: Gwen Mestidio & Amarah Obordo",
+      "Ring bearer: Axl Obordo",
+      "Coin bearer: Kenzo S Laylo",
+      "Bible bearer: Kenneth Cordovero",
+    ]],
   ],
 };
 /* ========================================================== */
