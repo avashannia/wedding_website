@@ -13,8 +13,8 @@ const CONFIG = {
     "assets/flower-3.png",
     "assets/flower-4.png",
   ], // your 4 flower pictures
-  logo: "assets/logo.png", // your logo – shown in a gold medallion at the top of the hero
-  heroPhoto: "", // photo inside the hero arch (leave "" for the placeholder)
+  logo: "assets/logo.png", // your logo (transparent PNG) – shown large at the top of the hero, no frame
+  logoDark: "", // optional: a light / gold version of the logo, used only in the dark theme
   videoUrl: "assets/video.mp4", // the autoplay video (muted, so the background song keeps playing)
   videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
@@ -26,6 +26,8 @@ const CONFIG = {
     { src: "", cap: "With family" },
     { src: "", cap: "Engagement day" },
     { src: "", cap: "Just us" },
+    { src: "", cap: "Celebrating us" },
+    { src: "", cap: "Forever begins" },
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
@@ -134,9 +136,7 @@ $("nm").textContent = CONFIG.names;
 $("dt").textContent = CONFIG.dateLabel;
 $("by").textContent = "Please respond by " + CONFIG.rsvpDeadline;
 $("ft").textContent = "With love, " + CONFIG.names;
-$("hp").innerHTML = media(CONFIG.heroPhoto, "The couple");
-$("lg").src = CONFIG.logo;
-$("lg").onerror = () => $("crest").classList.add("hide"); // no logo file yet: medallion stays hidden
+$("lg").onerror = () => $("lg").classList.add("hide"); // no logo file yet: it stays hidden
 $("dd").textContent = CONFIG.dressText;
 $("da").textContent = CONFIG.dressAvoid;
 $("dl").textContent = CONFIG.dressLadies;
@@ -322,6 +322,7 @@ const cards = P.map((p, i) => {
   return c;
 });
 $("dots").innerHTML = P.map(() => "<i></i>").join("");
+st.style.setProperty("--n", N); // gallery height grows with the number of photos
 function lay() {
   cards.forEach((c, i) => {
     const p = ord.indexOf(i);
@@ -655,6 +656,7 @@ const MOON = "M12 3a9 9 0 109 9 7 7 0 01-9-9z",
     "M12 7a5 5 0 100 10 5 5 0 000-10zM11 1h2v3h-2zM11 20h2v3h-2zM1 11h3v2H1zM20 11h3v2h-3z";
 function theme(t) {
   root.dataset.theme = t;
+  $("lg").src = t === "dark" && CONFIG.logoDark ? CONFIG.logoDark : CONFIG.logo;
   $("thp").setAttribute("d", t === "dark" ? SUN : MOON);
   $("th").setAttribute(
     "aria-label",
