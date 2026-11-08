@@ -28,6 +28,7 @@ const CONFIG = {
     { src: "assets/photo-6.jpg", cap: "Just us" },
     { src: "assets/photo-7.jpg", cap: "Celebrating us" },
     { src: "assets/photo-8.jpg", cap: "Forever begins" },
+    { src: "assets/photo-9.jpg", cap: "Forever begins" },
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
