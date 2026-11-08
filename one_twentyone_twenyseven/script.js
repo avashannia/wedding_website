@@ -15,7 +15,7 @@ const CONFIG = {
   ], // your 4 flower pictures
   logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
   logoDarkTheme: "assets/logo-dark.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
-  videoUrl: "assets/video.mp4", // the autoplay video (muted, so the background song keeps playing)
+  videoUrl: "https://www.facebook.com/share/v/1FTHN1Pb1z/4", // the autoplay video (muted, so the background song keeps playing)
   videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
@@ -254,11 +254,34 @@ $("sw").innerHTML = CONFIG.dressColors
       "</div></div>"
     );
   };
-  const two = (h1, a, h2, b) =>
-    blk([
-      { s: "l", h: h1, n: a },
-      { s: "r", h: h2, n: b },
-    ]);
+  /* two aligned columns: every row is one grid row, so a name that wraps never pushes its partner out of line */
+  const duo = (la, lb, h1, h2, title) => {
+    const n = Math.max(la.length, lb.length);
+    if (!n) return "";
+    let cells =
+      h1 || h2
+        ? '<div class="eh l">' +
+          (h1 || "") +
+          '</div><div class="eh r">' +
+          (h2 || "") +
+          "</div>"
+        : "";
+    for (let i = 0; i < n; i++)
+      cells +=
+        '<p class="l">' +
+        (la[i] || "") +
+        '</p><p class="r">' +
+        (lb[i] || "") +
+        "</p>";
+    return (
+      '<div class="eblk rv">' +
+      (title ? '<div class="eh mid">' + title + "</div>" : "") +
+      '<div class="eg eg2 rows">' +
+      cells +
+      "</div></div>"
+    );
+  };
+  const two = (h1, a, h2, b) => duo(a, b, h1, h2);
   $("en").innerHTML =
     two(
       "Parents of the Groom",
@@ -266,11 +289,11 @@ $("sw").innerHTML = CONFIG.dressColors
       "Parents of the Bride",
       E.parentsBride,
     ) +
-    blk(
-      [
-        { s: "l", n: E.principal.map((p) => p[0]).filter(Boolean) },
-        { s: "r", n: E.principal.map((p) => p[1]).filter(Boolean) },
-      ],
+    duo(
+      E.principal.map((p) => p[0]),
+      E.principal.map((p) => p[1]),
+      "",
+      "",
       "Principal Sponsors",
     ) +
     two(
@@ -554,7 +577,7 @@ function rev(el, i, t) {
   if (
     el.classList.contains("rv") ||
     el.tagName === "CANVAS" ||
-    el.matches(".sw,.cd,.en,#tl,.two2,#cer,#rec")
+    el.matches(".sw,.cd,.en,#tl,.two2,#cer,#rec,.mid")
   )
     return;
   el.classList.add("rv");

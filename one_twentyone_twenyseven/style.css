@@ -697,11 +697,29 @@ button {
 }
 
 /* hero: focused layout – logo, names, welcome title */
+/* the hero fills the whole first screen: names/date on top, invitation + logo in the middle, date line at the bottom */
 .hero {
-  display: block;
-  padding-top: clamp(40px, 8vw, 72px);
-  padding-bottom: clamp(36px, 6vw, 56px);
-} /* content starts at the top */
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(36px, 7vh, 72px);
+  padding-bottom: clamp(32px, 7vh, 64px);
+}
+.hero .in {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero .mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 0;
+}
 .hero .in {
   width: 100%;
 }
