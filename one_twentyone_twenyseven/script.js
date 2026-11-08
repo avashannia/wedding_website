@@ -2,8 +2,8 @@
 const CONFIG = {
   names: "Abe & Collyn", // replace with your names
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
-  dateLabel: "21.01.2027",
-  rsvpDeadline: "1 December 2026", // placeholder – set your real RSVP date
+  dateLabel: "1.21.2027",
+  rsvpDeadline: "December 1, 2026", // placeholder – set your real RSVP date
   sheetUrl:
     "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
@@ -21,20 +21,21 @@ const CONFIG = {
   photos: [
     // Gallery photos (src = image URL, cap = caption)
     { src: "assets/photo-1.jpg" },
-    { src: "assets/photo-2.jpg"},
-    { src: "assets/photo-3.jpg"},
-    { src: "assets/photo-4.jpg"},
-    { src: "assets/photo-5.jpg"},
-    { src: "assets/photo-6.jpg"},
-    { src: "assets/photo-7.jpg"},
-    { src: "assets/photo-8.jpg"},
-    { src: "assets/photo-9.jpg"},
+    { src: "assets/photo-2.jpg" },
+    { src: "assets/photo-3.jpg" },
+    { src: "assets/photo-4.jpg" },
+    { src: "assets/photo-5.jpg" },
+    { src: "assets/photo-6.jpg" },
+    { src: "assets/photo-7.jpg" },
+    { src: "assets/photo-8.jpg" },
+    { src: "assets/photo-9.jpg" },
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
     addr: "Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
-    when: "21 January 2027 · 4:00 PM",
+    when: "January 21, 2027 · 4:00 PM",
     note: "",
+    photo: "assets/church.jpg", // big photo of the church
     mapEmbed: "", // optional: paste the src of Google Maps > Share > Embed a map; leave "" to search by name + address
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -47,6 +48,7 @@ const CONFIG = {
     addr: "267 San Jose Ext. St., Antipolo",
     when: "6:00 PM onwards",
     note: "Cocktails to follow right after the ceremony.",
+    photo: "assets/reception.jpg", // big photo of the reception venue
     mapEmbed: "", // optional: same as above
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -55,53 +57,58 @@ const CONFIG = {
       ),
   },
   timeline: [
-    ["15:00", "Guest arrival", "Settle in and say hello"],
-    ["16:00", "Ceremony", "A little laughter, a little tears"],
-    ["17:00", "Cocktail hour", "Drinks and photos"],
-    ["18:00", "Reception dinner", "Toasts and a shared meal"],
-    ["20:00", "First dance & cake", "Then the dance floor opens"],
-    ["23:00", "End of evening", "Sparklers and goodbyes"],
+    // [time, title, short line, optional small text under the time]
+    ["3:00 PM", "Guest arrival", "Settle in and say hello"],
+    ["4:00 PM", "Ceremony", "A little laughter, a little tears"],
+    ["5:00 PM", "Cocktail hour", "Drinks and photos"],
+    ["6:00 PM", "Reception", "Toasts and a shared meal", "onwards"],
   ],
   dressText: "Semi-formal attire in harmony with our wedding colors.",
-  dressLadies: "Long dress, knee-length dress or cocktail dress",
-  dressGents: "Long pants, black coat and tie",
-  dressAvoid: "Kindly avoid jeans and sneakers.",
-  dressColors: [
-    ["Navy", "#14213D"],
-    ["Royal blue", "#3F5A8C"],
-    ["Light blue", "#A9B9DA"],
-    ["Gold", "#C9A24B"],
-    ["Cream", "#F3EEE4"],
-    ["White", "#FFFFFF"],
-    ["Sage", "#A8C3A0"],
+  dressLadies: "Long dress, knee-length dress, cocktail dress or slacks",
+  dressGents: "Long sleeves and slacks, coat and tie",
+  dressAvoid: "Strictly no jeans & sneakers.",
+  // [who, color name, color]
+  dressRoles: [
+    ["Ninongs", "Black", "#1C1C1C"],
+    ["Ninangs", "Beige", "#D2B89A"],
+    ["Groomsmen", "Cream", "#F2E8D5"],
+    ["Bridesmaids", "Champagne", "#DBC8A6"],
+  ],
+  // other guests: all shades of blue
+  dressBlues: [
+    ["Navy", "#2D456E"],
+    ["Royal blue", "#3C5B91"],
+    ["Cornflower", "#7590C8"],
+    ["Sky blue", "#ADC6ED"],
+    ["Powder blue", "#D3DFF5"],
+    ["Ice blue", "#EBF1FA"],
   ],
   // Entourage: everything is shown on the page (nothing to tap). One name per row.
   // principal = [left name, right name] pairs. Left column = groom's side / men, right column = bride's side / women.
   // Leave a list empty ([]) and that block is hidden (e.g. Secondary Sponsors).
   entourage: {
-    parentsGroom: ["Abemel A. Obordo", "Hermenia E. Obordo"],
-    parentsBride: ["Joselito P. Panganiban", "Josephine D. Panganiban"],
+    parentsGroom: ["Abemel Obordo", "Hermenia Obordo"],
+    parentsBride: ["Joselito Panganiban", "Josephine Panganiban"],
     principal: [
-      ["Ponciano Tugonon", "Evelyn Tugonon"],
-      ["Anthony Ocampo", "Jailyn Ocampo"],
-      ["PLTCOL Bryan Salvacion", "Mrs. Racquel Salvacion"],
-      ["PLTCOL Ruel Burlat", "Byng Acevedo"],
-      ["JSUPT Jayrex Joseph Bustinera", "Ma Fatima Montoya"],
+      ["Mr. Ponciano Tugonon", "Evelyn Tugonon"],
+      ["Engr. Antonio Ocampo", "Jailyn Ocampo"],
       ["JCSUPT Lyndon Torres (Ret.)", "PLTCOL Catherine Ramos"],
+      ["PLTCOL Neil Gumana", "Julgen Obordo"],
+      ["JSUPT Jayrex Joseph Bustinera", "Ma Fatima Montoya"],
+      ["PLTCOL Bryan O' Neil Salvacion", "Mrs. Racquel Salvacion"],
+      ["PLTCOL Ruel Burlat", "Byng Acevedo"],
       ["JSUPT Mark Anthony Omega", "Lourdes Eyao Icoy"],
-      ["PLTCOL Neil E Gumana", "Julgen A. Obordo"],
-      ["JSSUPT Xavier Solda", ""],
     ],
-    bestMan: ["PCPT Joedhel Lloyd E Obordo"],
+    bestMan: ["PCPT Joedhel Lloyd Obordo"],
     maidOfHonor: ["Paula Kat-yana Tugonon-Manuel", "Anne Sofia Lou Ocampo"],
     groomsmen: [
+      "Joerald Buen Obordo",
       "Luigi Edward Panganiban",
-      "Joerald Buen E Obordo",
       "PCPT Harren Ralph Dunton",
       "PCPT Michael John Bañes",
     ],
     bridesmaids: [
-      "Melnia Andrea E Obordo",
+      "Melnia Andrea Obordo",
       "Apple Serrano",
       "JSINSP Krizza Jane Bermudo",
       "Princess Arianne Macaranas",
@@ -109,10 +116,10 @@ const CONFIG = {
     candle: [],
     veil: [],
     cord: [], // Secondary Sponsors – add names to show this block
-    coinBearer: ["Kenzo S Laylo"],
+    coinBearer: ["Kenzo Laylo"],
     bibleBearer: ["Kenneth Cordovero"],
-    ringBearer: ["Axl Obordo"],
-    flowerGirls: ["Gwen Mestidio", "Amarah Obordo"],
+    ringBearer: ["Joross Axl Obordo"],
+    flowerGirls: ["Gwen Eloise Mestidio", "Amarah Ysabelle Obordo"],
   },
 };
 /* ========================================================== */
@@ -129,7 +136,11 @@ const store = (k, v) => {
 };
 const media = (src, alt) =>
   src
-    ? '<img src="' + src + '" alt="' + alt + '">'
+    ? '<img src="' +
+      src +
+      '" alt="' +
+      alt +
+      '" onerror="this.outerHTML=\'<div class=ph>PHOTO</div>\'">'
     : '<div class="ph">PHOTO</div>';
 
 /* ---------- text ---------- */
@@ -189,7 +200,10 @@ function venue(id, v) {
     v.when +
     "</b></p>" +
     (v.note ? "<p>" + v.note + "</p>" : "") +
-    '<p style="margin-top:16px"><a class="btn" href="' +
+    '<div class="vphoto frame">' +
+    media(v.photo, v.name) +
+    "</div>" +
+    '<p style="margin-top:18px"><a class="btn" href="' +
     v.mapUrl +
     '" target="_blank" rel="noopener">View on map</a></p>' +
     '<div class="map frame"><iframe title="Map of ' +
@@ -210,6 +224,7 @@ $("tl").innerHTML = CONFIG.timeline
       i * 0.12 +
       's"><span class="tm">' +
       t[0] +
+      (t[3] ? "<small>" + t[3] + "</small>" : "") +
       "</span><span><b>" +
       t[1] +
       "</b><br>" +
@@ -217,7 +232,21 @@ $("tl").innerHTML = CONFIG.timeline
       "</span></div>",
   )
   .join("");
-$("sw").innerHTML = CONFIG.dressColors
+$("roles").innerHTML = CONFIG.dressRoles
+  .map(
+    (r, i) =>
+      '<div class="rc rv rv-z" style="--d:' +
+      i * 0.1 +
+      's"><i style="background:' +
+      r[2] +
+      '" aria-hidden="true"></i><b>' +
+      r[0] +
+      "</b><span>" +
+      r[1] +
+      "</span></div>",
+  )
+  .join("");
+$("sw").innerHTML = CONFIG.dressBlues
   .map(
     (c) =>
       '<i tabindex="0" data-n="' +
@@ -320,100 +349,29 @@ $("sw").innerHTML = CONFIG.dressColors
     blk([{ s: "c", n: E.flowerGirls }], "Flower Girls");
 }
 
-/* ---------- gallery: stack + grid ---------- */
+/* ---------- prenup photos: grid only (an odd last photo is centered by the CSS) ---------- */
 const P = CONFIG.photos,
   N = P.length,
   st = $("stack");
-let ord = P.map((_, i) => i),
-  mode = "stack",
-  cur = 0,
-  swiped = false;
-const cards = P.map((p, i) => {
+let cur = 0;
+P.forEach((p, i) => {
+  p.cap = p.cap || "Prenup photo " + (i + 1);
   const c = document.createElement("div");
-  c.className = "card";
+  c.className = "card rv rv-z";
   c.tabIndex = 0;
   c.setAttribute("role", "button");
   c.setAttribute("aria-label", p.cap);
-  c.innerHTML = media(p.src, p.cap).replace(
-    ">PHOTO<",
-    ">PHOTO " + (i + 1) + "<",
-  );
+  c.style.setProperty("--d", ((i % 3) * 0.1).toFixed(2) + "s");
+  c.innerHTML = media(p.src, p.cap);
   st.appendChild(c);
-  c.onclick = () => {
-    if (swiped) return;
-    const pos = ord.indexOf(i);
-    if (mode === "grid" || pos === 0) openLb(i);
-    else {
-      ord.splice(pos, 1);
-      ord.unshift(i);
-      lay();
-    } // bring tapped card to the front
-  };
+  c.onclick = () => openLb(i);
   c.onkeydown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       c.click();
     }
   };
-  return c;
 });
-$("dots").innerHTML = P.map(() => "<i></i>").join("");
-st.style.setProperty("--n", N); // gallery height grows with the number of photos
-function lay() {
-  cards.forEach((c, i) => {
-    const p = ord.indexOf(i);
-    c.classList.toggle("front", p === 0 && mode === "stack");
-    c.style.zIndex = N - p;
-    c.style.transform =
-      "translateY(" +
-      -p * 26 +
-      "px) rotate(" +
-      [0, -5, 4, -3, 5, -4][p % 6] +
-      "deg)";
-  });
-  [...$("dots").children].forEach((d, i) =>
-    d.classList.toggle("on", i === ord[0]),
-  );
-}
-const go = (d) => {
-  d > 0 ? ord.push(ord.shift()) : ord.unshift(ord.pop());
-  lay();
-};
-$("nx").onclick = () => go(1);
-$("pv").onclick = () => go(-1);
-function setMode(m) {
-  if (m === mode) return;
-  st.style.opacity = 0;
-  setTimeout(() => {
-    mode = m;
-    st.classList.toggle("grid", m === "grid");
-    $("ctl").classList.toggle("hide", m === "grid");
-    $("hint").textContent =
-      m === "grid"
-        ? "Tap a photo to enlarge"
-        : "Tap a card’s top edge · swipe · tap to enlarge";
-    $("m1").setAttribute("aria-pressed", m === "stack");
-    $("m2").setAttribute("aria-pressed", m === "grid");
-    lay();
-    st.style.opacity = 1;
-  }, 250);
-}
-$("m1").onclick = () => setMode("stack");
-$("m2").onclick = () => setMode("grid");
-let sx = null; // swipe
-st.onpointerdown = (e) => {
-  sx = e.clientX;
-  swiped = false;
-};
-st.onpointerup = (e) => {
-  if (sx !== null && mode === "stack" && Math.abs(e.clientX - sx) > 40) {
-    swiped = true;
-    go(e.clientX < sx ? 1 : -1);
-    setTimeout(() => (swiped = false), 50);
-  }
-  sx = null;
-};
-lay();
 
 /* ---------- lightbox ---------- */
 const lb = $("lb");
@@ -485,8 +443,6 @@ $("f").onsubmit = async (e) => {
     name: $("n").value.trim(),
     contact: $("c").value.trim(),
     attending: a.value,
-    diet: $("d").value.trim(),
-    song: $("s").value.trim(),
     msg: $("m").value.trim(),
   };
   const btn = $("send");
@@ -578,7 +534,7 @@ function rev(el, i, t) {
   if (
     el.classList.contains("rv") ||
     el.tagName === "CANVAS" ||
-    el.matches(".sw,.cd,.en,#tl,.two2,#cer,#rec,.mid")
+    el.matches(".sw,.cd,.en,#tl,.two2,#cer,#rec,.mid,#roles,#stack")
   )
     return;
   el.classList.add("rv");
