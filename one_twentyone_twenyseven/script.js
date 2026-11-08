@@ -15,20 +15,20 @@ const CONFIG = {
   ], // your 4 flower pictures
   logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
   logoDarkTheme: "assets/logo-gold-cream.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
-  videoUrl: "https://www.facebook.com/share/v/1FTHN1Pb1z/4", // Facebook link (must be a PUBLIC video; if it does not load, open the link in a browser and paste the final address, e.g. facebook.com/yourpage/videos/123...) OR a file like "assets/prenup.mp4". Muted autoplay, so the background song keeps playing
+  videoUrl: "https://www.facebook.com/reel/1431983113331625", // Facebook link (must be a PUBLIC video; if it does not load, open the link in a browser and paste the final address, e.g. facebook.com/yourpage/videos/123...) OR a file like "assets/prenup.mp4". Muted autoplay, so the background song keeps playing
   videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
     // Gallery photos (src = image URL, cap = caption)
-    { src: "assets/photo-1.jpg", cap: "Our first trip" },
-    { src: "assets/photo-2.jpg", cap: "The proposal" },
-    { src: "assets/photo-3.jpg", cap: "Sunday mornings" },
-    { src: "assets/photo-4.jpg", cap: "With family" },
-    { src: "assets/photo-5.jpg", cap: "Engagement day" },
-    { src: "assets/photo-6.jpg", cap: "Just us" },
-    { src: "assets/photo-7.jpg", cap: "Celebrating us" },
-    { src: "assets/photo-8.jpg", cap: "Forever begins" },
-    { src: "assets/photo-9.jpg", cap: "Forever begins" },
+    { src: "assets/photo-1.jpg" },
+    { src: "assets/photo-2.jpg"},
+    { src: "assets/photo-3.jpg"},
+    { src: "assets/photo-4.jpg"},
+    { src: "assets/photo-5.jpg"},
+    { src: "assets/photo-6.jpg"},
+    { src: "assets/photo-7.jpg"},
+    { src: "assets/photo-8.jpg"},
+    { src: "assets/photo-9.jpg"},
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
@@ -45,7 +45,7 @@ const CONFIG = {
   reception: {
     name: "The Chandelier Events Place",
     addr: "267 San Jose Ext. St., Antipolo",
-    when: "6:00 PM onward",
+    when: "6:00 PM onwards",
     note: "Cocktails to follow right after the ceremony.",
     mapEmbed: "", // optional: same as above
     mapUrl:
@@ -79,7 +79,7 @@ const CONFIG = {
   // principal = [left name, right name] pairs. Left column = groom's side / men, right column = bride's side / women.
   // Leave a list empty ([]) and that block is hidden (e.g. Secondary Sponsors).
   entourage: {
-    parentsGroom: ["Abemel A. Obordo", "Hermenia E Obordo"],
+    parentsGroom: ["Abemel A. Obordo", "Hermenia E. Obordo"],
     parentsBride: ["Joselito P. Panganiban", "Josephine D. Panganiban"],
     principal: [
       ["Ponciano Tugonon", "Evelyn Tugonon"],
@@ -88,8 +88,8 @@ const CONFIG = {
       ["PLTCOL Ruel Burlat", "Byng Acevedo"],
       ["JSUPT Jayrex Joseph Bustinera", "Ma Fatima Montoya"],
       ["JCSUPT Lyndon Torres (Ret.)", "PLTCOL Catherine Ramos"],
-      ["PLTCOL Neil E. Gumana", "Lourdes Eyao Icoy"],
-      ["JCSUPT Lyndon Torres (Ret.)", "Julgen A. Obordo"],
+      ["JSUPT Mark Anthony Omega", "Lourdes Eyao Icoy"],
+      ["PLTCOL Neil E Gumana", "Julgen A. Obordo"],
       ["JSSUPT Xavier Solda", ""],
     ],
     bestMan: ["PCPT Joedhel Lloyd E Obordo"],
