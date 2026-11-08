@@ -15,7 +15,7 @@ const CONFIG = {
   ], // your 4 flower pictures
   logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
   logoDarkTheme: "assets/logo-gold-cream.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
-  videoUrl: "https://www.facebook.com/share/v/1FTHN1Pb1z/4", // the autoplay video (muted, so the background song keeps playing)
+  videoUrl: "https://www.facebook.com/share/v/1FTHN1Pb1z/4", // Facebook link (must be a PUBLIC video; if it does not load, open the link in a browser and paste the final address, e.g. facebook.com/yourpage/videos/123...) OR a file like "assets/prenup.mp4". Muted autoplay, so the background song keeps playing
   videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
@@ -789,43 +789,70 @@ if (CONFIG.songUrl) {
   });
 }
 
-/* ---------- video: autoplays (muted) when it scrolls into view and pauses when it leaves; the background song keeps playing ---------- */
+/* ---------- video: Facebook player (iframe) or a normal .mp4 file; the .mp4 version autoplays (muted) when it scrolls into view and pauses when it leaves; the background song keeps playing ---------- */
 {
   const vd = $("vd"),
     vb = $("vb"),
     vw = $("vw");
-  let vPaused = false; // true once a guest pauses it themselves
   vw.style.setProperty("--va", CONFIG.videoRatio || "16 / 9");
-  vd.muted = true;
-  if (CONFIG.videoPoster) vd.poster = CONFIG.videoPoster;
-  vd.src = CONFIG.videoUrl;
-  vd.onerror = () => {
-    vw.innerHTML = '<div class="ph">VIDEO</div>';
-  };
-  const sync = () => {
-    const p = $("vbp");
-    if (!p) return;
-    const on = !vd.paused;
-    vb.setAttribute("aria-label", on ? "Pause video" : "Play video");
-    p.setAttribute("d", on ? "M6 5h4v14H6zM14 5h4v14h-4z" : "M8 5v14l11-7z");
-  };
-  vd.onplay = vd.onpause = sync;
-  new IntersectionObserver(
-    (es) =>
-      es.forEach((e) => {
-        if (e.isIntersecting) {
-          if (!vPaused) vd.play().catch(() => {});
-        } else vd.pause();
-      }),
-    { threshold: 0.4 },
-  ).observe(vw);
-  vb.onclick = () => {
-    if (vd.paused) {
-      vPaused = false;
-      vd.play().catch(() => {});
-    } else {
-      vPaused = true;
-      vd.pause();
-    }
-  };
+
+  if (/facebook\.com|fb\.watch/.test(CONFIG.videoUrl)) {
+    // Facebook links can't play inside <video>, so use Facebook's player iframe
+    const f = document.createElement("iframe");
+    f.title = "Prenup video";
+    f.allow =
+      "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+    f.allowFullscreen = true;
+    f.style.cssText = "width:100%;height:100%;border:0";
+    const src =
+      "https://www.facebook.com/plugins/video.php?href=" +
+      encodeURIComponent(CONFIG.videoUrl) +
+      "&show_text=false&autoplay=true&mute=1";
+    vd.replaceWith(f);
+    if (vb) vb.remove(); // the custom play/pause button can't control Facebook's player
+    // load it only once the guest scrolls to it, so it starts playing at that moment
+    new IntersectionObserver(
+      (es, o) => {
+        if (es[0].isIntersecting) {
+          f.src = src;
+          o.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    ).observe(vw);
+  } else {
+    let vPaused = false; // true once a guest pauses it themselves
+    vd.muted = true;
+    if (CONFIG.videoPoster) vd.poster = CONFIG.videoPoster;
+    vd.src = CONFIG.videoUrl;
+    vd.onerror = () => {
+      vw.innerHTML = '<div class="ph">VIDEO</div>';
+    };
+    const sync = () => {
+      const p = $("vbp");
+      if (!p) return;
+      const on = !vd.paused;
+      vb.setAttribute("aria-label", on ? "Pause video" : "Play video");
+      p.setAttribute("d", on ? "M6 5h4v14H6zM14 5h4v14h-4z" : "M8 5v14l11-7z");
+    };
+    vd.onplay = vd.onpause = sync;
+    new IntersectionObserver(
+      (es) =>
+        es.forEach((e) => {
+          if (e.isIntersecting) {
+            if (!vPaused) vd.play().catch(() => {});
+          } else vd.pause();
+        }),
+      { threshold: 0.4 },
+    ).observe(vw);
+    vb.onclick = () => {
+      if (vd.paused) {
+        vPaused = false;
+        vd.play().catch(() => {});
+      } else {
+        vPaused = true;
+        vd.pause();
+      }
+    };
+  }
 }
