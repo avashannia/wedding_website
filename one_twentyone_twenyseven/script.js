@@ -14,20 +14,20 @@ const CONFIG = {
     "assets/flower-4.png",
   ], // your 4 flower pictures
   logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
-  logoDarkTheme: "assets/logo-dark.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
+  logoDarkTheme: "assets/logo-gold-cream.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
   videoUrl: "https://www.facebook.com/share/v/1FTHN1Pb1z/4", // the autoplay video (muted, so the background song keeps playing)
   videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
     // Gallery photos (src = image URL, cap = caption)
-    { src: "", cap: "Our first trip" },
-    { src: "", cap: "The proposal" },
-    { src: "", cap: "Sunday mornings" },
-    { src: "", cap: "With family" },
-    { src: "", cap: "Engagement day" },
-    { src: "", cap: "Just us" },
-    { src: "", cap: "Celebrating us" },
-    { src: "", cap: "Forever begins" },
+    { src: "assets/photo-1.png", cap: "Our first trip" },
+    { src: "assets/photo-2.png", cap: "The proposal" },
+    { src: "assets/photo-3.png", cap: "Sunday mornings" },
+    { src: "assets/photo-4.png", cap: "With family" },
+    { src: "assets/photo-5.png", cap: "Engagement day" },
+    { src: "assets/photo-6.png", cap: "Just us" },
+    { src: "assets/photo-7.png", cap: "Celebrating us" },
+    { src: "assets/photo-8.png", cap: "Forever begins" },
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
