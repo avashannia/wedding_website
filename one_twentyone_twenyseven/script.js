@@ -5,7 +5,7 @@ const CONFIG = {
   dateLabel: "1.21.2027",
   rsvpDeadline: "December 1, 2026", // placeholder – set your real RSVP date
   sheetUrl:
-    "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
+    "https://script.google.com/macros/s/AKfycbzrVUFeLJs8HPP14bdJEF48creBxjpaW8bLkQ_ODE95SuqFO-LZ_VFUUVjCvPLueWrx2Q/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
     "assets/flower-1.png",
