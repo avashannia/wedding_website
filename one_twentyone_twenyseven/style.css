@@ -912,6 +912,17 @@ dialog::backdrop {
   border: 2px solid var(--ac);
   overflow: hidden;
 }
+/* photo viewer: portrait frame (3:4) instead of a square-ish one */
+#lb {
+  width: fit-content;
+  max-width: 92vw;
+}
+#lb .lbc {
+  height: auto;
+  aspect-ratio: 3 / 4;
+  width: min(340px, calc((92vh - 170px) * 0.75), calc(92vw - 56px));
+  width: min(340px, calc((92dvh - 170px) * 0.75), calc(92vw - 56px));
+}
 .lbc img {
   width: 100%;
   height: 100%;
