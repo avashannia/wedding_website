@@ -20,14 +20,14 @@ const CONFIG = {
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
     // Gallery photos (src = image URL, cap = caption)
-    { src: "assets/photo-1.png", cap: "Our first trip" },
-    { src: "assets/photo-2.png", cap: "The proposal" },
-    { src: "assets/photo-3.png", cap: "Sunday mornings" },
-    { src: "assets/photo-4.png", cap: "With family" },
-    { src: "assets/photo-5.png", cap: "Engagement day" },
-    { src: "assets/photo-6.png", cap: "Just us" },
-    { src: "assets/photo-7.png", cap: "Celebrating us" },
-    { src: "assets/photo-8.png", cap: "Forever begins" },
+    { src: "assets/photo-1.jpg", cap: "Our first trip" },
+    { src: "assets/photo-2.jpg", cap: "The proposal" },
+    { src: "assets/photo-3.jpg", cap: "Sunday mornings" },
+    { src: "assets/photo-4.jpg", cap: "With family" },
+    { src: "assets/photo-5.jpg", cap: "Engagement day" },
+    { src: "assets/photo-6.jpg", cap: "Just us" },
+    { src: "assets/photo-7.jpg", cap: "Celebrating us" },
+    { src: "assets/photo-8.jpg", cap: "Forever begins" },
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
