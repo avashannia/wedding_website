@@ -35,7 +35,7 @@ const CONFIG = {
     addr: "Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
     when: "January 21, 2027 · 4:00 PM",
     note: "",
-    photo: "assets/church.jpg", // big photo of the church
+    photo: "assets/church.webp", // big photo of the church
     mapEmbed: "", // optional: paste the src of Google Maps > Share > Embed a map; leave "" to search by name + address
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -48,7 +48,7 @@ const CONFIG = {
     addr: "267 San Jose Ext. St., Antipolo",
     when: "6:00 PM onwards",
     note: "Cocktails to follow right after the ceremony.",
-    photo: "assets/reception.jpg", // big photo of the reception venue
+    photo: "assets/reception.webp", // big photo of the reception venue
     mapEmbed: "", // optional: same as above
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
