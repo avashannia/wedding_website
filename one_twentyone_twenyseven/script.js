@@ -7,7 +7,7 @@ const CONFIG = {
     "Your presence at our wedding is the greatest gift of all. However, should you wish to honor us with a gift, a monetary contribution towards our future together would be warmly appreciated.",
   rsvpDeadline: "December 1, 2026", // placeholder – set your real RSVP date
   sheetUrl:
-    "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
+    "https://script.google.com/macros/s/AKfycbzrVUFeLJs8HPP14bdJEF48creBxjpaW8bLkQ_ODE95SuqFO-LZ_VFUUVjCvPLueWrx2Q/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
     "assets/flower-1.png",
@@ -18,26 +18,26 @@ const CONFIG = {
   logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
   logoDarkTheme: "assets/logo-gold-cream.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
   videoUrl: "assets/prenup_final.mp4", // Facebook link (must be a PUBLIC video; if it does not load, open the link in a browser and paste the final address, e.g. facebook.com/yourpage/videos/123...) OR a file like "assets/prenup.mp4". Muted autoplay, so the background song keeps playing
-  videoPoster: "", // optional still image shown before the video loads
+  videoPoster: "assets/videoposter.png", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
     // Gallery photos (src = image URL, cap = caption)
     { src: "assets/photo-1.jpg" },
-    { src: "assets/photo-2.jpg"},
-    { src: "assets/photo-3.jpg"},
-    { src: "assets/photo-4.jpg"},
-    { src: "assets/photo-5.jpg"},
-    { src: "assets/photo-6.jpg"},
-    { src: "assets/photo-7.jpg"},
-    { src: "assets/photo-8.jpg"},
-    { src: "assets/photo-9.jpg"},
+    { src: "assets/photo-2.jpg" },
+    { src: "assets/photo-3.jpg" },
+    { src: "assets/photo-4.jpg" },
+    { src: "assets/photo-5.jpg" },
+    { src: "assets/photo-6.jpg" },
+    { src: "assets/photo-7.jpg" },
+    { src: "assets/photo-8.jpg" },
+    { src: "assets/photo-9.jpg" },
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
     addr: "Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
     when: "January 21, 2027 · 4:00 PM",
     note: "",
-    photo: "assets/church.jpg", // big photo of the church
+    photo: "assets/church.webp", // big photo of the church
     mapEmbed: "", // optional: paste the src of Google Maps > Share > Embed a map; leave "" to search by name + address
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -50,7 +50,7 @@ const CONFIG = {
     addr: "267 San Jose Ext. St., Antipolo",
     when: "6:00 PM onwards",
     note: "Cocktails to follow right after the ceremony.",
-    photo: "assets/reception.jpg", // big photo of the reception venue
+    photo: "assets/reception.webp", // big photo of the reception venue
     mapEmbed: "", // optional: same as above
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -106,8 +106,18 @@ const CONFIG = {
     ],
     bestMan: ["PCPT Joedhel Lloyd Obordo"],
     maidOfHonor: ["Paula Kat-yana Tugonon-Manuel", "Anne Sofia Lou Ocampo"],
-    groomsmen: ["Joerald Buen Obordo", "Luigi Edward Panganiban", "PCPT Harren Ralph Dunton", "PCPT Michael John Bañes"],
-    bridesmaids: ["Melnia Andrea Obordo", "Apple Serrano", "JSINSP Krizza Jane Bermudo", "Princess Arianne Macaranas"],
+    groomsmen: [
+      "Joerald Buen Obordo",
+      "Luigi Edward Panganiban",
+      "PCPT Harren Ralph Dunton",
+      "PCPT Michael John Bañes",
+    ],
+    bridesmaids: [
+      "Melnia Andrea Obordo",
+      "Apple Serrano",
+      "JSINSP Krizza Jane Bermudo",
+      "Princess Arianne Macaranas",
+    ],
     candle: [],
     veil: [],
     cord: [], // Secondary Sponsors – add names to show this block
@@ -131,7 +141,11 @@ const store = (k, v) => {
 };
 const media = (src, alt) =>
   src
-    ? '<img src="' + src + '" alt="' + alt + '" onerror="this.outerHTML=\'<div class=ph>PHOTO</div>\'">'
+    ? '<img src="' +
+      src +
+      '" alt="' +
+      alt +
+      '" onerror="this.outerHTML=\'<div class=ph>PHOTO</div>\'">'
     : '<div class="ph">PHOTO</div>';
 
 /* ---------- text ---------- */
@@ -184,26 +198,71 @@ $("days").innerHTML = [-2, -1, 0, 1, 2]
 /* ---------- venues, timeline, dress code, entourage ---------- */
 function venue(id, v) {
   $(id).innerHTML =
-    "<p>" + v.name + "<br>" + v.addr + '<br><b style="font-weight:500">' + v.when + "</b></p>" +
+    "<p>" +
+    v.name +
+    "<br>" +
+    v.addr +
+    '<br><b style="font-weight:500">' +
+    v.when +
+    "</b></p>" +
     (v.note ? "<p>" + v.note + "</p>" : "") +
-    '<div class="vphoto frame">' + media(v.photo, v.name) + "</div>" +
-    '<p style="margin-top:18px"><a class="btn" href="' + v.mapUrl + '" target="_blank" rel="noopener">View on map</a></p>' +
-    '<div class="map frame"><iframe title="Map of ' + v.name + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="' +
-    (v.mapEmbed || "https://www.google.com/maps?q=" + encodeURIComponent(v.name + ", " + v.addr) + "&output=embed") +
+    '<div class="vphoto frame">' +
+    media(v.photo, v.name) +
+    "</div>" +
+    '<p style="margin-top:18px"><a class="btn" href="' +
+    v.mapUrl +
+    '" target="_blank" rel="noopener">View on map</a></p>' +
+    '<div class="map frame"><iframe title="Map of ' +
+    v.name +
+    '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="' +
+    (v.mapEmbed ||
+      "https://www.google.com/maps?q=" +
+        encodeURIComponent(v.name + ", " + v.addr) +
+        "&output=embed") +
     '"></iframe></div>';
 }
 venue("cer", CONFIG.ceremony);
 venue("rec", CONFIG.reception);
 $("tl").innerHTML = CONFIG.timeline
-  .map((t, i) =>
-    '<div class="row rv" style="--d:' + i * 0.12 + 's"><span class="tm">' + t[0] + (t[3] ? "<small>" + t[3] + "</small>" : "") +
-    "</span><span><b>" + t[1] + "</b><br>" + t[2] + "</span></div>")
+  .map(
+    (t, i) =>
+      '<div class="row rv" style="--d:' +
+      i * 0.12 +
+      's"><span class="tm">' +
+      t[0] +
+      (t[3] ? "<small>" + t[3] + "</small>" : "") +
+      "</span><span><b>" +
+      t[1] +
+      "</b><br>" +
+      t[2] +
+      "</span></div>",
+  )
   .join("");
 $("roles").innerHTML = CONFIG.dressRoles
-  .map((r, i) => '<div class="rc rv rv-z" style="--d:' + i * 0.1 + 's"><i style="background:' + r[2] + '" aria-hidden="true"></i><b>' + r[0] + "</b><span>" + r[1] + "</span></div>")
+  .map(
+    (r, i) =>
+      '<div class="rc rv rv-z" style="--d:' +
+      i * 0.1 +
+      's"><i style="background:' +
+      r[2] +
+      '" aria-hidden="true"></i><b>' +
+      r[0] +
+      "</b><span>" +
+      r[1] +
+      "</span></div>",
+  )
   .join("");
 $("sw").innerHTML = CONFIG.dressBlues
-  .map((c) => '<i tabindex="0" data-n="' + c[0] + '" style="background:' + c[1] + '" aria-label="' + c[0] + '"></i>')
+  .map(
+    (c) =>
+      '<i tabindex="0" data-n="' +
+      c[0] +
+      '" style="background:' +
+      c[1] +
+      '" aria-label="' +
+      c[0] +
+      '"></i>',
+  )
   .join("");
 /* entourage: all names visible. Two-column blocks put the left column against the middle (right-aligned)
    and the right column against the middle (left-aligned), like a printed program. */
@@ -297,7 +356,9 @@ $("sw").innerHTML = CONFIG.dressBlues
 }
 
 /* ---------- prenup photos: grid only (an odd last photo is centered by the CSS) ---------- */
-const P = CONFIG.photos, N = P.length, st = $("stack");
+const P = CONFIG.photos,
+  N = P.length,
+  st = $("stack");
 let cur = 0;
 P.forEach((p, i) => {
   p.cap = p.cap || "Prenup photo " + (i + 1);
@@ -310,7 +371,12 @@ P.forEach((p, i) => {
   c.innerHTML = media(p.src, p.cap);
   st.appendChild(c);
   c.onclick = () => openLb(i);
-  c.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.click(); } };
+  c.onkeydown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      c.click();
+    }
+  };
 });
 
 /* ---------- lightbox ---------- */
@@ -706,6 +772,7 @@ if (CONFIG.songUrl) {
       "&show_text=false&autoplay=true&mute=1";
     vd.replaceWith(f);
     if (vb) vb.remove(); // the custom play/pause button can't control Facebook's player
+    if ($("vs")) $("vs").remove(); // use the sound control inside Facebook's player instead
     // load it only once the guest scrolls to it, so it starts playing at that moment
     new IntersectionObserver(
       (es, o) => {
@@ -731,7 +798,52 @@ if (CONFIG.songUrl) {
       vb.setAttribute("aria-label", on ? "Pause video" : "Play video");
       p.setAttribute("d", on ? "M6 5h4v14H6zM14 5h4v14h-4z" : "M8 5v14l11-7z");
     };
-    vd.onplay = vd.onpause = sync;
+    /* sound: the video starts muted (browsers only allow autoplay when muted). The sound button unmutes it;
+       while the video plays WITH sound the background song pauses, and it comes back when the video is
+       paused, muted or scrolled out of view. */
+    const vs = $("vs");
+    let hadMusic = false; // the song was playing when the video got loud
+    const SND_ON =
+      "M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z";
+    const SND_OFF =
+      "M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.8 8.8 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 003.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z";
+    const syncSound = () => {
+      if (!vs) return;
+      const on = !vd.muted;
+      vs.setAttribute(
+        "aria-label",
+        on ? "Turn video sound off" : "Turn video sound on",
+      );
+      $("vsp").setAttribute("d", on ? SND_ON : SND_OFF);
+    };
+    const balance = () => {
+      if (!vd.paused && !vd.muted) {
+        if (!au.paused) {
+          hadMusic = true;
+          au.pause();
+        }
+      } else if (hadMusic && !userPaused) {
+        hadMusic = false;
+        au.play().catch(() => {});
+      }
+    };
+    vd.onplay =
+      vd.onpause =
+      vd.onvolumechange =
+        () => {
+          sync();
+          syncSound();
+          balance();
+        };
+    if (vs)
+      vs.onclick = () => {
+        vd.muted = !vd.muted;
+        if (!vd.muted && vd.paused) {
+          vPaused = false;
+          vd.play().catch(() => {});
+        }
+      };
+    syncSound();
     new IntersectionObserver(
       (es) =>
         es.forEach((e) => {
