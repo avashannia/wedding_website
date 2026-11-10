@@ -426,51 +426,16 @@ button {
 }
 
 /* prenup photos: grid only; flex-wrap + centered rows = an odd last photo sits in the middle */
-#story h2.big {
-  font-size: clamp(46px, 11vw, 78px);
-  line-height: 1.05;
-  margin-bottom: 8px;
-}
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin-top: 22px;
-}
-.card {
-  flex: 0 0 calc(50% - 7px);
-  aspect-ratio: 1 / 1.1;
-  border: 2px solid var(--gold);
-  overflow: hidden;
-  cursor: pointer;
-  background: #222;
-}
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s;
-}
-.card:hover img,
-.card:focus-visible img {
-  transform: scale(1.06);
-}
-.card:nth-child(4n + 1),
-.card:nth-child(4n) {
-  border-radius: 999px 999px 0 0;
-}
-.card:nth-child(4n + 2),
-.card:nth-child(4n + 3) {
-  border-radius: 50%;
-}
+#story h2.big { font-size: clamp(46px, 11vw, 78px); line-height: 1.05; margin-bottom: 8px; }
+.gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 22px; }
+.card { flex: 0 0 calc(50% - 7px); aspect-ratio: 1 / 1.1; border: 2px solid var(--gold); overflow: hidden; cursor: pointer; background: #222; }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+.card:hover img, .card:focus-visible img { transform: scale(1.06); }
+.card:nth-child(4n + 1), .card:nth-child(4n) { border-radius: 999px 999px 0 0; }
+.card:nth-child(4n + 2), .card:nth-child(4n + 3) { border-radius: 50%; }
 
 /* places */
-.vphoto {
-  aspect-ratio: 4 / 3;
-  margin-top: 22px;
-}
+.vphoto { aspect-ratio: 4 / 3; margin-top: 22px; }
 .map {
   height: clamp(130px, 30vw, 190px);
   margin-top: 20px;
@@ -498,25 +463,14 @@ button {
 .row:last-child {
   border-bottom: 1px solid var(--ac);
 }
-.tm {
-  font: 400 clamp(24px, 5vw, 32px)/1.2 var(--serif);
-  color: var(--t2);
-  width: clamp(104px, 26vw, 140px);
-  flex: none;
-  white-space: nowrap;
-}
-.tm small {
-  display: block;
-  font: 500 11px var(--sans);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
+.tm { font: 400 clamp(24px, 5vw, 32px)/1.2 var(--serif); color: var(--t2); width: clamp(104px, 26vw, 140px); flex: none; white-space: nowrap; }
+.tm small { display: block; font: 500 11px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; margin-top: 2px; }
 .row b {
   font-weight: 500;
 }
 
 /* gift note (RSVP form + thank-you screen) */
+<<<<<<< HEAD
 .gift {
   margin: 18px 0 6px;
   padding: 14px 16px;
@@ -524,37 +478,16 @@ button {
   text-align: center;
   font: 400 16px/1.55 var(--serif);
 }
+=======
+.gift { margin: 18px 0 6px; padding: 14px 16px; border: 1px solid var(--gold); text-align: center; font: 400 16px/1.55 var(--serif); }
+>>>>>>> 9bb92ed94c220213b1ba1a1482c24887400badec
 
 /* dress code */
-.roles {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
-  gap: 18px 10px;
-  margin: 26px 0 4px;
-}
-.rc {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-.rc i {
-  width: clamp(54px, 13vw, 68px);
-  height: clamp(54px, 13vw, 68px);
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  margin-bottom: 6px;
-}
-.rc b {
-  font: 500 11px var(--sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--t1);
-}
-.rc span {
-  font-size: 13px;
-}
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 18px 10px; margin: 26px 0 4px; }
+.rc { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.rc i { width: clamp(54px, 13vw, 68px); height: clamp(54px, 13vw, 68px); border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); margin-bottom: 6px; }
+.rc b { font: 500 11px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--t1); }
+.rc span { font-size: 13px; }
 .sw {
   display: flex;
   justify-content: center;
@@ -1019,9 +952,7 @@ textarea {
    RESPONSIVE
    ========================================================= */
 @media (min-width: 640px) {
-  .card {
-    flex-basis: calc(33.333% - 10px);
-  }
+  .card { flex-basis: calc(33.333% - 10px); }
 }
 @media (min-width: 1100px) {
   .in {

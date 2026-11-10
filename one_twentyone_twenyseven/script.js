@@ -3,9 +3,11 @@ const CONFIG = {
   names: "Abe & Collyn", // replace with your names
   date: new Date(2027, 0, 21, 16, 0, 0), // year, month (0 = Jan), day, hour, minute
   dateLabel: "1.21.2027",
+  giftNote:
+    "Your presence at our wedding is the greatest gift of all. However, should you wish to honor us with a gift, a monetary contribution towards our future together would be warmly appreciated.",
   rsvpDeadline: "December 1, 2026", // placeholder – set your real RSVP date
   sheetUrl:
-    "https://script.google.com/macros/s/AKfycbzrVUFeLJs8HPP14bdJEF48creBxjpaW8bLkQ_ODE95SuqFO-LZ_VFUUVjCvPLueWrx2Q/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
+    "https://script.google.com/macros/s/AKfycbxQPAGTy1PbTWvoN-uwVC3WJlzwjbxkPLHIDneGh14JLQAErv37zzH5gjRD5g9zCtOfOw/exec", // paste your Google Apps Script web app URL here (see google-apps-script.gs). Leave "" to test without sending.
   songUrl: "assets/song.mp3", // your song: put song.mp3 in the same folder as index.html (or paste a full MP3 link)
   flowers: [
     "assets/flower-1.png",
@@ -16,26 +18,26 @@ const CONFIG = {
   logoLightTheme: "assets/logo.png", // logo shown in the LIGHT theme (transparent PNG, dark / colored ink)
   logoDarkTheme: "assets/logo-gold-cream.png", // logo shown in the DARK theme (a light / gold version). If this file is missing, the light-theme logo is used.
   videoUrl: "assets/prenup_final.mp4", // Facebook link (must be a PUBLIC video; if it does not load, open the link in a browser and paste the final address, e.g. facebook.com/yourpage/videos/123...) OR a file like "assets/prenup.mp4". Muted autoplay, so the background song keeps playing
-  videoPoster: "assets/videoposter.png", // optional still image shown before the video loads
+  videoPoster: "", // optional still image shown before the video loads
   videoRatio: "16 / 9", // e.g. "9 / 16" for a phone-style vertical video
   photos: [
     // Gallery photos (src = image URL, cap = caption)
     { src: "assets/photo-1.jpg" },
-    { src: "assets/photo-2.jpg" },
-    { src: "assets/photo-3.jpg" },
-    { src: "assets/photo-4.jpg" },
-    { src: "assets/photo-5.jpg" },
-    { src: "assets/photo-6.jpg" },
-    { src: "assets/photo-7.jpg" },
-    { src: "assets/photo-8.jpg" },
-    { src: "assets/photo-9.jpg" },
+    { src: "assets/photo-2.jpg"},
+    { src: "assets/photo-3.jpg"},
+    { src: "assets/photo-4.jpg"},
+    { src: "assets/photo-5.jpg"},
+    { src: "assets/photo-6.jpg"},
+    { src: "assets/photo-7.jpg"},
+    { src: "assets/photo-8.jpg"},
+    { src: "assets/photo-9.jpg"},
   ],
   ceremony: {
     name: "Parish of the Immaculate Heart of Mary",
     addr: "Hinulugang Taktak Rd., Brgy. Dela Paz, Antipolo City",
     when: "January 21, 2027 · 4:00 PM",
     note: "",
-    photo: "assets/church.webp", // big photo of the church
+    photo: "assets/church.jpg", // big photo of the church
     mapEmbed: "", // optional: paste the src of Google Maps > Share > Embed a map; leave "" to search by name + address
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -48,7 +50,7 @@ const CONFIG = {
     addr: "267 San Jose Ext. St., Antipolo",
     when: "6:00 PM onwards",
     note: "Cocktails to follow right after the ceremony.",
-    photo: "assets/reception.webp", // big photo of the reception venue
+    photo: "assets/reception.jpg", // big photo of the reception venue
     mapEmbed: "", // optional: same as above
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=" +
@@ -90,29 +92,22 @@ const CONFIG = {
     parentsGroom: ["Abemel Obordo", "Hermenia Obordo"],
     parentsBride: ["Joselito Panganiban", "Josephine Panganiban"],
     principal: [
-      ["Mr. Ponciano Tugonon", "Evelyn Tugonon"],
-      ["Engr. Antonio Ocampo", "Jailyn Ocampo"],
+      // [ninong, ninang]  – the last two ninangs have no ninong beside them
+      ["Mr. Ponciano Tugonon", "Mrs. Evelyn Tugonon"],
+      ["Engr. Antonio Ocampo", "Mrs. Jailyn Ocampo"],
       ["JCSUPT Lyndon Torres (Ret.)", "PLTCOL Catherine Ramos"],
-      ["PLTCOL Neil Gumana", "Julgen Obordo"],
-      ["JSUPT Jayrex Joseph Bustinera", "Ma Fatima Montoya"],
-      ["PLTCOL Bryan O' Neil Salvacion", "Mrs. Racquel Salvacion"],
-      ["PLTCOL Ruel Burlat", "Byng Acevedo"],
-      ["JSUPT Mark Anthony Omega", "Lourdes Eyao Icoy"],
+      ["PLTCOL Neil Gumana", "Ms. Julgen Obordo"],
+      ["JSUPT Jayrex Joseph Bustinera", "Mrs. Ma Fatima Montoya"],
+      ["PLTCOL Bryan O' Neil Salvacion", "Mrs. Raquel Salvacion"],
+      ["PLTCOL Ruel Burlat", "Mrs. Ana Acevedo-Erndl"],
+      ["JSUPT Mark Anthony Omega", "Mrs. Lourdes Icoy"],
+      ["", "Mrs. Vivian Herrera"],
+      ["", "Mrs. Amiebel Mahan"],
     ],
     bestMan: ["PCPT Joedhel Lloyd Obordo"],
     maidOfHonor: ["Paula Kat-yana Tugonon-Manuel", "Anne Sofia Lou Ocampo"],
-    groomsmen: [
-      "Joerald Buen Obordo",
-      "Luigi Edward Panganiban",
-      "PCPT Harren Ralph Dunton",
-      "PCPT Michael John Bañes",
-    ],
-    bridesmaids: [
-      "Melnia Andrea Obordo",
-      "Apple Serrano",
-      "JSINSP Krizza Jane Bermudo",
-      "Princess Arianne Macaranas",
-    ],
+    groomsmen: ["Joerald Buen Obordo", "Luigi Edward Panganiban", "PCPT Harren Ralph Dunton", "PCPT Michael John Bañes"],
+    bridesmaids: ["Melnia Andrea Obordo", "Apple Serrano", "JSINSP Krizza Jane Bermudo", "Princess Arianne Macaranas"],
     candle: [],
     veil: [],
     cord: [], // Secondary Sponsors – add names to show this block
@@ -136,16 +131,13 @@ const store = (k, v) => {
 };
 const media = (src, alt) =>
   src
-    ? '<img src="' +
-      src +
-      '" alt="' +
-      alt +
-      '" onerror="this.outerHTML=\'<div class=ph>PHOTO</div>\'">'
+    ? '<img src="' + src + '" alt="' + alt + '" onerror="this.outerHTML=\'<div class=ph>PHOTO</div>\'">'
     : '<div class="ph">PHOTO</div>';
 
 /* ---------- text ---------- */
 $("nm").textContent = CONFIG.names;
 $("dt").textContent = CONFIG.dateLabel;
+$("gift").textContent = $("gift2").textContent = CONFIG.giftNote;
 $("by").textContent = "Please respond by " + CONFIG.rsvpDeadline;
 $("ft").textContent = "With love, " + CONFIG.names;
 /* logo swaps with the theme; falls back to the other file if one is missing, hides if both are */
@@ -192,71 +184,26 @@ $("days").innerHTML = [-2, -1, 0, 1, 2]
 /* ---------- venues, timeline, dress code, entourage ---------- */
 function venue(id, v) {
   $(id).innerHTML =
-    "<p>" +
-    v.name +
-    "<br>" +
-    v.addr +
-    '<br><b style="font-weight:500">' +
-    v.when +
-    "</b></p>" +
+    "<p>" + v.name + "<br>" + v.addr + '<br><b style="font-weight:500">' + v.when + "</b></p>" +
     (v.note ? "<p>" + v.note + "</p>" : "") +
-    '<div class="vphoto frame">' +
-    media(v.photo, v.name) +
-    "</div>" +
-    '<p style="margin-top:18px"><a class="btn" href="' +
-    v.mapUrl +
-    '" target="_blank" rel="noopener">View on map</a></p>' +
-    '<div class="map frame"><iframe title="Map of ' +
-    v.name +
-    '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="' +
-    (v.mapEmbed ||
-      "https://www.google.com/maps?q=" +
-        encodeURIComponent(v.name + ", " + v.addr) +
-        "&output=embed") +
+    '<div class="vphoto frame">' + media(v.photo, v.name) + "</div>" +
+    '<p style="margin-top:18px"><a class="btn" href="' + v.mapUrl + '" target="_blank" rel="noopener">View on map</a></p>' +
+    '<div class="map frame"><iframe title="Map of ' + v.name + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="' +
+    (v.mapEmbed || "https://www.google.com/maps?q=" + encodeURIComponent(v.name + ", " + v.addr) + "&output=embed") +
     '"></iframe></div>';
 }
 venue("cer", CONFIG.ceremony);
 venue("rec", CONFIG.reception);
 $("tl").innerHTML = CONFIG.timeline
-  .map(
-    (t, i) =>
-      '<div class="row rv" style="--d:' +
-      i * 0.12 +
-      's"><span class="tm">' +
-      t[0] +
-      (t[3] ? "<small>" + t[3] + "</small>" : "") +
-      "</span><span><b>" +
-      t[1] +
-      "</b><br>" +
-      t[2] +
-      "</span></div>",
-  )
+  .map((t, i) =>
+    '<div class="row rv" style="--d:' + i * 0.12 + 's"><span class="tm">' + t[0] + (t[3] ? "<small>" + t[3] + "</small>" : "") +
+    "</span><span><b>" + t[1] + "</b><br>" + t[2] + "</span></div>")
   .join("");
 $("roles").innerHTML = CONFIG.dressRoles
-  .map(
-    (r, i) =>
-      '<div class="rc rv rv-z" style="--d:' +
-      i * 0.1 +
-      's"><i style="background:' +
-      r[2] +
-      '" aria-hidden="true"></i><b>' +
-      r[0] +
-      "</b><span>" +
-      r[1] +
-      "</span></div>",
-  )
+  .map((r, i) => '<div class="rc rv rv-z" style="--d:' + i * 0.1 + 's"><i style="background:' + r[2] + '" aria-hidden="true"></i><b>' + r[0] + "</b><span>" + r[1] + "</span></div>")
   .join("");
 $("sw").innerHTML = CONFIG.dressBlues
-  .map(
-    (c) =>
-      '<i tabindex="0" data-n="' +
-      c[0] +
-      '" style="background:' +
-      c[1] +
-      '" aria-label="' +
-      c[0] +
-      '"></i>',
-  )
+  .map((c) => '<i tabindex="0" data-n="' + c[0] + '" style="background:' + c[1] + '" aria-label="' + c[0] + '"></i>')
   .join("");
 /* entourage: all names visible. Two-column blocks put the left column against the middle (right-aligned)
    and the right column against the middle (left-aligned), like a printed program. */
@@ -350,9 +297,7 @@ $("sw").innerHTML = CONFIG.dressBlues
 }
 
 /* ---------- prenup photos: grid only (an odd last photo is centered by the CSS) ---------- */
-const P = CONFIG.photos,
-  N = P.length,
-  st = $("stack");
+const P = CONFIG.photos, N = P.length, st = $("stack");
 let cur = 0;
 P.forEach((p, i) => {
   p.cap = p.cap || "Prenup photo " + (i + 1);
@@ -365,12 +310,7 @@ P.forEach((p, i) => {
   c.innerHTML = media(p.src, p.cap);
   st.appendChild(c);
   c.onclick = () => openLb(i);
-  c.onkeydown = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      c.click();
-    }
-  };
+  c.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.click(); } };
 });
 
 /* ---------- lightbox ---------- */
