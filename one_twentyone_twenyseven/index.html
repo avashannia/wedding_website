@@ -64,6 +64,14 @@
           <h2 class="gt">Watch Our Save the Date Video</h2>
           <div class="vid frame" id="vw">
             <video id="vd" muted loop playsinline preload="metadata"></video>
+            <button class="vbtn vs" id="vs" aria-label="Turn video sound on">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  id="vsp"
+                  d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63z"
+                />
+              </svg>
+            </button>
             <button class="vbtn" id="vb" aria-label="Pause video">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path id="vbp" d="M6 5h4v14H6zM14 5h4v14h-4z" />
@@ -121,7 +129,7 @@
           </div>
           <p id="da"></p>
           <div class="roles" id="roles"></div>
-          <div class="k" style="margin-top: 28px">GUESTS</div>
+          <div class="k" style="margin-top: 28px">Other guests</div>
           <p style="margin: 0 0 4px">All shades of blue</p>
           <div class="sw" id="sw"></div>
         </div>
@@ -199,6 +207,7 @@
         <div class="err" id="e3"></div>
         <label for="m">A message for the couple (optional)</label
         ><textarea id="m" rows="2"></textarea>
+        <p class="gift" id="gift"></p>
         <div class="err" id="e4" role="alert"></div>
         <div class="two">
           <button
@@ -223,6 +232,7 @@
         <p id="typ">
           Your reply has been received. We can’t wait to celebrate with you.
         </p>
+        <p class="gift" id="gift2"></p>
         <button class="btn f" id="x2" style="margin-top: 14px">Close</button>
       </div>
     </dialog>
