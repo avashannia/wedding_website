@@ -516,6 +516,15 @@ button {
   font-weight: 500;
 }
 
+/* gift note (RSVP form + thank-you screen) */
+.gift {
+  margin: 18px 0 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--gold);
+  text-align: center;
+  font: 400 16px/1.55 var(--serif);
+}
+
 /* dress code */
 .roles {
   display: grid;
@@ -736,6 +745,9 @@ button {
   cursor: pointer;
   background: linear-gradient(135deg, var(--gold2), var(--gold));
   color: #0b1426;
+}
+.vbtn.vs {
+  right: 64px;
 }
 .vbtn svg {
   width: 20px;
