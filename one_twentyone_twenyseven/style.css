@@ -1073,3 +1073,154 @@ textarea {
     scroll-behavior: auto;
   }
 }
+
+/* =========================================================
+   RSVP FORM (styled) - every rule is scoped to #dlg so the photo viewer is untouched
+   ========================================================= */
+#dlg {
+  --ha: var(
+    --h1a
+  ); /* the shimmering heading needs these colors, otherwise it is invisible inside a dialog */
+  --hb: var(--h1b);
+  max-width: 460px;
+  padding: clamp(26px, 6vw, 38px) clamp(20px, 6vw, 36px) 28px;
+  background:
+    radial-gradient(
+      120% 55% at 50% 0%,
+      rgba(201, 162, 75, 0.16),
+      transparent 62%
+    ),
+    var(--p1);
+  box-shadow:
+    inset 0 0 0 6px var(--p1),
+    inset 0 0 0 7px rgba(201, 162, 75, 0.55),
+    0 30px 90px rgba(0, 0, 0, 0.55);
+  scrollbar-width: thin;
+  scrollbar-color: var(--ac) transparent;
+}
+#dlg[open] {
+  animation: dlgIn 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes dlgIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+#dlg::backdrop {
+  background: rgba(4, 8, 18, 0.78);
+  backdrop-filter: blur(4px);
+}
+#dh {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: clamp(32px, 8vw, 40px);
+}
+/* seat notice */
+#dlg .seat {
+  margin: 0 0 6px;
+  text-align: center;
+  font: 400 17px/1.6 var(--serif);
+  color: var(--i1);
+}
+#dlg .seat b {
+  font-weight: 600;
+  color: var(--t1);
+}
+/* fields: underline style, no resize handle */
+#dlg label {
+  margin-top: 18px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+}
+#dlg input:not([type="radio"]),
+#dlg textarea {
+  border: 0;
+  border-bottom: 1px solid var(--soft);
+  border-radius: 0;
+  padding: 11px 2px 9px;
+  resize: none;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    background 0.25s;
+}
+#dlg textarea {
+  background: rgba(201, 162, 75, 0.05);
+}
+#dlg input:not([type="radio"]):focus,
+#dlg textarea:focus {
+  outline: none;
+  border-bottom-color: var(--ac);
+  box-shadow: 0 1px 0 0 var(--ac);
+  background: rgba(201, 162, 75, 0.08);
+}
+/* attendance choice cards */
+#dlg .choice {
+  gap: 12px;
+  margin-top: 22px;
+}
+#dlg .choice label {
+  position: relative;
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 16px 8px 14px;
+  border-radius: 2px;
+  font: 400 17px/1.2 var(--serif);
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    color 0.25s;
+}
+#dlg .choice label::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--ac);
+  border-radius: 50%;
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+}
+#dlg .choice label:hover {
+  border-color: var(--ac);
+}
+#dlg .choice label:has(input:checked) {
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  border-color: var(--gold);
+  color: #0b1426;
+}
+#dlg .choice label:has(input:checked)::before {
+  background: #0b1426;
+  border-color: #0b1426;
+}
+#dlg #e3 {
+  text-align: center;
+}
+/* gift note: just two gold hairlines */
+#dlg .gift {
+  margin: 14px 0 4px;
+  padding: 16px 4px;
+  border: 0;
+  border-top: 1px solid rgba(201, 162, 75, 0.45);
+  border-bottom: 1px solid rgba(201, 162, 75, 0.45);
+  font-size: 16px;
+}
+#dlg #f .two:last-child {
+  margin-top: 18px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #dlg[open] {
+    animation: none;
+  }
+}
