@@ -186,13 +186,19 @@
 
     <!-- RSVP form (no seat or table questions) -->
     <dialog id="dlg" aria-labelledby="dh">
-      <h2 class="gt" id="dh" style="font-size: 34px">Will you join us?</h2>
+      <h2 class="gt" id="dh">Will you join us?</h2>
       <form id="f" novalidate>
+        <div class="orn" aria-hidden="true"><b></b></div>
+        <p class="seat">
+          Due to limited venue capacity, we can only accommodate those formally
+          invited to our wedding. With this in mind, please be informed that we
+          have reserved <b>one (1) seat</b> for you.
+        </p>
         <label for="n">Full name</label><input id="n" autocomplete="name" />
         <div class="err" id="e1"></div>
         <label for="c">Email or mobile number</label><input id="c" />
         <div class="err" id="e2"></div>
-        <div class="two" role="radiogroup" aria-label="Attendance">
+        <div class="two choice" role="radiogroup" aria-label="Attendance">
           <label
             ><input type="radio" name="a" value="Joyfully accepts" />Joyfully
             accepts</label
@@ -206,7 +212,7 @@
         </div>
         <div class="err" id="e3"></div>
         <label for="m">A message for the couple (optional)</label
-        ><textarea id="m" rows="2"></textarea>
+        ><textarea id="m" rows="3"></textarea>
         <p class="gift" id="gift"></p>
         <div class="err" id="e4" role="alert"></div>
         <div class="two">
